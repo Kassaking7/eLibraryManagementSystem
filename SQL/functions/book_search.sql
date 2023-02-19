@@ -25,7 +25,7 @@ CREATE PROCEDURE book_search (
     AND [Author].[nationality] LIKE CONCAT(ISNULL([author_nationality], ""), "%")
     AND [Author].[birth_year] LIKE CONCAT(ISNULL([author_birth_year], ""), "%")
     AND [Publisher].[name] LIKE CONCAT(ISNULL([publisher_name], ""), "%")
-    AND [Book].[publication_year] LIKE CONCAT(ISNULL([publication_year], ""), "%")
+    AND [Book].[publication_year] LIKE CONCAT(ISNULL([publication_year], ""), "%");
   END
   
 
@@ -48,7 +48,7 @@ CREATE PROCEDURE show_general_book_info (
     INNER JOIN [Written_by] ON ([Book].[ISBN] = [Written_by].[ISBN])
     INNER JOIN [Author] ON ([Written_by].[author_ID] = [Author].[ID])
     INNER JOIN [Publisher] ON ([Book].[publisher_ID] = [Publisher].[ID])
-    WHERE [Book].[ISBN] = [ISBN]
+    WHERE [Book].[ISBN] = [ISBN];
   END
 
 CREATE PROCEDURE show_detailed_book_info (
@@ -76,5 +76,5 @@ CREATE PROCEDURE show_detailed_book_info (
       AND [Copy].[availability] = TRUE
       GROUP BY [Copy].[ISBN]
     ) AS [Copies] ON ([Book].[ISBN] = [Copies].[ISBN])
-    WHERE [Book].[ISBN] = [ISBN]
+    WHERE [Book].[ISBN] = [ISBN];
   END

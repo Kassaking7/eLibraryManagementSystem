@@ -19,5 +19,5 @@ CREATE PROCEDURE match_password (
         ) ELSE (
           SELECT [Administrator].[ID] FROM [Administrator]
         )
-    )
+    );
   END

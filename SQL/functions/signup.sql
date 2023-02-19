@@ -10,5 +10,5 @@ CREATE PROCEDURE signup (
   INSERT INTO [People]
     VALUE(@user_count * 10 + 1, [username], [password]);
   INSERT INTO [Guest]
-    VALUE(@user_count * 10 + 1, @default_credit_level, @default_credit_level, DEFAULT)
+    VALUE(@user_count * 10 + 1, @default_credit_level, @default_credit_level, DEFAULT);
   END

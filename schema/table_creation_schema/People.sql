@@ -1,5 +1,5 @@
 CREATE TABLE People (
-  [ID]                INT NOT NULL AUTO_INCREMENT,
+  [ID]                INT NOT NULL -- AUTO_INCREMENT,
   [username]          VARCHAR(100) NOT NULL UNIQUE,
   [password]          VARCHAR(100) NOT NULL,
 
@@ -17,7 +17,7 @@ CREATE TABLE Guest (
   FOREIGN KEY ([ID]) REFERENCES People([ID])
 )
 
-CREATE TABLE Guest (
+CREATE TABLE Administrator (
   [ID]                INT NOT NULL,
   [can_edit_books]    BOOLEAN NOT NULL,
   [can_host_event]    BOOLEAN NOT NULL,

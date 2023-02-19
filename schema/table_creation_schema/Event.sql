@@ -6,13 +6,13 @@ CREATE TABLE Event (
   [capacity]          INT NOT NULL,
   [current_amount]    INT NOT NULL,
   [description]       VARCHAR(MAX),
-  [hosted_at]         INT NOT NULL,
-  [hosted_by]         INT NOT NULL,
+  [location_ID]         INT NOT NULL,
+  [admin_ID]         INT NOT NULL,
 
   PRIMARY KEY (ID),
 
-  FOREIGN KEY ([hosted_at]) REFERENCES [Location]([ID]),
-  FOREIGN KEY ([hosted_by]) REFERENCES Administrator([ID])
+  FOREIGN KEY ([location_ID]) REFERENCES [Location]([ID]),
+  FOREIGN KEY ([admin_ID]) REFERENCES Administrator([ID])
 )
 
 CREATE TABLE Registration (

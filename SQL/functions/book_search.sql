@@ -1,3 +1,8 @@
+-- Caller: guests
+-- Senario: a guest wants to search a book
+-- Function: search books that matches the given information
+-- Input: ISBN, title, number of pages, tag name, author name, author nationality, author birth year, publisher name, publication year
+-- Output: ISBN of the search books
 CREATE PROCEDURE book_search (
   IN [ISBN]               VARCHAR(20),
   IN [title]              VARCHAR(50),
@@ -28,10 +33,11 @@ CREATE PROCEDURE book_search (
     AND [Book].[publication_year] LIKE CONCAT(ISNULL([publication_year], ""), "%");
   END
   
-
-
-
-
+-- Caller: guests
+-- Senario: after getting the ISBN of the search results, display the list of general info of the search results.
+-- Function: get the general info of the book with the book with given ISBN
+-- Input: ISBN
+-- Output: book title, authors, publisher name, publication year, tags
 CREATE PROCEDURE show_general_book_info (
   IN [ISBN]               VARCHAR(20)
 )
@@ -51,9 +57,11 @@ CREATE PROCEDURE show_general_book_info (
     WHERE [Book].[ISBN] = [ISBN];
   END
 
-
-
-
+-- Caller: guests
+-- Senario: after getting the ISBN of the search results, display the list of detailed info of the search results.
+-- Function: get the detailed info of the book with the book with given ISBN
+-- Input: ISBN
+-- Output: book title, authors, publisher name, publication year, tags, number of available copies, book description
 CREATE PROCEDURE show_detailed_book_info (
   IN [ISBN]               VARCHAR(20)
 )

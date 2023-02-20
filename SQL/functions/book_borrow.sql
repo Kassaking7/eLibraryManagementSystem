@@ -1,10 +1,12 @@
--- For the case that a guest bring a book to the front desk and wants to borrow the book.
--- The admin at the front-desk will help the guest to borrow the book, 
---   where the user, book, copy, and number of days of borrowing is known
+-- Caller: administrators
+-- Senario: a guest bring a book to the front desk and wants to borrow the book, an administrator helps the guest to borrow the book in the system
+-- Function: check if the guest can borrow the given book, and update the corresponding tables
+-- Input: user id, ISBN, copy id, borrow days
+-- Output: whether there is enough credit for the guest
 CREATE PROCEDURE borrow_via_admin (
-    IN [user_id]            INT, 
+    IN [user_id]            BIGINT, 
     IN [ISBN]               VARCHAR(20),
-    IN [copy_ID]            INT,
+    IN [copy_ID]            BIGINT,
     IN [borrow_days]        INT,
     OUT [enough_credit]     BOOLEAN
 )
@@ -15,6 +17,7 @@ CREATE PROCEDURE borrow_via_admin (
                 SELECT [Guest].[remaining_credit]
                 FROM [Guest]
                 WHERE [Guest].[ID] = [user_id]
+                AND [Guest].[is_activated] = TRUE
             ), 0
         ) >= 1 THEN TRUE
         ELSE FALSE
@@ -38,22 +41,28 @@ CREATE PROCEDURE borrow_via_admin (
     SET COPY.availability = FALSE
     WHERE COPY.ISBN = ISBN AND COPY.copy_ID = copy_ID;
 
+    -- update the current storing amount of the Bookshelf table
+    UPDATE [Bookshelf]
+    SET [Bookshelf].[current_amount] = [Bookshelf].[current_amount] - 1
+    WHERE [Bookshelf].[ID] = (
+        SELECT [Copy].[bookshelf_ID]
+        FROM [Copy]
+        WHERE [Copy].[ISBN] = [ISBN]
+        AND [Copy].[copy_ID] = [copy_ID]
+    )
+
     -- insert a record into BORROWING table
     SET @TODAY = CONVERT(DATE, GETDATE());
     SET @RETURN_DATE = CONVERT(DATE, GETDATE() + borrow_days);
     INSERT INTO BORROWING
     VALUES(ISBN, copy_ID, borrowing_ID, TODAY, NULL, RETURN_DATE, DEFAULT, user_id);
-
-
   END
 
-
-
-
-
--- For the case that guests borrow a book by themselves
---   where the user, book, and number of days of borrowing is known
---   and the procedure will check if the choosen book has an available copy
+-- Caller: guests
+-- Senario: after a guest searched a book, the guest borrow the book from the application by himself/herself
+-- Function: check if the guest can borrow the given book and there is available copy, and update the corresponding tables
+-- Input: user id, ISBN, borrow days
+-- Output: whether there is enough credit for the guest, and whether there is enough copies of the selected book
 CREATE PROCEDURE borrow_via_guest (
     IN [user_id]            INT, 
     IN [ISBN]               VARCHAR(20),
@@ -68,6 +77,7 @@ CREATE PROCEDURE borrow_via_guest (
                 SELECT [Guest].[remaining_credit]
                 FROM [Guest]
                 WHERE [Guest].[ID] = [user_id]
+                AND [Guest].[is_activated] = TRUE
             ), 0
         ) >= 1 THEN TRUE
         ELSE FALSE
@@ -92,6 +102,15 @@ CREATE PROCEDURE borrow_via_guest (
     -- otherwise, we update the tables for this borrow
     SET @new_credit = remaining_credit - 1;
 
+    -- find a copy of the chosen book
+    SET @copy_ID = (
+        SELECT [Copy].[copy_ID]
+        FROM [Copy]
+        WHERE [Copy].[ISBN] = [ISBN]
+        AND [Copy].[availability] = TRUE
+        LIMIT 1
+    )
+
     -- update guest remaining credit
     UPDATE GUEST
     SET remaining_credit = new_credit
@@ -100,13 +119,21 @@ CREATE PROCEDURE borrow_via_guest (
     -- update availability in Copy table
     UPDATE COPY
     SET COPY.availability = FALSE
-    WHERE COPY.ISBN = ISBN AND COPY.copy_ID = copy_ID;
+    WHERE COPY.ISBN = ISBN AND COPY.copy_ID = @copy_ID;
+
+    -- update the current storing amount of the Bookshelf table
+    UPDATE [Bookshelf]
+    SET [Bookshelf].[current_amount] = [Bookshelf].[current_amount] - 1
+    WHERE [Bookshelf].[ID] = (
+        SELECT [Copy].[bookshelf_ID]
+        FROM [Copy]
+        WHERE [Copy].[ISBN] = [ISBN]
+        AND [Copy].[copy_ID] = @copy_ID
+    )
 
     -- insert a record into BORROWING table
     SET @TODAY = CONVERT(DATE, GETDATE());
     SET @RETURN_DATE = CONVERT(DATE, GETDATE() + borrow_days);
     INSERT INTO BORROWING
-    VALUES(ISBN, copy_ID, borrowing_ID, TODAY, NULL, RETURN_DATE, DEFAULT, user_id);
-
-
+    VALUES(ISBN, @copy_ID, borrowing_ID, TODAY, NULL, RETURN_DATE, DEFAULT, user_id);
   END

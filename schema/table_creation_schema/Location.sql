@@ -3,7 +3,9 @@ CREATE TABLE Location (
   [building]          VARCHAR(100) NOT NULL,
   [floor]             VARCHAR(100) NOT NULL,
   [room]              VARCHAR(100) NOT NULL,
-  [open_hour]         VARCHAR(15) NOT NULL,
+  [open_time]        TIME NOT NULL,
+  [close_time]       TIME NOT NULL
+  
 
   PRIMARY KEY (ID),
 

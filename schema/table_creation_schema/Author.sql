@@ -1,5 +1,5 @@
 CREATE TABLE Author (
-  [ID]                INT NOT NULL AUTO_INCREMENT,
+  [ID]                BIGINT NOT NULL AUTO_INCREMENT,
   [name]              VARCHAR(100) NOT NULL,
   [nationality]       VARCHAR(100),
   [birth_year]        VARCHAR(7),
@@ -9,7 +9,7 @@ CREATE TABLE Author (
 
 CREATE TABLE Written_by (
   [ISBN]              VARCHAR(20) NOT NULL,
-  [author_ID]         INT NOT NULL,
+  [author_ID]         BIGINT NOT NULL,
 
   PRIMARY KEY (ISBN, author_ID),
   

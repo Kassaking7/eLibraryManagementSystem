@@ -1,8 +1,8 @@
 CREATE TABLE Copy (
   [ISBN]              VARCHAR(20) NOT NULL,
-  [copy_ID]           INT NOT NULL,
+  [copy_ID]           BIGINT NOT NULL,
   [availability]      BOOLEAN NOT NULL,
-  [bookshelf_ID]      INT NOT NULL,
+  [bookshelf_ID]      BIGINT NOT NULL,
 
   PRIMARY KEY (ISBN, copy_ID),
 

@@ -2,6 +2,7 @@ CREATE TABLE People (
   [ID]                INT NOT NULL -- AUTO_INCREMENT,
   [username]          VARCHAR(100) NOT NULL UNIQUE,
   [password]          VARCHAR(100) NOT NULL,
+  [is_guest]          BOOLEAN NOT NULL DEFAULT TRUE,
 
   PRIMARY KEY (ID)
 )

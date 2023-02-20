@@ -1,7 +1,8 @@
-
+-- For the case that a guest bring a book to the front desk and wants to borrow the book.
+-- The admin at the front-desk will help the guest to borrow the book, 
+--   where the user, book, copy, and number of days of borrowing is known
 CREATE PROCEDURE borrow_via_admin (
     IN [user_id]            INT, 
-    IN [remaining_credit]   INT,
     IN [ISBN]               VARCHAR(20),
     IN [copy_ID]            INT,
     IN [borrow_days]        INT,
@@ -10,7 +11,12 @@ CREATE PROCEDURE borrow_via_admin (
   proc_label: BEGIN
    -- check if user still has credit to borrow
 	CASE
-		WHEN remaining_credit >= 1 THEN TRUE
+        WHEN IFNULL((
+                SELECT [Guest].[remaining_credit]
+                FROM [Guest]
+                WHERE [Guest].[ID] = [user_id]
+            ), 0
+        ) >= 1 THEN TRUE
         ELSE FALSE
 	END AS result INTO enough_credit;
 
@@ -45,10 +51,11 @@ CREATE PROCEDURE borrow_via_admin (
 
 
 
-
+-- For the case that guests borrow a book by themselves
+--   where the user, book, and number of days of borrowing is known
+--   and the procedure will check if the choosen book has an available copy
 CREATE PROCEDURE borrow_via_guest (
     IN [user_id]            INT, 
-    IN [remaining_credit]   INT,
     IN [ISBN]               VARCHAR(20),
     IN [borrow_days]        INT,
     OUT [enough_credit]     BOOLEAN,
@@ -57,7 +64,12 @@ CREATE PROCEDURE borrow_via_guest (
   proc_label: BEGIN
    -- check if user still has credit to borrow
 	CASE
-		WHEN remaining_credit >= 1 THEN TRUE
+        WHEN IFNULL((
+                SELECT [Guest].[remaining_credit]
+                FROM [Guest]
+                WHERE [Guest].[ID] = [user_id]
+            ), 0
+        ) >= 1 THEN TRUE
         ELSE FALSE
 	END AS result INTO enough_credit;
 

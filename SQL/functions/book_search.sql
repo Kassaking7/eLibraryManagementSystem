@@ -51,6 +51,9 @@ CREATE PROCEDURE show_general_book_info (
     WHERE [Book].[ISBN] = [ISBN];
   END
 
+
+
+
 CREATE PROCEDURE show_detailed_book_info (
   IN [ISBN]               VARCHAR(20)
 )

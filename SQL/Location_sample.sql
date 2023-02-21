@@ -1,0 +1,10 @@
+insert into Location (ID, building, floor, room, open_time, close_time) values (1, 'AC', 1, 1, '8:00', '17:00:00');
+insert into Location (ID, building, floor, room, open_time, close_time) values (2, 'AB', 1, 1, '8:00', '17:00:00');
+insert into Location (ID, building, floor, room, open_time, close_time) values (3, 'AC', 1, 3, '9:00', '17:00:00');
+insert into Location (ID, building, floor, room, open_time, close_time) values (4, 'AC', 1, 3, '8:00', '16:00:00');
+insert into Location (ID, building, floor, room, open_time, close_time) values (5, 'AC', 1, 3, '9:00', '16:00:00');
+insert into Location (ID, building, floor, room, open_time, close_time) values (6, 'AC', 2, 2, '8:00', '17:00:00');
+insert into Location (ID, building, floor, room, open_time, close_time) values (7, 'AB', 2, 4, '9:00', '17:00:00');
+insert into Location (ID, building, floor, room, open_time, close_time) values (8, 'AC', 2, 1, '9:00', '16:00:00');
+insert into Location (ID, building, floor, room, open_time, close_time) values (9, 'AC', 2, 3, '9:00', '17:00:00');
+insert into Location (ID, building, floor, room, open_time, close_time) values (10, 'AC', 2, 1, '9:00', '16:00:00');

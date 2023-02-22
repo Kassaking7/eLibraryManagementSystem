@@ -9,15 +9,15 @@ CREATE PROCEDURE create_guest_account (
   IN email_address  VARCHAR(100),
   OUT user_ID       BIGINT
 )
-  BEGIN
-    SET @default_credit_level = 5
-    SET @new_user_id = (
-      SELECT MAX(People.ID) + 1
-      FROM People
-    );
-    INSERT INTO People
-      VALUE(@new_user_id, username, password, email_address, TRUE);
-    INSERT INTO Guest
-      VALUE(@new_user_id, FALSE, @default_credit_level, @default_credit_level, DEFAULT);
-    SELECT @new_user_id INTO user_ID
-  END
+BEGIN
+  SET @default_credit_level = 5
+  SET @new_user_id = (
+    SELECT MAX(People.ID) + 1
+    FROM People
+  );
+  INSERT INTO People
+    VALUE(@new_user_id, username, password, email_address, TRUE);
+  INSERT INTO Guest
+    VALUE(@new_user_id, FALSE, @default_credit_level, @default_credit_level, DEFAULT);
+  SELECT @new_user_id INTO user_ID
+END

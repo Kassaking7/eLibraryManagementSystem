@@ -10,7 +10,7 @@ CREATE PROCEDURE activate_guest_account (
 
 BEGIN
 	UPDATE Guest
-	SET Guest.availability = TRUE
+	SET Guest.is_activated = TRUE
 	WHERE Guest.ID = guest_ID;
 END //
 DELIMITER ;

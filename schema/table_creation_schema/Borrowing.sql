@@ -11,6 +11,6 @@ CREATE TABLE Borrowing (
   PRIMARY KEY (ISBN, copy_ID, borrowing_ID),
 
   FOREIGN KEY (ISBN) REFERENCES Book(ISBN),
-  FOREIGN KEY (copy_ID) REFERENCES Copy(ID),
+  FOREIGN KEY (copy_ID) REFERENCES Copy(copy_ID),
   FOREIGN KEY (guest_ID) REFERENCES Guest(ID)
 );

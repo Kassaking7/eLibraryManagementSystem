@@ -1,4 +1,4 @@
-CREATE TABLE Copy (
+CREATE TABLE Waitlist (
   ISBN              VARCHAR(20) NOT NULL,
   wait_ID           BIGINT NOT NULL,
   priority          INT NOT NULL,

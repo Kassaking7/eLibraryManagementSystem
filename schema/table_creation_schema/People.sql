@@ -6,7 +6,7 @@ CREATE TABLE People (
   is_guest          BOOLEAN NOT NULL DEFAULT TRUE,
 
   PRIMARY KEY (ID)
-)
+);
 
 CREATE TABLE Guest (
   ID                BIGINT NOT NULL,
@@ -28,4 +28,4 @@ CREATE TABLE Administrator (
   PRIMARY KEY (ID),
 
   FOREIGN KEY (ID) REFERENCES People(ID)
-)
+);

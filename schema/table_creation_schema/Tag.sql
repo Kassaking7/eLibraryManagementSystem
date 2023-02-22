@@ -2,7 +2,7 @@ CREATE TABLE Tag (
   name              VARCHAR(50) NOT NULL,
 
   PRIMARY KEY (name)
-)
+);
 
 CREATE TABLE Has_tag (
   ISBN              VARCHAR(20) NOT NULL,
@@ -12,4 +12,4 @@ CREATE TABLE Has_tag (
   
   FOREIGN KEY (ISBN) REFERENCES Book(ISBN),
   FOREIGN KEY (tag_name) REFERENCES Tag(name)
-)
+);

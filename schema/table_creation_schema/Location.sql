@@ -9,7 +9,7 @@ CREATE TABLE Location (
   PRIMARY KEY (ID),
 
   -- CONSTRAINT unique_location UNIQUE (building, floor, room)
-)
+);
 
 CREATE TABLE In_charged_by (
   location_ID       BIGINT NOT NULL,
@@ -19,4 +19,4 @@ CREATE TABLE In_charged_by (
   
   FOREIGN KEY (location_ID) REFERENCES Location(ID),
   FOREIGN KEY (administrator_ID) REFERENCES Administrator(ID)
-)
+);

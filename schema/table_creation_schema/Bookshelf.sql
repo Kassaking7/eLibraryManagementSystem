@@ -7,4 +7,4 @@ CREATE TABLE Bookshelf (
   PRIMARY KEY (ID),
 
   FOREIGN KEY (location_ID) REFERENCES Location(ID)
-)
+);

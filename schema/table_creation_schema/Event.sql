@@ -5,7 +5,7 @@ CREATE TABLE Event (
   end_date_time     DATETIME NOT NULL,
   capacity          INT NOT NULL,
   current_amount    INT NOT NULL,
-  description       VARCHAR(MAX),
+  description       VARCHAR(16383),
   location_ID       BIGINT NOT NULL,
   admin_ID          BIGINT NOT NULL,
 
@@ -13,7 +13,7 @@ CREATE TABLE Event (
 
   FOREIGN KEY (location_ID) REFERENCES Location(ID),
   FOREIGN KEY (admin_ID) REFERENCES Administrator(ID)
-)
+);
 
 CREATE TABLE Registration (
   guest_ID          BIGINT NOT NULL,
@@ -23,4 +23,4 @@ CREATE TABLE Registration (
 
   FOREIGN KEY (guest_ID) REFERENCES Guest(ID),
   FOREIGN KEY (event_ID) REFERENCES Event(ID)
-)
+);

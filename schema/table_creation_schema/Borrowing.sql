@@ -8,7 +8,7 @@ CREATE TABLE Borrowing (
   extend_number     INT NOT NULL DEFAULT 0,
   guest_ID          BIGINT NOT NULL,
 
-  PRIMARY (ISBM, copy_ID, borrowing_ID),
+  PRIMARY KEY (ISBM, copy_ID, borrowing_ID),
 
   FOREIGN KEY (ISBN) REFERENCES Book(ISBN),
   FOREIGN KEY (copy_ID) REFERENCES Copy(ID),

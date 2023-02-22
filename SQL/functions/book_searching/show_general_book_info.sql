@@ -3,6 +3,8 @@
 -- Function: get the general info of the book with the book with given ISBN
 -- Input: ISBN
 -- Output: book title, authors, publisher name, publication year, tags
+
+DELIMITER //
 CREATE PROCEDURE show_general_book_info (
   IN ISBN               VARCHAR(20)
 )
@@ -12,7 +14,7 @@ CREATE PROCEDURE show_general_book_info (
     GROUP_CONCAT(Author.name) AS authors,
     Publisher.name AS publisher,
     Book.publication_year,
-    GROUP_CONCAT(Tag.name) AS tags
+    GROUP_CONCAT(DISTINCT Tag.name SEPARATOR ',') AS tags
     FROM Book
     INNER JOIN Has_tag ON (Book.ISBN = Has_tag.ISBN)
     INNER JOIN Tag ON (Has_tag.tag_name = Tag.name)
@@ -20,4 +22,6 @@ CREATE PROCEDURE show_general_book_info (
     INNER JOIN Author ON (Written_by.author_ID = Author.ID)
     INNER JOIN Publisher ON (Book.publisher_ID = Publisher.ID)
     WHERE Book.ISBN = ISBN;
-  END
+  END //
+  
+  DELIMITER ;

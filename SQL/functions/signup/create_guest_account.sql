@@ -10,10 +10,14 @@ CREATE PROCEDURE create_guest_account (
   OUT user_ID       BIGINT
 )
   BEGIN
-    @user_count := @user_count + 1
+    SET @default_credit_level = 5
+    SET @new_user_id = (
+      SELECT MAX(People.ID) + 1
+      FROM People
+    );
     INSERT INTO People
-      VALUE(@user_count, username, password, email_address, TRUE);
+      VALUE(@new_user_id, username, password, email_address, TRUE);
     INSERT INTO Guest
-      VALUE(@user_count, FALSE, @default_credit_level, @default_credit_level, DEFAULT);
-    SELECT @user_count INTO user_ID
+      VALUE(@new_user_id, FALSE, @default_credit_level, @default_credit_level, DEFAULT);
+    SELECT @new_user_id INTO user_ID
   END

@@ -5,7 +5,7 @@ CREATE TABLE Event (
   end_date_time     DATETIME NOT NULL,
   capacity          INT NOT NULL,
   current_amount    INT NOT NULL,
-  description       VARCHAR(16383),
+  description       VARCHAR(6000),
   location_ID       BIGINT NOT NULL,
   admin_ID          BIGINT NOT NULL,
 

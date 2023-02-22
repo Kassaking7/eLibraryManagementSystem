@@ -11,9 +11,10 @@ CREATE PROCEDURE create_guest_account (
 )
   BEGIN
     SET @default_credit_level = 5
-    SET @new_user_id = (
-      SELECT MAX(People.ID) + 1
-      FROM People
+    SET @new_user_id = IFNULL((
+        SELECT MAX(People.ID) + 1
+        FROM People
+      ), 1
     );
     INSERT INTO People
       VALUE(@new_user_id, username, password, email_address, TRUE);

@@ -8,7 +8,7 @@ CREATE TABLE Location (
 
   PRIMARY KEY (ID),
 
-  -- CONSTRAINT unique_location UNIQUE (building, floor, room)
+  CONSTRAINT unique_location UNIQUE (building, floor, room)
 );
 
 CREATE TABLE In_charged_by (

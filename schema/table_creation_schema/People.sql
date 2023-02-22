@@ -13,7 +13,7 @@ CREATE TABLE Guest (
   is_activated      BOOLEAN NOT NULL DEFAULT FALSE,
   credit_level      INT NOT NULL,
   remaining_credit  INT NOT NULL,
-  late_fee          NUMERIC(10, 2) NOT NULL SET DEFAULT 0.00,
+  late_fee          NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
 
   PRIMARY KEY (ID),
 

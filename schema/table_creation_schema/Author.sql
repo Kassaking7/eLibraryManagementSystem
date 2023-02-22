@@ -5,7 +5,7 @@ CREATE TABLE Author (
   birth_year        VARCHAR(7),
 
   PRIMARY KEY (ID)
-)
+);
 
 CREATE TABLE Written_by (
   ISBN              VARCHAR(20) NOT NULL,
@@ -15,4 +15,4 @@ CREATE TABLE Written_by (
   
   FOREIGN KEY (ISBN) REFERENCES Book(ISBN),
   FOREIGN KEY (author_ID) REFERENCES Author(ID)
-)
+);

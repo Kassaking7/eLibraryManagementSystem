@@ -8,4 +8,4 @@ CREATE TABLE Copy (
 
   FOREIGN KEY (ISBN) REFERENCES Book(ISBN),
   FOREIGN KEY (bookshelf_ID) REFERENCES Bookshelf(ID)
-)
+);

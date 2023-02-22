@@ -74,6 +74,7 @@ CREATE PROCEDURE borrow_via_guest (
     -- insert a record into BORROWING table
     SET @TODAY = CONVERT(DATE, GETDATE());
     SET @RETURN_DATE = CONVERT(DATE, GETDATE() + borrow_days);
+    SET @borrowingID = SELECT COUNT(borrowing_ID) FROM BORROWING;
     INSERT INTO BORROWING
-    VALUES(ISBN, @copy_ID, borrowing_ID, TODAY, NULL, RETURN_DATE, DEFAULT, user_id);
+    VALUES(ISBN, @copy_ID, borrowingID, TODAY, NULL, RETURN_DATE, DEFAULT, user_id);
   END

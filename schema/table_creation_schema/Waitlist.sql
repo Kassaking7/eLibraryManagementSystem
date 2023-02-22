@@ -1,10 +1,9 @@
 CREATE TABLE Waitlist (
   ISBN              VARCHAR(20) NOT NULL,
-  wait_ID           BIGINT NOT NULL,
-  priority          INT NOT NULL,
   guest_ID          BIGINT NOT NULL,
+  priority          INT NOT NULL,
 
-  PRIMARY KEY (ISBN, wait_ID),
+  PRIMARY KEY (ISBN, guest_ID),
 
   CONSTRAINT unique_priority_for_one_book UNIQUE (ISBN, priority),
 

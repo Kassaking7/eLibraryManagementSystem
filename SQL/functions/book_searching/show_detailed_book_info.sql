@@ -24,10 +24,9 @@ CREATE PROCEDURE show_detailed_book_info (
     INNER JOIN Author ON (Written_by.author_ID = Author.ID)
     INNER JOIN Publisher ON (Book.publisher_ID = Publisher.ID)
     INNER JOIN (
-      SELECT Copy.ISBN, COUNT(Copy.ISBN) AS available_copies
+      SELECT Copy.ISBN, sum(Copy.availability =1) AS available_copies
       FROM Copy
       WHERE Copy.ISBN = ISBN
-      AND Copy.availability = TRUE
       GROUP BY Copy.ISBN
     ) AS Copies ON (Book.ISBN = Copies.ISBN)
     WHERE Book.ISBN = ISBN;

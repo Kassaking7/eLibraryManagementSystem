@@ -3,6 +3,8 @@
 -- Function: search books that matches the given information
 -- Input: ISBN, title, number of pages, tag name, author name, author nationality, author birth year, publisher name, publication year
 -- Output: ISBN of the search books
+
+DELIMITER //
 CREATE PROCEDURE book_search (
   IN ISBN               VARCHAR(20),
   IN title              VARCHAR(50),
@@ -31,4 +33,5 @@ CREATE PROCEDURE book_search (
     AND Author.birth_year LIKE CONCAT(ISNULL(author_birth_year, ""), "%")
     AND Publisher.name LIKE CONCAT(ISNULL(publisher_name, ""), "%")
     AND Book.publication_year LIKE CONCAT(ISNULL(publication_year, ""), "%");
-  END
+  END //
+  DELIMITER ;

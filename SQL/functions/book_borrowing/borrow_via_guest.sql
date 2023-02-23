@@ -16,13 +16,12 @@ CREATE PROCEDURE borrow_via_guest (
   proc_label: BEGIN
    -- check if user still has credit to borrow
 	CASE
-        WHEN IFNULL((
+        WHEN IFNULL(
                 SELECT Guest.remaining_credit
                 FROM Guest
                 WHERE Guest.ID = user_id
                 AND Guest.is_activated = TRUE
-            ), 0
-        ) >= 1 THEN TRUE
+            ) >= 1 THEN TRUE
         ELSE FALSE
 	END AS result INTO enough_credit;
 

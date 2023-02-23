@@ -3,6 +3,9 @@
 -- Function: check if the guest can borrow the given book and there is available copy, and update the corresponding tables
 -- Input: user id, ISBN, borrow days
 -- Output: whether there is enough credit for the guest, and whether there is enough copies of the selected book
+
+DELIMITER //
+
 CREATE PROCEDURE borrow_via_guest (
     IN user_id            INT, 
     IN ISBN               VARCHAR(20),
@@ -77,4 +80,6 @@ CREATE PROCEDURE borrow_via_guest (
     SET @borrowingID = SELECT COUNT(borrowing_ID) FROM BORROWING;
     INSERT INTO BORROWING
     VALUES(ISBN, @copy_ID, borrowingID, TODAY, NULL, RETURN_DATE, DEFAULT, user_id);
-  END
+  END //
+  
+  DELIMITER ;

@@ -4,45 +4,51 @@
 -- Input: user id, ISBN, borrow days
 -- Output: whether there is enough credit for the guest, and whether there is enough copies of the selected book
 
+
 DELIMITER //
 
 CREATE PROCEDURE borrow_via_guest (
     IN user_id            INT, 
     IN ISBN               VARCHAR(20),
-    IN borrow_days        INT,
     OUT enough_credit     BOOLEAN,
     OUT copy_available    BOOLEAN
 )
-  proc_label: BEGIN
+
+proc_label: BEGIN
    -- check if user still has credit to borrow
-	CASE
-        WHEN IFNULL(
-                SELECT Guest.remaining_credit
+   SET enough_credit =
+   CASE 
+        WHEN (SELECT Guest.remaining_credit
                 FROM Guest
                 WHERE Guest.ID = user_id
-                AND Guest.is_activated = TRUE
-            ) >= 1 THEN TRUE
+                AND Guest.is_activated = TRUE ) >= 1
+		THEN TRUE
         ELSE FALSE
-	END AS result INTO enough_credit;
+	END;
 
     -- check if the book has available copy
+    SET copy_available = 
     CASE
         WHEN (
             SELECT COUNT(*)
             FROM Copy
             WHERE Copy.ISBN = ISBN
             AND Copy.availability = TRUE
-        ) >= 1 THEN TRUE
-        ELSE FALSE
-    END AS result INTO copy_available;
+        ) >= 1 
+        THEN TRUE
+        ELSE  FALSE
+	END;
+
 
     -- if not enough credit or copy not available, then exist the procedure
     IF (enough_credit = FALSE OR copy_available = FALSE) THEN
-        LEAVE proc_label
-    END IF
-
+        LEAVE proc_label;
+    END IF;
     -- otherwise, we update the tables for this borrow
-    SET @new_credit = remaining_credit - 1;
+    SET @new_credit = (
+		SELECT Guest.remaining_credit - 1
+        FROM Guest
+        WHERE Guest.ID = user_id);
 
     -- find a copy of the chosen book
     SET @copy_ID = (
@@ -51,11 +57,11 @@ CREATE PROCEDURE borrow_via_guest (
         WHERE Copy.ISBN = ISBN
         AND Copy.availability = TRUE
         LIMIT 1
-    )
+    );
 
     -- update guest remaining credit
     UPDATE GUEST
-    SET remaining_credit = new_credit
+    SET remaining_credit = @new_credit
     WHERE GUEST.ID = user_id;
 
     -- update availability in Copy table
@@ -71,11 +77,11 @@ CREATE PROCEDURE borrow_via_guest (
         FROM Copy
         WHERE Copy.ISBN = ISBN
         AND Copy.copy_ID = @copy_ID
-    )
-
+    );
+	
     -- insert a record into BORROWING table
-    INSERT INTO BORROWING
-    VALUES(ISBN, @copy_ID, NULL, NULL, NULL, NULL, DEFAULT, user_id);
-  END //
-  
-  DELIMITER ;
+    INSERT INTO Borrowing
+    VALUES(ISBN, @copy_ID, 0, CURDATE(), NULL, CURDATE(), 0, user_id);
+    
+  END//
+DELIMITER ;

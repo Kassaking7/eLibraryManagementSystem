@@ -10,7 +10,7 @@ BEGIN
     AND Borrowing.copy_ID = Borrowing.copy_ID
   );
   SET NEW.borrow_date = CONVERT(DATE, CURDATE());
-  SET NEW.borrow_date = CONVERT(DATE, ADDDATE(CURDATE(),15));
+  SET NEW.return_deadline = CONVERT(DATE, ADDDATE(CURDATE(),15));
 END //
 
 DELIMITER ;

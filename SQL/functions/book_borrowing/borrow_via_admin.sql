@@ -3,37 +3,40 @@
 -- Function: check if the guest can borrow the given book, and update the corresponding tables
 -- Input: user id, ISBN, copy id, borrow days
 -- Output: whether there is enough credit for the guest
-CREATE PROCEDURE borrow_via_admin (
+
+ DELIMITER //
+CREATE PROCEDURE borrow_via_admin(
     IN user_id            BIGINT, 
     IN ISBN               VARCHAR(20),
     IN copy_ID            BIGINT,
-    IN borrow_days        INT,
     OUT enough_credit     BOOLEAN
 )
-  proc_label: BEGIN
-   -- check if user still has credit to borrow
-	CASE
-        WHEN IFNULL((
-                SELECT Guest.remaining_credit
-                FROM Guest
-                WHERE Guest.ID = user_id
-                AND Guest.is_activated = TRUE
-            ), 0
-        ) >= 1 THEN TRUE
+proc_label: BEGIN
+	-- check if user still has credit to borrow
+	SET enough_credit =
+	CASE 
+		WHEN (SELECT Guest.remaining_credit
+			FROM Guest
+			WHERE Guest.ID = user_id
+			AND Guest.is_activated = TRUE ) >= 1 
+		THEN TRUE
         ELSE FALSE
-	END AS result INTO enough_credit;
+	END;
 
     -- if not enough credit, then exist the procedure
-    IF enough_credit = FALSE THEN
-        LEAVE proc_label
-    END IF
+    IF (enough_credit) = FALSE THEN
+        LEAVE proc_label;
+    END IF;
 
     -- otherwise, we update the tables for this borrow
-    SET @new_credit = remaining_credit - 1;
+    SET @new_credit = (
+		SELECT Guest.remaining_credit - 1
+        FROM Guest
+        WHERE Guest.ID = user_id);
 
     -- update guest remaining credit
     UPDATE GUEST
-    SET remaining_credit = new_credit
+    SET remaining_credit = @new_credit
     WHERE GUEST.ID = user_id;
 
     -- update availability in Copy table
@@ -49,9 +52,11 @@ CREATE PROCEDURE borrow_via_admin (
         FROM Copy
         WHERE Copy.ISBN = ISBN
         AND Copy.copy_ID = copy_ID
-    )
+    );
+    
 
     -- insert a record into BORROWING table
     INSERT INTO Borrowing
-    VALUES(ISBN, copy_ID, NULL, NULL, NULL, NULL, DEFAULT, user_id);
-  END
+    VALUES(ISBN, copy_ID, 0, CURDATE(), NULL, CURDATE(), 0, user_id);
+  END //
+  DELIMITER ;

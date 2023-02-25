@@ -3,7 +3,7 @@ CREATE TABLE Borrowing (
   copy_ID           BIGINT NOT NULL,
   borrowing_ID      BIGINT NOT NULL,
   borrow_date       DATE NOT NULL,
-  return_date       DATE NOT NULL,
+  return_date       DATE,
   return_deadline   DATE NOT NULL,
   extend_number     INT NOT NULL DEFAULT 0,
   guest_ID          BIGINT NOT NULL,

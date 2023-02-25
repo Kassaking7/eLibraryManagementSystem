@@ -11,6 +11,7 @@ CREATE PROCEDURE borrow_via_admin(
     IN copy_ID            BIGINT,
     OUT enough_credit     BOOLEAN
 )
+
 proc_label: BEGIN
 	-- check if user still has credit to borrow
 	SET enough_credit =
@@ -20,7 +21,7 @@ proc_label: BEGIN
 			WHERE Guest.ID = user_id
 			AND Guest.is_activated = TRUE ) >= 1 
 		THEN TRUE
-        ELSE FALSE
+	ELSE FALSE
 	END;
 
     -- if not enough credit, then exist the procedure

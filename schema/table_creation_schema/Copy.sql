@@ -9,3 +9,5 @@ CREATE TABLE Copy (
   FOREIGN KEY (ISBN) REFERENCES Book(ISBN),
   FOREIGN KEY (bookshelf_ID) REFERENCES Bookshelf(ID)
 );
+
+CREATE INDEX copy_index ON Copy(copy_ID);

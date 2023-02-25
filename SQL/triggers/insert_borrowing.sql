@@ -9,8 +9,8 @@ BEGIN
     WHERE Borrowing.ISBN = Borrowing.ISBN
     AND Borrowing.copy_ID = Borrowing.copy_ID
   );
-  SET NEW.borrow_date = CONVERT(DATE, CURDATE());
-  SET NEW.return_deadline = CONVERT(DATE, ADDDATE(CURDATE(),15));
+  SET NEW.borrow_date = CURDATE();
+  SET NEW.return_deadline = ADDDATE(CURDATE(),15);
 END //
 
 DELIMITER ;

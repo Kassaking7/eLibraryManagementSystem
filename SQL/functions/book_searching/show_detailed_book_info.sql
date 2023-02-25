@@ -3,6 +3,8 @@
 -- Function: get the detailed info of the book with the book with given ISBN
 -- Input: ISBN
 -- Output: book title, authors, publisher name, publication year, tags, number of available copies, book description
+
+DELIMITER //
 CREATE PROCEDURE show_detailed_book_info (
   IN ISBN               VARCHAR(20)
 )
@@ -12,7 +14,7 @@ CREATE PROCEDURE show_detailed_book_info (
     GROUP_CONCAT(Author.name) AS authors,
     Publisher.name AS publisher,
     Book.publication_year,
-    GROUP_CONCAT(Tag.name) AS tags,
+    GROUP_CONCAT(DISTINCT Tag.name SEPARATOR ',') AS tags,
     Copies.available_copies,
     Book.description
     FROM Book
@@ -22,11 +24,12 @@ CREATE PROCEDURE show_detailed_book_info (
     INNER JOIN Author ON (Written_by.author_ID = Author.ID)
     INNER JOIN Publisher ON (Book.publisher_ID = Publisher.ID)
     INNER JOIN (
-      SELECT Copy.ISBN, COUNT(Copy.ISBN) AS available_copies
+      SELECT Copy.ISBN, sum(Copy.availability =1) AS available_copies
       FROM Copy
       WHERE Copy.ISBN = ISBN
-      AND Copy.availability = TRUE
       GROUP BY Copy.ISBN
     ) AS Copies ON (Book.ISBN = Copies.ISBN)
     WHERE Book.ISBN = ISBN;
-  END
+  END //
+  
+  DELIMITER ;

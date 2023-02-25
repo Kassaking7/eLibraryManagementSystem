@@ -3,11 +3,14 @@
 -- Function: activate the new guest's account
 -- Input: guest_ID
 -- Output: None
+DELIMITER //
 CREATE PROCEDURE activate_guest_account (
   IN guest_ID     BIGINT
 )
-  BEGIN
-    UPDATE Guest
-    SET Guest.availability = TRUE
-    WHERE Guest.ID = guest_ID;
-  END
+
+BEGIN
+	UPDATE Guest
+	SET Guest.is_activated = TRUE
+	WHERE Guest.ID = guest_ID;
+END //
+DELIMITER ;

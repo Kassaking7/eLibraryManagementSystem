@@ -1,89 +1,71 @@
-.login-container {
-    background: linear-gradient(to right, #FFC107, #FF5722);
-    background-size: 400% 400%;
-    animation: BackgroundGradient 10s ease infinite;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    header,
-    footer {
-      display: none;
-    }
-}
-@keyframes BackgroundGradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
 .login-form {
-    display: flex;
-    margin: auto;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 200px;
-    flex-direction: column;
-    align-items: center;
-    padding: 1em;
-    background-color: #f2f2f2;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px #aaa;
-  }
-  
-  
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 0.5em;
-    margin: 0.5em 0;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px #aaa;
-  }
-  
-  button[type="submit"] {
-    padding: 0.5em 1em;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 150px;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #3e8e41;
-    align-items: center;
-  }
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  padding: 50px;
+  background: #f9f9f9;
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  text-align: center;
+}
 
-.signup-link {
-  padding: 0.5em 1em;
-  margin: 0.5em 0;
-  background-color: #4CAF50;
-  color: white;
+h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background: #e8e8e8;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+input,
+select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  background: #0070f3;
+  color: #fff;
   border: none;
   border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
-  margin-left: 10px;
+  margin-right: 10px;
 }
+
+.signup-link {
+  background: none;
+  border: none;
+  color: #0070f3;
+  cursor: pointer;
+  font-size: 16px;
+}
+
 .signup-link:hover {
-  background-color: #3e8e41;
-  align-items: center;
-}
-
-.button-pos{
-  position: relative;
-}
-
-.forgetpassword{
-  color: rgba(2, 57, 57, 0.637);
   text-decoration: underline;
+}
+
+.error {
+  color: red;
+  margin-top: 20px;
+  font-weight: bold;
 }

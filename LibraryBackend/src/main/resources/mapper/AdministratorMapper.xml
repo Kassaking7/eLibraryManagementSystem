@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.backend.mapper.AdministratorMapper">
+
+    <select id="ListAdministrator" resultType="Administrator">
+        SELECT * FROM Administrator
+    </select>
+
+    <select id="findAdministratorById" resultType="Administrator">
+        SELECT  * FROM Administrator where  id=#{id}
+    </select>
+
+    <insert id="insertAdministrator" parameterType="com.example.backend.entity.Administrator"
+            keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO Administrator(
+            id,can_edit_books,can_host_event
+        )
+        VALUES(
+        #{id},#{can_edit_books},#{can_host_event}
+        )
+    </insert>
+
+    <update id="Update" parameterType="com.example.backend.entity.Administrator">
+        update Administrator
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="can_edit_books != null">can_edit_books=#{can_edit_books},</if>
+            <if test="can_host_event!= null">can_host_event=#{can_host_event}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="com.example.backend.entity.Administrator">
+        delete from Administrator where id=#{id}
+    </delete>
+</mapper>

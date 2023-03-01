@@ -14,10 +14,18 @@ function SignupPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8080/peoplecrud/findPeopleByNameAndPassword?name=" + name + "&password=" + password);
-      
+      const allusers = await axios.post("http://127.0.0.1:8080/peoplecrud/listPeople");
+      const usernum = allusers.data.length;
+      const newusernum = usernum + 1;
+      console.log(newusernum);
+      const response = await axios.post("http://127.0.0.1:8080/peoplecrud/insert?id=" + newusernum + 
+                                    "&username=" + name + 
+                                    "&is_guest=" + true + 
+                                    "&password=" + password +
+                                    "&email_address=" + email);
+      console.log(response.data);
       const users = response.data;
-      if (!users.length) {
+      if (users.length == 0) {
         setError("Sign Up failed");
         return;
       }
@@ -25,7 +33,7 @@ function SignupPage() {
       router.push("/mainPage");
     } catch (error) {
       console.error(error);
-      setError("An error occurred while logging in");
+      setError("An error occurred while Signing up");
     }
   };
   const handleUserStatusChange = (event) => {

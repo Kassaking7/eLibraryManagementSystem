@@ -5,8 +5,11 @@ import com.example.backend.mapper.PeopleMapper;
 import com.example.backend.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.ObjectError;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PeopleServiceImpl implements PeopleService {
@@ -19,6 +22,16 @@ public class PeopleServiceImpl implements PeopleService {
 
     public List<People> findPeopleByNameAndPassword(String username, String password) {
         return peopleMapper.findPeopleByNameAndPassword(username,password);}
+
+    public String Login(String username, String password) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("username", username);
+        param.put("password", password);
+        param.put("password_match", false);
+        List<Map<String, Object>> res = peopleMapper.Login(param);
+        return (String) param.get("password_match");
+    }
+
     public People findById(long id){
         return peopleMapper.findPeopleById(id);
     }

@@ -5,7 +5,11 @@ import com.example.backend.service.impl.PeopleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value="/peoplecrud",method = {RequestMethod.GET,RequestMethod.POST})
@@ -22,6 +26,14 @@ public class PeopleCRUD {
     @PostMapping(value="listPeopleByName")
     public List<People> ListPeopleByNAME(@RequestParam("name") String name){
         return peopleService.findByName(name);
+    }
+
+    @PostMapping(value="Login")
+    public List<String> Login(@RequestParam("username") String username,
+                                            @RequestParam("password")String password){
+        List<String> result = new ArrayList<String>();
+        result.add(peopleService.Login(username,password));
+        return result;
     }
     @PostMapping(value="findPeopleByNameAndPassword")
     public List<People> ListPeopleByNAME(@RequestParam("name") String name,
@@ -40,11 +52,11 @@ public class PeopleCRUD {
 
     @PostMapping(value = "insert")
     public People insert(@RequestParam("id")int id,
-                        @RequestParam("name")String name,
+                        @RequestParam("username")String username,
                        @RequestParam("is_guest")Boolean is_guest,
                        @RequestParam("password")String password, 
-                       @RequestParam("email")String email){
-        return peopleService.insertPeople(id,name,is_guest,password,email);
+                       @RequestParam("email_address")String email_address){
+        return peopleService.insertPeople(id,username,is_guest,password,email_address);
     }
 
     @PostMapping(value = "update")

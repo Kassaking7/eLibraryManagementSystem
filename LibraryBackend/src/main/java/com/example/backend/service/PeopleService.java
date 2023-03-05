@@ -3,10 +3,13 @@ package com.example.backend.service;
 import com.example.backend.entity.People;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PeopleService {
     public List<People> findByName(String username);
     public List<People> findPeopleByNameAndPassword(String username, String password);
+
+    public String Login(String username, String password);
     public People findById(long id);
 
     public List<People> ListPeople();

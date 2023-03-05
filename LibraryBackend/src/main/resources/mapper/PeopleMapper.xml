@@ -11,6 +11,15 @@
         <result property="is_guest" column="is_guest" />
         <result property="ID" column="ID" />
     </resultMap>
+    <parameterMap type="java.util.Map" id ="LoginMap">
+        <parameter property="username" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="password" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="password_match" mode="OUT" jdbcType="VARCHAR" />
+    </parameterMap>
+
+    <select id="Login" statementType="CALLABLE"  parameterMap="LoginMap">
+        {call match_password(?,?,?)}
+    </select>
 
     <select id="ListPeople" resultMap="result">
         SELECT * FROM People
@@ -28,13 +37,14 @@
         SELECT  * FROM People where  id=#{id}
     </select>
 
+
     <insert id="insertPeople" parameterType="com.example.backend.entity.People"
             keyProperty="id" useGeneratedKeys="true">
         INSERT INTO People(
             id,username,password,email_address,is_guest
         )
         VALUES(
-        #{id},#{name},#{password},#{email},#{is_guest}
+        #{ID},#{username},#{password},#{email_address},#{is_guest}
         )
     </insert>
 

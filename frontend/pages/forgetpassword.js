@@ -3,8 +3,9 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-function LoginPage() {
+function Forgetpassword() {
   const [userStatus, setUserStatus] = useState("guest");
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -13,11 +14,10 @@ function LoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8080/peoplecrud/Login?username=" + name + "&password=" + password);
+      const response = await axios.post("http://127.0.0.1:8080/peoplecrud/findPeopleByNameAndPassword?name=" + name + "&password=" + password);
       
       const users = response.data;
-      console.log(users);
-      if (users[0] == "0") {
+      if (!users.length) {
         setError("Incorrect name or password");
         return;
       }
@@ -38,30 +38,23 @@ function LoginPage() {
     <hr className="form-divider" />
     <form onSubmit={handleSubmit} className="form">
       <div className="form-group">
-        <label htmlFor="userStatus" className="form-label">You are a:</label>
-        <select id="userStatus" value={userStatus} onChange={handleUserStatusChange} className="form-select">
-          <option value="guest">Guest</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label htmlFor="name" className="form-label">Username:</label>
+        <label htmlFor="email" className="form-label">Email:</label>
         <input
           type="text"
-          id="name"
-          placeholder="Enter your Username"
-          value={name}
+          id="email"
+          placeholder="Enter your email"
+          value={email}
           onChange={(event) => setName(event.target.value)}
           required
           className="form-input"
         />
       </div>
       <div className="form-group">
-        <label htmlFor="password" className="form-label">Password:</label>
+        <label htmlFor="code" className="form-label">code:</label>
         <input
-          type="password"
-          id="password"
-          placeholder="Enter your password"
+          type="code"
+          id="code"
+          placeholder="Enter your code"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           required
@@ -70,14 +63,11 @@ function LoginPage() {
       </div>
       <div className="form-group">
         <Link href="/forgetpassword" className="forgetpassword">
-          Forget password
+          Send verification code
         </Link>
       </div>
       <div className="form-group">
         <button type="submit" className="form-submit-btn">Submit</button>
-        <button className="signup-link">
-          <Link href="/signup">Sign up</Link>
-        </button>
       </div>
     </form>
     {error && <div className="error">{error}</div>}
@@ -85,4 +75,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default Forgetpassword;

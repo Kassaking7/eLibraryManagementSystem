@@ -11,4 +11,6 @@ To start the project:
 Test user:  
 name: Sax ; password: Mc12!Anell7543ye
 
-Note the for the frontend next.js, please init a next.js project and then copy those files to corresponding files
+Note:
+* For the frontend next.js, please init a next.js project and then copy those files to corresponding files
+* To check the SQL queries used in Backend, please see the .xml files in [here](https://github.com/Kassaking7/eLibraryManagementSystem/tree/main/LibraryBackend/src/main/resources/mapper)

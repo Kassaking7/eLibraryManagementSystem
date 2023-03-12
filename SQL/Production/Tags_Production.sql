@@ -1,4 +1,4 @@
-INSERT INTO genres (name) VALUES
+INSERT INTO Tag (name) VALUES
 ('Romance'),
 ('Mystery'),
 ('Science Fiction'),

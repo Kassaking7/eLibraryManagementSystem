@@ -1,7 +1,7 @@
 -- Caller: admin or guests
 -- Senario: return the book for the guest
 -- Function: return the book, update the database
--- Input: user id, ISBN, copy_ID, borrowing_ID
+-- Input: user_id, ISBN, copy_ID, borrowing_ID
 
 DELIMITER //
 CREATE PROCEDURE book_return(

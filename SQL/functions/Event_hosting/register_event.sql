@@ -1,7 +1,6 @@
 -- Caller: admin or guests
 -- Senario: register an event
--- Function: guest_ID, event_id
--- Input: user id, ISBN, copy_ID, borrowing_ID
+-- Input: guest_ID, event_id
 -- Output: if_registerd, if_event_exist
 
 DELIMITER //

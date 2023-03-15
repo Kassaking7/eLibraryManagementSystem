@@ -14,7 +14,7 @@ CREATE PROCEDURE register_event(
 proc_label: BEGIN
     -- to check if the event exist
     SET if_event_exist = (event_ID in (SELECT ID FROM Event));
-    SET if_registerd = TRUE;
+    SET if_registerd = FALSE;
 
     -- if cannot register, then exist the procedure
     IF (if_event_exist = FALSE) THEN

@@ -22,7 +22,7 @@ proc_label: BEGIN
     -- check if there enough capacity to register or the event ended
     SET if_registerd = 
     CASE
-        WHEN (SELECT end_date_time FROM Event WHERE Event.ID = event_ID) < NOW() THEN FALSE
+        WHEN (SELECT end_date_time FROM Event WHERE Event.ID = event_ID) < (SELECT NOW()) THEN FALSE
         WHEN (SELECT current_amount FROM Event WHERE Event.ID = event_ID) < (SELECT capacity FROM Event WHERE Event.ID = event_ID) THEN TRUE
         ELSE FALSE
     END;

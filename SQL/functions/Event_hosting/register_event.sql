@@ -1,23 +1,21 @@
 -- Caller: admin or guests
 -- Senario: register an event
 -- Input: guest_ID, event_id
--- Output: if_registerd, if_event_exist
+-- Output: if_registerd
 
 DELIMITER //
 CREATE PROCEDURE register_event(
     IN guest_ID            BIGINT, 
     IN event_ID            BIGINT,
-    OUT if_registerd       BOOLEAN,
-    OUT if_event_exist     BOOLEAN
+    OUT if_registerd       BOOLEAN
 )
 
 proc_label: BEGIN
     -- to check if the event exist
-    SET if_event_exist = (event_ID in (SELECT ID FROM Event));
-    SET if_registerd = FALSE;
+    SET if_registerd = (event_ID in (SELECT ID FROM Event));
 
     -- if cannot register, then exist the procedure
-    IF (if_event_exist = FALSE) THEN
+    IF (if_registerd = FALSE) THEN
         LEAVE proc_label;
     END IF;
 

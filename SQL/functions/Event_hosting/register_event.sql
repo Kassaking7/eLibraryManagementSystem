@@ -21,7 +21,7 @@ proc_label: BEGIN
         LEAVE proc_label;
     END IF;
 
-    -- check if there enough capacity to register or the event has past
+    -- check if there enough capacity to register or the event ended
     SET if_registerd = 
     CASE
         WHEN (SELECT end_date_time FROM Event WHERE Event.ID = event_ID) < NOW() THEN FALSE

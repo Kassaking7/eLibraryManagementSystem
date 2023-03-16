@@ -22,7 +22,7 @@ proc_label: BEGIN
     -- check if event ended
     SET if_succeeded = 
     CASE
-        WHEN (SELECT end_date_time FROM Event WHERE Event.ID = event_ID) < NOW() THEN FALSE
+        WHEN (SELECT end_date_time FROM Event WHERE Event.ID = event_ID) < (SELECT NOW()) THEN FALSE
         ELSE TRUE
     END;
 

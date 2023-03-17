@@ -19,7 +19,7 @@ BEGIN
 
     -- update the return date in borrowing
     UPDATE Borrowing
-    SET return_date = DATE(NOW())
+    SET return_date = (SELECT DATE(NOW()))
     WHERE (Borrowing.borrowing_ID, Borrowing.copy_ID, Borrowing.ISBN) = (borrowing_ID, copy_ID, ISBN);
 
     -- update guest information

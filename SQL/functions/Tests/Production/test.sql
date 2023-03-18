@@ -56,30 +56,30 @@ call event_setup('event07', '2023-05-11 9:00:00', '2023-05-11 12:00:00', 5, 'Rea
 select @t8; #Expect: 0, ('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 13, 8) inserted to "event"
 
 -- Event time in the past
-call event_setup('event08', '2023-02-01 14:00:00', '2023-05-01 17:30:00', 5, 'Reading party3', 18, 4, @t7);
-select @t7; #Expect: 0, ('event13', '2023-05-01 14:00:00', '2023-05-01 17:30:00', 5, 'Reading party3', 13, 4) inserted to "event"
-call event_setup('event09', '2021-03-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 17, 8, @t8);
-select @t8; #Expect: 0, ('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 13, 8) inserted to "event"
+call event_setup('event08', '2023-02-01 14:00:00', '2023-05-01 17:30:00', 5, 'Reading party3', 18, 4, @t9);
+select @t9; #Expect: 0, ('event13', '2023-05-01 14:00:00', '2023-05-01 17:30:00', 5, 'Reading party3', 13, 4) inserted to "event"
+call event_setup('event09', '2021-03-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 17, 8, @t10);
+select @t10; #Expect: 0, ('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 13, 8) inserted to "event"
 
 
 
 # Event creation succeed
 # No row should be inserted to the "create" datatable.
 -- First event inserted
-call event_setup('event11', '2023-05-01 13:00:00', '2023-05-01 14:00:00', 5, 'Reading party1', 10, 2, @t2);
-select @t2; #Expect: 1, ('event11', '2023-05-01 13:00:00', '2023-05-01 14:00:00', 5, 'Reading party1', 3, 2) inserted to "event"
+call event_setup('event11', '2023-05-01 13:00:00', '2023-05-01 14:00:00', 5, 'Reading party1', 10, 2, @t11);
+select @t11; #Expect: 1, ('event11', '2023-05-01 13:00:00', '2023-05-01 14:00:00', 5, 'Reading party1', 3, 2) inserted to "event"
 
 -- A event right after a event
-call event_setup('event12', '2023-05-01 14:00:01', '2023-05-01 15:00:00', 5, 'Reading party2', 10, 2, @t6);
-select @t6; #Expect: 1, ('event12', '2023-05-01 14:00:01', '2023-05-01 15:00:00', 5, 'Reading party2', 3, 2) inserted to "event"
+call event_setup('event12', '2023-05-01 14:00:01', '2023-05-01 15:00:00', 5, 'Reading party2', 10, 2, @t12);
+select @t12; #Expect: 1, ('event12', '2023-05-01 14:00:01', '2023-05-01 15:00:00', 5, 'Reading party2', 3, 2) inserted to "event"
 
 -- End at the library closing time
-call event_setup('event13', '2023-05-01 14:00:00', '2023-05-01 17:30:00', 5, 'Reading party3', 18, 4, @t7);
-select @t7; #Expect: 1, ('event13', '2023-05-01 14:00:00', '2023-05-01 17:30:00', 5, 'Reading party3', 13, 4) inserted to "event"
+call event_setup('event13', '2023-05-01 14:00:00', '2023-05-01 17:30:00', 5, 'Reading party3', 18, 4, @t13);
+select @t13; #Expect: 1, ('event13', '2023-05-01 14:00:00', '2023-05-01 17:30:00', 5, 'Reading party3', 13, 4) inserted to "event"
 
 -- Start at the library start time
-call event_setup('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 17, 8, @t8);
-select @t8; #Expect: 1, ('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 13, 8) inserted to "event"
+call event_setup('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 17, 8, @t14);
+select @t14; #Expect: 1, ('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 13, 8) inserted to "event"
 
 
 

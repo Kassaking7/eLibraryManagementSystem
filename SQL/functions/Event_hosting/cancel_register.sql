@@ -4,7 +4,7 @@
 -- Output: if_succeeded
 
 DELIMITER //
-CREATE PROCEDURE register_event(
+CREATE PROCEDURE cancel_register(
     IN guest_ID            BIGINT, 
     IN event_ID            BIGINT,
     OUT if_succeeded       BOOLEAN

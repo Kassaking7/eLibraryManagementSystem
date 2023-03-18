@@ -1,6 +1,6 @@
 DELIMITER //
 
-CREATE TRIGGER insert_copy_to_bookshelf_success AFTER INSERT ON Copy
+CREATE TRIGGER insert_copy_to_bookshelf_fail AFTER INSERT ON Copy
 FOR EACH ROW
 BEGIN
   IF (
@@ -12,7 +12,7 @@ BEGIN
     FROM Bookshelf
     WHERE WHERE Bookshelf.ID = NEW.bookshelf_ID
   ) THEN
-    ROLLBACK;
+    SIGNAL sqlstate '45001' set message_text = "No way ! You cannot do this !";
   END IF;
 END //
 

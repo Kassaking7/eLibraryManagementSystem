@@ -8,7 +8,7 @@ BEGIN
     FROM Has_tag
     WHERE Has_tag.ISBN = NEW.ISBN AND Has_tag.tag_name = NEW.tag_name
   ) >= 1 THEN
-    ROLLBACK;
+    SIGNAL sqlstate '45001' set message_text = "No way ! You cannot do this !";
   END IF;
 END //
 

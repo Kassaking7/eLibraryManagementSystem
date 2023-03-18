@@ -6,13 +6,13 @@
 
 DELIMITER //
 CREATE PROCEDURE register_event(
-    INT event_name              VARCHAR(100) NOT NULL,
-    INT start_date_time         DATETIME NOT NULL,
-    INT end_date_time           DATETIME NOT NULL,
-    INT capacity                INT NOT NULL,
-    INT description             VARCHAR(6000),
-    INT location_ID             BIGINT NOT NULL,
-    INT admin_ID                BIGINT NOT NULL,
+    IN event_name              VARCHAR(100) NOT NULL,
+    IN start_date_time         DATETIME NOT NULL,
+    IN end_date_time           DATETIME NOT NULL,
+    IN capacity                INT NOT NULL,
+    IN description             VARCHAR(6000),
+    IN location_ID             BIGINT NOT NULL,
+    IN admin_ID                BIGINT NOT NULL,
     OUT if_succeeded            BOOLEAN
 )
 

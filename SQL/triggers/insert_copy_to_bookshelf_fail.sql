@@ -12,7 +12,9 @@ BEGIN
     FROM Bookshelf
     WHERE WHERE Bookshelf.ID = NEW.bookshelf_ID
   ) THEN
-    SIGNAL sqlstate '45001' set message_text = "No way ! You cannot do this !";
+    SET NEW.ISBN = '831-8-89-353269-4';
+    SET NEW.copy_ID = 1;
+    -- SIGNAL sqlstate '45001' set message_text = "No way ! You cannot do this !";
   END IF;
 END //
 

@@ -41,8 +41,7 @@ public class BookCRUD {
     @PostMapping(value = "update")
     public String update(@RequestParam("ISBN") String ISBN,
                          @RequestParam("title") String title, 
-                         @RequestParam("pages") int pages, 
-                         @RequestParam("description") String descrpition, 
+                         @RequestParam("pages") int pages,
                          @RequestParam("publisher_ID") String publisher_ID, 
                          @RequestParam("publication_year") String publication_year) {
         int result = BookService.Update(ISBN, title, pages, publisher_ID, publication_year);

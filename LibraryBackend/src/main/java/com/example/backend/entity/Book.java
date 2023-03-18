@@ -5,15 +5,13 @@ public class Book {
     private String ISBN;
     private String title;
     private int pages;
-    private String descrpition;
     private String publisher_ID;
     private String publication_year;
 
-    public Book(String ISBN, String title, int pages, String descrpition, String publisher_ID, String publication_year) {
+    public Book(String ISBN, String title, int pages, String publisher_ID, String publication_year) {
         this.ISBN = ISBN;
         this.title = title;
         this.pages = pages;
-        this.descrpition = descrpition;
         this.publisher_ID = publisher_ID;
         this.publication_year = publication_year;
     }
@@ -40,14 +38,6 @@ public class Book {
 
     public void setPages(int pages) {
         this.pages = pages;
-    }
-
-    public String getDescrpition() {
-        return descrpition;
-    }
-
-    public void setDescrpition(String descrpition) {
-        this.descrpition = descrpition;
     }
 
     public String getPublisher_ID() {

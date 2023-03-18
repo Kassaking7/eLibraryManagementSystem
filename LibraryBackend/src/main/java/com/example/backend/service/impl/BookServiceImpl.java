@@ -20,8 +20,8 @@ public class BookServiceImpl implements BookService {
     public List<Book> ListBook(){
         return BookMapper.ListBook();
     }
-    public Book insertBook(String ISBN, String title, int pages, String descrpition, String publisher_ID, String publication_year) {
-        Book Book = new Book(ISBN, title, pages, descrpition, publisher_ID, publication_year);
+    public Book insertBook(String ISBN, String title, int pages, String publisher_ID, String publication_year) {
+        Book Book = new Book(ISBN, title, pages, publisher_ID, publication_year);
         BookMapper.insertBook(Book);
         return Book;
     }
@@ -30,11 +30,10 @@ public class BookServiceImpl implements BookService {
         return BookMapper.delete(ISBN);
     }
 
-    public int Update(String ISBN, String title, int pages, String descrpition, String publisher_ID, String publication_year){
+    public int Update(String ISBN, String title, int pages, String publisher_ID, String publication_year){
         Book Book = BookMapper.findBookByISBN(ISBN);
         Book.setTitle(title);
         Book.setPages(pages);
-        Book.setDescrpition(descrpition);
         Book.setPublisher_ID(publisher_ID);
         Book.setPublication_year(publication_year);
         return BookMapper.Update(Book);

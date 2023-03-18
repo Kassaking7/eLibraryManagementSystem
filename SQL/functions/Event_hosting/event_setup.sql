@@ -5,15 +5,15 @@
 -- Output: if_succeeded
 
 DELIMITER //
-CREATE PROCEDURE register_event(
-    IN event_name              VARCHAR(100) NOT NULL,
-    IN start_date_time         DATETIME NOT NULL,
-    IN end_date_time           DATETIME NOT NULL,
-    IN capacity                INT NOT NULL,
+CREATE PROCEDURE event_setup(
+    IN event_name              VARCHAR(100),
+    IN start_date_time         DATETIME,
+    IN end_date_time           DATETIME,
+    IN capacity                INT,
     IN description             VARCHAR(6000),
-    IN location_ID             BIGINT NOT NULL,
-    IN admin_ID                BIGINT NOT NULL,
-    OUT if_succeeded            BOOLEAN
+    IN location_ID             BIGINT,
+    IN admin_ID                BIGINT,
+    OUT if_succeeded           BOOLEAN
 )
 
 proc_label: BEGIN
@@ -44,7 +44,7 @@ proc_label: BEGIN
                             WHERE Event.location_ID = location_ID
                             AND  ((start_date_time BETWEEN Event.start_date_time AND Event.end_date_time) OR 
                                 (end_date_time BETWEEN Event.start_date_time AND Event.end_date_time))
-                                )
+                                );
     
     SET if_succeeded = 
     CASE

@@ -28,9 +28,9 @@ call activate_guest_account(110);
 
 
 
-##############################
-## Event_SetUp
-##############################
+############################################################
+## Event_SetUp: Test for procedure event_setup
+############################################################
 # Event creation failed
 # No row should be inserted to the "event" datatable.
 -- Admin cannot host event
@@ -67,6 +67,39 @@ select @t7; #Expect: 1, ('event13', '2023-05-01 14:00:00', '2023-05-01 17:30:00'
 -- Start at the library start time
 call event_setup('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 13, 8, @t8);
 select @t8; #Expect: 1, ('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00', 5, 'Reading party4', 13, 8) inserted to "event"
+
+
+
+
+
+############################################################
+## Event_Registration: Test for procedure register_event
+############################################################
+
+
+
+
+
+
+
+############################################################
+## Event_Cancel: Test for procedure cancel_event
+############################################################
+
+
+
+
+
+
+
+############################################################
+## Event_Cancel: Test for procedure cancel_register
+############################################################
+
+
+
+
+
 
 
 

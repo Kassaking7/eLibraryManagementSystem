@@ -4,6 +4,8 @@
 --        location_ID, admin_ID
 -- Output: if_succeeded
 
+drop procedure event_setup;
+
 DELIMITER //
 CREATE PROCEDURE event_setup(
     IN event_name              VARCHAR(100),
@@ -26,11 +28,11 @@ proc_label: BEGIN
     END IF;
 
     -- check if the start/end time is within the opening time of the location
-    SET @after_open = (SELECT open_time FROM Location WHERE Location.ID = location_ID) <= (SELECT TIME(NOW()));
-    SET @before_close = (SELECT close_time FROM Location WHERE Location.ID = location_ID) >= (SELECT TIME(NOW()));
+    SET @after_open = (SELECT open_time FROM Location WHERE Location.ID = location_ID) <= (SELECT TIME(start_date_time));
+    SET @before_close = (SELECT close_time FROM Location WHERE Location.ID = location_ID) >= (SELECT TIME(end_date_time));
     SET if_succeeded = 
     CASE
-        WHEN ((after_open = TRUE) AND (before_close = TRUE)) THEN TRUE
+        WHEN ((@after_open = TRUE) AND (@before_close = TRUE)) THEN TRUE
         ELSE FALSE
     END;
 
@@ -43,16 +45,16 @@ proc_label: BEGIN
     SET @conflict_event = (SELECT COUNT(*) FROM Event
                             WHERE Event.location_ID = location_ID
                             AND  ((start_date_time BETWEEN Event.start_date_time AND Event.end_date_time) OR 
-                                (end_date_time BETWEEN Event.start_date_time AND Event.end_date_time))
+								(end_date_time BETWEEN Event.start_date_time AND Event.end_date_time))
                                 );
     
     SET if_succeeded = 
     CASE
-        WHEN (conflict_event = 0) THEN TRUE
+        WHEN (@conflict_event = 0) THEN TRUE
         ELSE FALSE
     END;
 
-    -- exit the process if fail
+	-- exit the process if fail
     IF (if_succeeded = FALSE) THEN
         LEAVE proc_label;
     END IF;
@@ -62,4 +64,3 @@ proc_label: BEGIN
     VALUES(event_name, start_date_time, end_date_time, capacity, 0, description, location_ID, admin_ID);
 
 END //
-DELIMITER;

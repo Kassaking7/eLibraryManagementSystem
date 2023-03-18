@@ -1,6 +1,6 @@
 DELIMITER //
 
-CREATE TRIGGER insert_copy_to_bookshelf_fail AFTER INSERT ON Copy
+CREATE TRIGGER insert_copy_to_bookshelf_fail BEFORE INSERT ON Copy
 FOR EACH ROW
 BEGIN
   IF (

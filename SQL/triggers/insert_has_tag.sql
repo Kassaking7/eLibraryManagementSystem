@@ -1,6 +1,6 @@
 DELIMITER //
 
-CREATE TRIGGER insert_has_tag AFTER INSERT ON Has_tag
+CREATE TRIGGER insert_has_tag BEFORE INSERT ON Has_tag
 FOR EACH ROW
 BEGIN
   IF (

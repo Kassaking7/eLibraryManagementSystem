@@ -6,7 +6,7 @@
 <mapper namespace="com.example.backend.mapper.PeopleMapper">
     <resultMap id="result" type="com.example.backend.entity.People">
         <result property="username" column="username" />
-        <result property="password" column="password"/>
+        <result property="password" column="password" />
         <result property="email_address" column="email_address" />
         <result property="is_guest" column="is_guest" />
         <result property="ID" column="ID" />

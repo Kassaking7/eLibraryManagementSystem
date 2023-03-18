@@ -10,7 +10,7 @@
     </select>
 
     <select id="findBookByISBN" resultType="Book">
-        SELECT  * FROM Book where  id=#{id}
+        SELECT  * FROM Book where ISBN = #{ISBN}
     </select>
 
     <insert id="insertBook" parameterType="com.example.backend.entity.Book"

@@ -32,11 +32,10 @@ public class BookCRUD {
     @PostMapping(value = "insert")
     public Book insert(@RequestParam("ISBN") String ISBN,
                        @RequestParam("title") String title, 
-                       @RequestParam("pages") int pages, 
-                       @RequestParam("description") String descrpition, 
+                       @RequestParam("pages") int pages,
                        @RequestParam("publisher_ID") String publisher_ID, 
                        @RequestParam("publication_year") String publication_year) {
-        return BookService.insertBook(ISBN, title, pages, descrpition, publisher_ID, publication_year);
+        return BookService.insertBook(ISBN, title, pages, publisher_ID, publication_year);
     }
 
     @PostMapping(value = "update")
@@ -46,7 +45,7 @@ public class BookCRUD {
                          @RequestParam("description") String descrpition, 
                          @RequestParam("publisher_ID") String publisher_ID, 
                          @RequestParam("publication_year") String publication_year) {
-        int result = BookService.Update(ISBN, title, pages, descrpition, publisher_ID, publication_year);
+        int result = BookService.Update(ISBN, title, pages, publisher_ID, publication_year);
         if (result >= 1){
             return "modified";
         }else{

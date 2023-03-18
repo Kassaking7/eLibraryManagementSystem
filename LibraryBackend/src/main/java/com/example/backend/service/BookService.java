@@ -9,9 +9,9 @@ public interface BookService {
 
     public List<Book> ListBook();
 
-    public Book insertBook(String ISBN, String title, int pages, String descrpition, String publisher_ID, String publication_year);
+    public Book insertBook(String ISBN, String title, int pages, String publisher_ID, String publication_year);
 
     public int Delete(String ISBN);
 
-    public int Update(String ISBN, String title, int pages, String descrpition, String publisher_ID, String publication_year);
+    public int Update(String ISBN, String title, int pages, String publisher_ID, String publication_year);
 }

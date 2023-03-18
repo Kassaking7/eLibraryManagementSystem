@@ -2,7 +2,6 @@ DELIMITER //
 
 CREATE TRIGGER insert_copy_to_bookshelf_success AFTER INSERT ON Copy
 FOR EACH ROW
-WHEN 
 BEGIN
   IF (
     SELECT Bookshelf.current_amount 

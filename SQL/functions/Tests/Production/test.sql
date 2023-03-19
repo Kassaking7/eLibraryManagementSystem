@@ -152,7 +152,21 @@ select @t03; #Expect: 0
 
 
 
+############################################################
+## Book_Return: Test for procedure book_return
+############################################################
+# First create some borrowing records
+call borrow_via_guest(101, '000-0-00-179354-2', @enough_credit1, @copy_available1);
+call borrow_via_guest(101, '000-0-12-759187-4', @enough_credit1, @copy_available1);
+call borrow_via_guest(101, '000-0-12-759187-4', @enough_credit1, @copy_available1);
+call borrow_via_guest(101, '000-0-14-820806-0', @enough_credit1, @copy_available1);
+call borrow_via_guest(101, '000-0-36-213242-6', @enough_credit1, @copy_available1);
+call borrow_via_guest(102, '000-0-67-718592-1', @enough_credit1, @copy_available1);
+call borrow_via_guest(102, '000-0-79-115678-5', @enough_credit1, @copy_available1);
+call borrow_via_guest(103, '000-0-00-179354-2', @enough_credit1, @copy_available1);
 
-
-
-
+# Test
+- Expect remaining_credit for guest with ID 101 to increase by 1, 
+- Expect copy's availability for book with ISBN '000-0-00-179354-2' and CopyId 1 to be true,
+- Expect return-date for this borrow record to be today's date
+call book_return(101 , '000-0-00-179354-2' , 1)

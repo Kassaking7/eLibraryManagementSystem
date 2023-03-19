@@ -88,25 +88,40 @@ select @t14; #Expect: 1, ('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00'
 ############################################################
 ## Event_Registration: Test for procedure register_event
 ############################################################
+# Event Registration successful
+# increase the current amount of participant in the event by 1; record in the register table
+-- Register a event until the capacity is full
+call register_event(101, 33, @t11);
+select @t11; #Expect: 1, (101, 33) added to the register table, current_amount 1 for event 33 in table "event"
+call register_event(102, 33, @t12);
+select @t12; #Expect: 1, (102, 33) added to the register table, current_amount 2 for event 33 in table "event"
+call register_event(103, 33, @t13);
+select @t13; #Expect: 1, (103, 33) added to the register table, current_amount 3 for event 33 in table "event"
+call register_event(104, 33, @t14);
+select @t14; #Expect: 1, (104, 33) added to the register table, current_amount 4 for event 33 in table "event"
+call register_event(105, 33, @t15);
+select @t15; #Expect: 1, (105, 33) added to the register table, current_amount 5 for event 33 in table "event"
+
+-- Another registration for a different event
+call register_event(101, 34, @t16);
+select @t16; #Expect: 1, (101, 34) added to the register table, current_amount 1 for event 34 in table "event"
 
 
 
+# Event Registration not successful
+-- Event does not exist
+call register_event(101, 59, @t01);
+select @t01; #Expect: 0
+
+-- capacity exceed
+call register_event(106, 33, @t15);
+select @t15; #Expect: 0
 
 
 
 
 ############################################################
-## Event_Cancel: Test for procedure cancel_event
-############################################################
-
-
-
-
-
-
-
-############################################################
-## Event_Cancel: Test for procedure cancel_register
+## Registration_Cancel: Test for procedure cancel_register
 ############################################################
 
 

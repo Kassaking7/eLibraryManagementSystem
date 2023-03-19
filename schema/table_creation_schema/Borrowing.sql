@@ -1,7 +1,7 @@
 CREATE TABLE Borrowing (
   ISBN              VARCHAR(20) NOT NULL,
   copy_ID           BIGINT NOT NULL,
-  borrowing_ID      BIGINT NOT NULL,
+  borrowing_ID      BIGINT NOT NULL AUTO_INCREMENT,
   borrow_date       DATE NOT NULL,
   return_date       DATE,
   return_deadline   DATE NOT NULL,

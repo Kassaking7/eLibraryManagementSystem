@@ -3,6 +3,11 @@
 -- Input: guest_ID, event_id
 -- Output: if_registerd
 
+-- Caller: admin or guests
+-- Senario: register an event
+-- Input: guest_ID, event_id
+-- Output: if_registerd
+
 DELIMITER //
 CREATE PROCEDURE register_event(
     IN guest_ID            BIGINT, 
@@ -42,4 +47,3 @@ proc_label: BEGIN
     VALUES(guest_ID, event_ID);
 
 END //
-DELIMITER;

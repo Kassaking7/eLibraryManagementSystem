@@ -4,6 +4,12 @@
 --        location_ID, admin_ID
 -- Output: if_succeeded
 
+-- Caller: admin
+-- Senario: set up an event
+-- Input: event_name, start_date_time, end_date_time, capacity, description
+--        location_ID, admin_ID
+-- Output: if_succeeded
+
 drop procedure event_setup;
 
 DELIMITER //
@@ -20,7 +26,9 @@ CREATE PROCEDURE event_setup(
 
 proc_label: BEGIN
     -- check if the Administrator can host event
-    SET if_succeeded = (admin_ID in (SELECT ID FROM Administrator WHERE Administrator.can_host_event = TRUE));
+    SET if_succeeded = (admin_ID in (SELECT ID FROM Administrator inner join
+    in_charged_by on in_charged_by.administrator_ID = Administrator.ID where in_charged_by.location_ID = location_ID
+    AND Administrator.can_host_event = TRUE));
     
     -- exit the process if fail
     IF (if_succeeded = FALSE) THEN
@@ -28,8 +36,8 @@ proc_label: BEGIN
     END IF;
 
     -- check if the start/end time is within the opening time of the location
-    SET @after_open = (SELECT open_time FROM Location WHERE Location.ID = location_ID) <= (SELECT TIME(start_date_time));
-    SET @before_close = (SELECT close_time FROM Location WHERE Location.ID = location_ID) >= (SELECT TIME(end_date_time));
+    SET @after_open = ((SELECT open_time FROM Location WHERE Location.ID = location_ID) <= (SELECT TIME(start_date_time)) and (start_date_time >= (SELECT NOW())));
+    SET @before_close = ((SELECT close_time FROM Location WHERE Location.ID = location_ID) >= (SELECT TIME(end_date_time)) and (start_date_time >= (SELECT NOW())));
     SET if_succeeded = 
     CASE
         WHEN ((@after_open = TRUE) AND (@before_close = TRUE)) THEN TRUE

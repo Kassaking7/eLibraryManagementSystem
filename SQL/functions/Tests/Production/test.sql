@@ -114,8 +114,8 @@ call register_event(101, 59, @t01);
 select @t01; #Expect: 0
 
 -- capacity exceed
-call register_event(106, 33, @t15);
-select @t15; #Expect: 0
+call register_event(106, 33, @t02);
+select @t02; #Expect: 0
 
 
 
@@ -123,6 +123,30 @@ select @t15; #Expect: 0
 ############################################################
 ## Registration_Cancel: Test for procedure cancel_register
 ############################################################
+# Event Registration successful
+# increase the current amount of participant in the event by 1; record in the register table
+-- Register a event until the capacity is full
+call cancel_register(102, 33, @t11);
+select @t11; #Expect: 1, (102, 33) removed from the register table, event with id 33 has current_amount 4
+
+
+
+# Event Registration not successful
+-- Event does not exist
+call register_event(101, 59, @t01);
+select @t01; #Expect: 0
+
+-- Event ended
+# First add a event at now
+call event_setup('event15', '2023-03-19 10:00:00', '2023-03-18 11:00:00', 5, 'Reading party5', 17, 8, @t14);
+select @t14;
+# Test
+call cancel_register(101, 33, @t02);
+select @t02; #Expect: 0
+
+-- Guest have not registered
+call cancel_register(106, 34, @t03);
+select @t03; #Expect: 0
 
 
 

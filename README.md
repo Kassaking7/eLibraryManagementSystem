@@ -9,12 +9,12 @@ Prerequest:
 To start the project:
 * Turn on database and run the commands to creating the tables with sample data.
 * Open idea, modify application-dev.yml file (located [here](https://github.com/Kassaking7/eLibraryManagementSystem/blob/main/LibraryBackend/src/main/resources/application-dev.yml)), use the password and username of your database. Then run the Java code (Backend)
-* Choose a file to do 
+* Open terminal. Choose a file and do 
 ```
 npx create-next-app@latest nextjs-blog --use-npm --example "https://github.com/vercel/next-learn/tree/master/basics/learn-starter"
 ```
 This will init a next.js project with basic config. Then replace the pages and styles files ([here](https://github.com/Kassaking7/eLibraryManagementSystem/tree/main/frontend)).
-* Open Terminal, go to the next.js file and do 
+* cd to the created next.js file and do 
 ```
 npm run dev
 ```

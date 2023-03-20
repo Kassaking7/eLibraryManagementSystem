@@ -1,7 +1,6 @@
 package com.example.backend.service.impl;
 
 import com.example.backend.entity.Copy;
-import com.example.backend.mapper.BookMapper;
 import com.example.backend.mapper.CopyMapper;
 import com.example.backend.service.CopyService;
 
@@ -9,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CopyServiceImpl {
+public class CopyServiceImpl implements CopyService {
     private CopyMapper copyMapper;
 
     public Copy findCopyByISBNAndCopyId(String ISBN, long copyID) {

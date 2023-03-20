@@ -3,24 +3,25 @@
 -- Function: return the book, update the database
 -- Input: user_id, ISBN, copy_ID, borrowing_ID
 
+drop PROCEDURE book_return;
+
 DELIMITER //
 CREATE PROCEDURE book_return(
     IN user_id            BIGINT, 
     IN ISBN               VARCHAR(20),
-    IN copy_ID            BIGINT,
-    IN borrowing_ID       BIGINT
+    IN copy_ID            BIGINT
 )
 
 BEGIN
     -- update the copy availability
     UPDATE COPY
-    SET COPY.availability = TRUE
+    SET COPY.availability = 1
     WHERE COPY.copy_ID = copy_ID AND COPY.ISBN = ISBN;
 
     -- update the return date in borrowing
     UPDATE Borrowing
     SET return_date = (SELECT DATE(NOW()))
-    WHERE (Borrowing.borrowing_ID, Borrowing.copy_ID, Borrowing.ISBN) = (borrowing_ID, copy_ID, ISBN);
+    WHERE ((Borrowing.copy_ID, Borrowing.ISBN) = (copy_ID, ISBN)) and (Borrowing.return_date is null);
 
     -- update guest information
     UPDATE Guest 

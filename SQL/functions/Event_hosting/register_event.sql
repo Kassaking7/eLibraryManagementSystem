@@ -42,4 +42,3 @@ proc_label: BEGIN
     VALUES(guest_ID, event_ID);
 
 END //
-DELIMITER;

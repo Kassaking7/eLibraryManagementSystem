@@ -3,8 +3,10 @@
 -- Input: guest_ID, event_id
 -- Output: if_succeeded
 
+drop PROCEDURE cancel_register;
+
 DELIMITER //
-CREATE PROCEDURE register_event(
+CREATE PROCEDURE cancel_register(
     IN guest_ID            BIGINT, 
     IN event_ID            BIGINT,
     OUT if_succeeded       BOOLEAN
@@ -13,6 +15,19 @@ CREATE PROCEDURE register_event(
 proc_label: BEGIN
     -- to check if the event exist
     SET if_succeeded = (event_ID in (SELECT ID FROM Event));
+
+    -- if cannot register, then exist the procedure
+    IF (if_succeeded = FALSE) THEN
+        LEAVE proc_label;
+    END IF;
+    
+    -- to check if the registration exists
+    SET if_succeeded = (guest_ID in (select registration.guest_ID from registration where event_ID = registration.event_ID ));
+    
+    -- if cannot register, then exist the procedure
+    IF (if_succeeded = FALSE) THEN
+        LEAVE proc_label;
+    END IF;
 
     -- if cannot register, then exist the procedure
     IF (if_succeeded = FALSE) THEN
@@ -41,4 +56,3 @@ proc_label: BEGIN
     WHERE (Registration.guest_ID, Registration.event_ID) = (guest_ID, event_ID);
 
 END //
-DELIMITER;

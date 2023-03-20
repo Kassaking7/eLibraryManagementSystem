@@ -5,6 +5,7 @@ The database will be stored in MySQL port 3306. And we use JDBC(Springboot+Mybat
 Prerequest:
 * [idea](https://www.jetbrains.com/idea/)
 * [Node.js](https://nodejs.org/en/download)
+
 To start the project:
 * Turn on database and run the commands to creating the tables with sample data.
 * Open idea, modify application-dev.yml file (located [here](https://github.com/Kassaking7/eLibraryManagementSystem/blob/main/LibraryBackend/src/main/resources/application-dev.yml)), use the password and username of your database. Then run the Java code (Backend)

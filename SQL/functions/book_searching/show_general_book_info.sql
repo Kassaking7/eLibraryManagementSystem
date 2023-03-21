@@ -4,6 +4,8 @@
 -- Input: ISBN
 -- Output: book title, authors, publisher name, publication year, tags
 
+DROP PROCEDURE IF EXISTS show_general_book_info;
+
 DELIMITER //
 CREATE PROCEDURE show_general_book_info (
   IN ISBN               VARCHAR(20)

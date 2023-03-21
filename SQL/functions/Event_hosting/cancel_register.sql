@@ -3,7 +3,7 @@
 -- Input: guest_ID, event_id
 -- Output: if_succeeded
 
-drop PROCEDURE cancel_register;
+DROP PROCEDURE IF EXISTS cancel_register;
 
 DELIMITER //
 CREATE PROCEDURE cancel_register(

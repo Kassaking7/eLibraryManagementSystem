@@ -1,3 +1,6 @@
+
+DROP PROCEDURE IF EXISTS activate_guest_account;
+
 -- Caller: administrators
 -- Senario: a guest just created an account, and the new guest went to the front desk and paid the deposit fee
 -- Function: activate the new guest's account

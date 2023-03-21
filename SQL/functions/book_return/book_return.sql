@@ -3,7 +3,7 @@
 -- Function: return the book, update the database
 -- Input: user_id, ISBN, copy_ID, borrowing_ID
 
-drop PROCEDURE book_return;
+DROP PROCEDURE IF EXISTS book_return;
 
 DELIMITER //
 CREATE PROCEDURE book_return(

@@ -3,6 +3,8 @@
 -- Input: guest_ID, event_id
 -- Output: if_registerd
 
+DROP PROCEDURE IF EXISTS register_event;
+
 DELIMITER //
 CREATE PROCEDURE register_event(
     IN guest_ID            BIGINT, 

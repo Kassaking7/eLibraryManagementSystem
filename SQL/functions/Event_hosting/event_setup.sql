@@ -10,7 +10,7 @@
 --        location_ID, admin_ID
 -- Output: if_succeeded
 
-drop procedure event_setup;
+DROP PROCEDURE IF EXISTS  event_setup;
 
 DELIMITER //
 CREATE PROCEDURE event_setup(

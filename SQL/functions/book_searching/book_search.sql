@@ -4,6 +4,7 @@
 -- Input: ISBN, title, number of pages, tag name, author name, author nationality, author birth year, publisher name, publication year
 -- Output: ISBN of the search books
 
+DROP PROCEDURE IF EXISTS book_search;
 
 DELIMITER //
 CREATE PROCEDURE book_search (

@@ -4,6 +4,7 @@
 -- Input: user id, ISBN, borrow days
 -- Output: whether there is enough credit for the guest, and whether there is enough copies of the selected book
 
+DROP PROCEDURE IF EXISTS borrow_via_guest;
 
 DELIMITER //
 

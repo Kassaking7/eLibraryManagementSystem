@@ -9,7 +9,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value="/bookcrud",method = {RequestMethod.GET,RequestMethod.POST})
+@RequestMapping(value="/guestcrud",method = {RequestMethod.GET,RequestMethod.POST})
 public class GuestCRUD {
     @Autowired
     private GuestServiceImpl guestService;

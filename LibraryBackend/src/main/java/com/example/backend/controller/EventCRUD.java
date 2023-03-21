@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value="/bookcrud",method = {RequestMethod.GET,RequestMethod.POST})
+@RequestMapping(value="/eventcrud",method = {RequestMethod.GET,RequestMethod.POST})
 public class EventCRUD {
 
     @Autowired

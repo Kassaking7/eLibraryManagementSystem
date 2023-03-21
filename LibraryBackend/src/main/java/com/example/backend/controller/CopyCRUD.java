@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value="/bookcrud",method = {RequestMethod.GET,RequestMethod.POST})
+@RequestMapping(value="/copycrud",method = {RequestMethod.GET,RequestMethod.POST})
 public class CopyCRUD {
     @Autowired
     private CopyServiceImpl copyService;

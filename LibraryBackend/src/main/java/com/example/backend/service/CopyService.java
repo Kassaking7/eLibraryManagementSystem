@@ -1,7 +1,6 @@
 package com.example.backend.service;
 
 import com.example.backend.entity.Copy;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.List;
 public interface CopyService {

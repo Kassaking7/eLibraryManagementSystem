@@ -28,7 +28,7 @@ public class EventCRUD {
         return eventService.listEvents();
     }
 
-    @GetMapping("/insertEvent")
+    @PostMapping("/insertEvent")
     public Boolean insertEvent(@RequestParam("eventName") String eventName,
                                @RequestParam("startDateTime") LocalDateTime startDateTime,
                                @RequestParam("endDateTime") LocalDateTime endDateTime,
@@ -39,13 +39,13 @@ public class EventCRUD {
         return insertEvent(eventName, startDateTime, endDateTime, capacity, description, lcoationID, adminID);
     }
 
-    @GetMapping("/registerEvent")
+    @PostMapping("/registerEvent")
     public Boolean registerEvent(@RequestParam("guestID") long guestID,
                                  @RequestParam("eventID") long eventID) {
         return registerEvent(guestID, eventID);
     }
 
-    @GetMapping("/cancelRegisterEvent")
+    @PostMapping("/cancelRegisterEvent")
     public Boolean cancelRegisterEvent(@RequestParam("guestID") long guestID,
                                        @RequestParam("eventID") long eventID) {
         return cancelRegisterEvent(guestID, eventID);

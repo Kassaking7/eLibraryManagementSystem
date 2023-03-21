@@ -22,6 +22,11 @@
         <parameter property="copy_ID" mode="IN" jdbcType="BIGINT" />
         <parameter property="copy_available" mode="OUT" jdbcType="BOOLEAN" />
     </parameterMap>
+    <parameterMap type="java.util.Map" id ="ReturnMap">
+        <parameter property="user_id" mode="IN" jdbcType="BIGINT" />
+        <parameter property="ISBN" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="copy_ID" mode="IN" jdbcType="BIGINT" />
+    </parameterMap>
 
 
     <select id="findCopyByISBNAndCopyId" resultType="Copy">
@@ -61,32 +66,7 @@
         {call borrow_via_guest(?,?,?,?,?)}
     </select>
 
-
-
-    public int borrowBookWithKnownBook(String ISBN, long userID);
-
-
-    <insert id="insertAdministrator" parameterType="com.example.backend.entity.Administrator"
-            keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO Administrator(
-        id,can_edit_books,can_host_event
-        )
-        VALUES(
-        #{id},#{can_edit_books},#{can_host_event}
-        )
-    </insert>
-
-    <update id="Update" parameterType="com.example.backend.entity.Administrator">
-        update Administrator
-        <set>
-            <if test="ID != null">ID=#{ID},</if>
-            <if test="can_edit_books != null">can_edit_books=#{can_edit_books},</if>
-            <if test="can_host_event!= null">can_host_event=#{can_host_event}</if>
-        </set>
-        where id=#{id}
-    </update>
-
-    <delete id="delete" parameterType="com.example.backend.entity.Administrator">
-        delete from Administrator where id=#{id}
-    </delete>
+    <select id="returnBook" statementType="CALLABLE"  parameterMap="ReturnMap">
+        {call book_return(?,?,?)}
+    </select>
 </mapper>

@@ -10,11 +10,11 @@ BEGIN
   ) + 1 <= (
     SELECT Bookshelf.capacity 
     FROM Bookshelf
-    WHERE WHERE Bookshelf.ID = NEW.bookshelf_ID
+    WHERE Bookshelf.ID = NEW.bookshelf_ID
   ) THEN 
     UPDATE Bookshelf 
     SET Bookshelf.current_amount = Bookshelf.current_amount + 1
-    WHERE WHERE Bookshelf.ID = NEW.bookshelf_ID;
+    WHERE Bookshelf.ID = NEW.bookshelf_ID;
   END IF;
 END //
 

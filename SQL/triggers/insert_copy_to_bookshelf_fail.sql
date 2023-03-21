@@ -10,7 +10,7 @@ BEGIN
   ) + 1 > (
     SELECT Bookshelf.capacity 
     FROM Bookshelf
-    WHERE WHERE Bookshelf.ID = NEW.bookshelf_ID
+    WHERE Bookshelf.ID = NEW.bookshelf_ID
   ) THEN
     SET NEW.ISBN = '831-8-89-353269-4';
     SET NEW.copy_ID = 1;

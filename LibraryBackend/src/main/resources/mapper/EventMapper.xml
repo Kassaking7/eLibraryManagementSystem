@@ -17,9 +17,9 @@
     </resultMap>
     <parameterMap type="java.util.Map" id ="InsertEventMap">
         <parameter property="event_name" mode="IN" jdbcType="VARCHAR" />
-        <parameter property="start_date_time" mode="IN" jdbcType="DATETIME" />
-        <parameter property="end_date_time" mode="OUT" jdbcType="DATETIME" />
-        <parameter property="capacity" mode="OUT" jdbcType="INT" />
+        <parameter property="start_date_time" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="end_date_time" mode="OUT" jdbcType="VARCHAR" />
+        <parameter property="capacity" mode="OUT" jdbcType="DECIMAL" />
         <parameter property="description" mode="OUT" jdbcType="VARCHAR" />
         <parameter property="location_ID" mode="OUT" jdbcType="BIGINT" />
         <parameter property="admin_ID" mode="OUT" jdbcType="BIGINT" />

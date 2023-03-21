@@ -18,7 +18,7 @@ public class EventCRUD {
     @Autowired
     private EventServiceImpl eventService;
 
-    @GetMapping("/findEvent")
+    @PostMapping("/findEvent")
     public Event findEvent(@RequestParam("eventId") long eventId){
         return eventService.findEvent(eventId);
     }
@@ -30,8 +30,8 @@ public class EventCRUD {
 
     @PostMapping("/insertEvent")
     public Boolean insertEvent(@RequestParam("eventName") String eventName,
-                               @RequestParam("startDateTime") LocalDateTime startDateTime,
-                               @RequestParam("endDateTime") LocalDateTime endDateTime,
+                               @RequestParam("startDateTime") String startDateTime,
+                               @RequestParam("endDateTime") String endDateTime,
                                @RequestParam("capacity") int capacity,
                                @RequestParam("description") String description,
                                @RequestParam("lcoationID") long lcoationID,

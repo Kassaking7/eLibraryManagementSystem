@@ -14,7 +14,7 @@ public class GuestCRUD {
     @Autowired
     private GuestServiceImpl guestService;
 
-    @GetMapping("/findById")
+    @PostMapping("/findById")
     public Guest findById(@RequestParam("id")  long id) {
         return guestService.findById(id);
     }

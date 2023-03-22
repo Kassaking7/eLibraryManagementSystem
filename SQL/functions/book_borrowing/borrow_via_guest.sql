@@ -16,6 +16,7 @@ CREATE PROCEDURE borrow_via_guest (
 )
 
 proc_label: BEGIN
+    SET SQL_SAFE_UPDATES = 0;
    -- check if user still has credit to borrow
    SET enough_credit =
    CASE 
@@ -83,6 +84,6 @@ proc_label: BEGIN
     -- insert a record into BORROWING table
     INSERT INTO Borrowing
     VALUES(ISBN, @copy_ID, 0, CURDATE(), NULL, CURDATE(), 0, user_id);
-    
+    SET SQL_SAFE_UPDATES = 1;
   END//
 DELIMITER ;

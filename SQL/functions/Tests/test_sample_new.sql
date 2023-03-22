@@ -122,7 +122,7 @@ select @enough_credit1; # Expect 0
 call borrow_via_admin(101, '007-8-28-546023-7', 1, @enough_credit2);
 select @enough_credit2; # Expect 1
 
-## After the update, the guest with ID 11 should have remaining_credit 3
+## After the update, the guest with ID 101 should have remaining_credit 3
 ## Book with ISBN '007-8-28-546023-7' should have 0 copy available
 call borrow_via_admin(101, '007-8-28-546023-7', 2, @enough_credit3);
 select @enough_credit3; # Expect 1
@@ -138,7 +138,7 @@ call borrow_via_admin(101, '015-6-42-186006-6', 2, @enough_credit6);
 select @enough_credit6; # Expect 1
 
 ## After the update, the guest with ID 101 should have remaining_credit 0
-## Book with ISBN '015-6-42-186006-6' should have 1 copy available
+## Book with ISBN '015-6-42-186006-6' should have 0 copy available
 call borrow_via_admin(101, '015-6-42-186006-6', 3, @enough_credit7);
 select @enough_credit7; # Expect 1
 
@@ -174,7 +174,7 @@ call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit3, @copy_available
 select @enough_credit3, @copy_available3; # Expect 1 and 1
 
 ## After the updete, the guest with ID 102 should have remaining_credit 3
-## Book with ISBN 47 should have 1 copy available
+## Book with ISBN '021-8-66-898323-6' should have 1 copy available
 call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit4, @copy_available4);
 select @enough_credit4, @copy_available4; # Expect 1 and 1
 
@@ -303,19 +303,19 @@ select @t14; #Expect: 1, ('event14', '2023-05-11 9:00:00', '2023-05-11 12:00:00'
 # increase the current amount of participant in the event by 1; record in the register table
 -- Register a event until the capacity is full
 call register_event(101, 1, @t11);
-select @t11; #Expect: 1, (101, 33) added to the register table, current_amount 1 for event 33 in table "event"
+select @t11; #Expect: 1, (101, 1) added to the register table, current_amount 1 for event 1 in table "event"
 call register_event(102, 1, @t12);
-select @t12; #Expect: 1, (102, 33) added to the register table, current_amount 2 for event 33 in table "event"
+select @t12; #Expect: 1, (102, 1) added to the register table, current_amount 2 for event 1 in table "event"
 call register_event(103, 1, @t13);
-select @t13; #Expect: 1, (103, 33) added to the register table, current_amount 3 for event 33 in table "event"
+select @t13; #Expect: 1, (103, 1) added to the register table, current_amount 3 for event 1 in table "event"
 call register_event(104, 1, @t14);
-select @t14; #Expect: 1, (104, 33) added to the register table, current_amount 4 for event 33 in table "event"
+select @t14; #Expect: 1, (104, 1) added to the register table, current_amount 4 for event 1 in table "event"
 call register_event(105, 1, @t15);
-select @t15; #Expect: 1, (105, 33) added to the register table, current_amount 5 for event 33 in table "event"
+select @t15; #Expect: 1, (105, 1) added to the register table, current_amount 5 for event 1 in table "event"
 
 -- Another registration for a different event
 call register_event(101, 2, @t16);
-select @t16; #Expect: 1, (101, 34) added to the register table, current_amount 1 for event 34 in table "event"
+select @t16; #Expect: 1, (101, 2) added to the register table, current_amount 1 for event 2 in table "event"
 
 
 
@@ -338,7 +338,7 @@ select @t02; #Expect: 0
 # increase the current amount of participant in the event by 1; record in the register table
 -- Register a event until the capacity is full
 call cancel_register(101, 1, @t11);
-select @t11; #Expect: 1, (102, 33) removed from the register table, event with id 33 has current_amount 4
+select @t11; #Expect: 1, (101, 1) removed from the register table, event with id 1 has current_amount 4
 
 
 
@@ -360,9 +360,9 @@ select @t03; #Expect: 0
 ## Book_Return: Test for procedure book_return
 ############################################################
 # First create some borrowing records
-- Expect remaining_credit for guest with ID 103 to decrease by 1 (now is 4)
+- Expect remaining_credit for guest with ID 103 to decrease by 1 (now is 4), and copy 1 for book with ISBN '030-6-46-961682-1' is now unavailable
 call borrow_via_guest(103, '030-6-46-961682-1', @enough_credit1, @copy_available1);
-- Expect remaining_credit for guest with ID 103 to decrease by 1 (now is 3)
+- Expect remaining_credit for guest with ID 103 to decrease by 1 (now is 3), and copy 1 for book with ISBN '030-6-46-961682-1' is now unavailable
 call borrow_via_guest(103, '030-6-46-961682-1', @enough_credit1, @copy_available1);
 
 # Test

@@ -18,7 +18,7 @@ CREATE TABLE Guest (
   PRIMARY KEY (ID),
 
   FOREIGN KEY (ID) REFERENCES People(ID)
-)
+);
 
 CREATE TABLE Administrator (
   ID                BIGINT NOT NULL,

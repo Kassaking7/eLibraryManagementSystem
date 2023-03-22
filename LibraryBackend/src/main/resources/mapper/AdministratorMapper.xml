@@ -10,7 +10,7 @@
     </select>
 
     <select id="findAdministratorById" resultType="Administrator">
-        SELECT  * FROM Administrator where  id=#{id}
+        SELECT * FROM Administrator where id=#{id}
     </select>
 
     <insert id="insertAdministrator" parameterType="com.example.backend.entity.Administrator"

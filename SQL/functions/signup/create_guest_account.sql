@@ -1,3 +1,6 @@
+
+DROP PROCEDURE IF EXISTS create_guest_account;
+
 -- Caller: guests
 -- Senario: a new guest wants to creat an account
 -- Function: insert a new record into People table and Guest table with the input guest info, where the new guest account is not activated

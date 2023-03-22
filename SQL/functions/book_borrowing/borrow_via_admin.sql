@@ -4,6 +4,8 @@
 -- Input: user id, ISBN, copy id, borrow days
 -- Output: whether there is enough credit for the guest
 
+DROP PROCEDURE IF EXISTS borrow_via_admin;
+
  DELIMITER //
 CREATE PROCEDURE borrow_via_admin(
     IN user_id            BIGINT, 

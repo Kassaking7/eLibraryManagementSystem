@@ -1,3 +1,6 @@
+
+DROP PROCEDURE IF EXISTS match_password;
+
 DELIMITER //
 
 -- Caller: guests or administrators

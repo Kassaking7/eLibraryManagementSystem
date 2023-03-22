@@ -17,6 +17,7 @@ public interface PeopleMapper {
 
     List<Map<String, Object>> Login(Map<String, Object> param);
 
+
     People findPeopleById(long id);
 
     public List<People> ListPeople();

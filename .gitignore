@@ -1,0 +1,11 @@
+.DS_Store
+./frontend/.DS_Store
+./schema/.DS_Store
+./dataGeneration/.DS_Store
+./dataGeneration/ipynb_checkpoints/*
+./LibraryBackend/.DS_Store
+./LibraryBackend/src/.DS_Store
+
+
+### VS Code ###
+.vscode/

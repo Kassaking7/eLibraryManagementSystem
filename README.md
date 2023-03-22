@@ -14,7 +14,7 @@ To start the project:
 npm run dev
 ```
 (frontend)
-If an error happen, it's likely that you have to do a
+If an error on next happen (happens for all who first run a next.js prject), it's likely that you have to do a
 ```
 npm install next react react-dom
 ```

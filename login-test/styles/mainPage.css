@@ -1,0 +1,68 @@
+.main-page {
+    background-color: #f4f4f4;
+    display: flex;
+    height: 100vh;
+  }
+  .user-name {
+    padding: 10px;
+    border: 1px solid rgb(76, 6, 6);
+    border-radius: 15px;
+    background-color: #77d5e0;
+    text-align: center;
+    font-size: 20px;
+    width: 150px;
+    margin: 10px;
+    align-self: center;
+  }
+  .left-side {
+    background-color: #77d5e0;
+    width: 20%;
+  }
+  
+  .right-side {
+    background-color: #487fac;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .top-part {
+    background-color: #a6faf7;
+    height: 10%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .bottom-part {
+    background-color: #87f59f;
+    height: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .book {
+    background-color: #90ee90;
+    height: 200px;
+    margin: 10px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .left-side a {
+    display: block;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .left-side a:hover {
+    background-color: rgba(0,0,0,0.2);
+  }

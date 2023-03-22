@@ -9,16 +9,15 @@ Prerequest:
 To start the project:
 * Turn on database and run the commands to creating the tables with sample data.
 * Open idea, modify application-dev.yml file (located [here](https://github.com/Kassaking7/eLibraryManagementSystem/blob/main/LibraryBackend/src/main/resources/application-dev.yml)), use the password and username of your database. Then run the Java code. It will take some time for those who run Springboot Project first time since idea will automatically install the required dependency (Backend)
-* Open terminal. Choose a file and do 
-```
-npx create-next-app@latest nextjs-blog --use-npm --example "https://github.com/vercel/next-learn/tree/master/basics/learn-starter"
-```
-This will init a next.js project with basic config. Then replace the pages and styles files ([here](https://github.com/Kassaking7/eLibraryManagementSystem/tree/main/frontend)).
-* cd to the created next.js file and do 
+* Open terminal. cd to login-test and do 
 ```
 npm run dev
 ```
 (frontend)
+If an error on next happen (happens for all who first run a next.js prject), it's likely that you have to do a
+```
+npm install next react react-dom
+```
 * Go to localhost 3000 port and use the library.
 
 Test user:  

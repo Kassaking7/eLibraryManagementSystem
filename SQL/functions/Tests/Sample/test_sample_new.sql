@@ -1,18 +1,4 @@
 ##############################
-## test_password
-##############################
-# Test the function for checking if user password is correct 
-call match_password('101', 'zxdchf12345', @password_match_t1);
-select @password_match_t1 as t1; #Expect: 1
-
-call match_password('102', '0123em45mis!@', @password_match_f1);
-select @password_match_f1 as f1; #Expect: 0
-
-
-
-
-
-##############################
 ## test_createGuestAccoun
 ##############################
 # Test the function for creating guest account
@@ -35,6 +21,22 @@ select @userid_t4 as t4;
 
 call create_guest_account('user6', 'get41145', '69357345@gmail.com', @userid_t4);
 select @userid_t4 as t4;
+
+
+
+
+
+##############################
+## test_password
+##############################
+# Test the function for checking if user password is correct 
+call match_password('101', 'zxdchf12345', @password_match_t1);
+select @password_match_t1 as t1; #Expect: 1
+
+call match_password('102', '0123em45mis!@', @password_match_f1);
+select @password_match_f1 as f1; #Expect: 0
+
+
 
 
 

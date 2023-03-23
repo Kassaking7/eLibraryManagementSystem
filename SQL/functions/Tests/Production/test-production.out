@@ -1,3 +1,278 @@
+##############################
+## test_createGuestAccount
+##############################
+# Test the function for creating guest account
+## Expected these account to appear in both Guest and People Tables.
+## In the People table, "is_guest" should be 1 for these inserted rows
+## In the Guest table, "is_activated" should be 0 for these rows
+## In the Guest table, "credit_level" and "remaining_credit" should be 5, and "late_fee" should be 0.
+
+# call create_guest_account('Bob C', 'zxdchf12345', '123avds45@kklib.com', @userid_t1);
+# select @userid_t1 as t1;
+- No output
+
+# call create_guest_account('Simon Zeng', '1234512345', '12gds345@kklib.com', @userid_t2);
+# select @userid_t2 as t2;
+- No output
+
+# call create_guest_account('Alice Tian', '341hf12345', '534sadfc5@kklib.com', @userid_t3);
+# select @userid_t3 as t3;
+- No output
+
+# call create_guest_account('Josh Dan', 'z341145', '151adsc345@kklib.com', @userid_t4);
+# select @userid_t4 as t4;
+- No output
+
+# call create_guest_account('Kyle Smith', 'get41145', '69357345@kklib.com', @userid_t4);
+# select @userid_t4 as t4;
+- No output
+
+
+
+
+
+##############################
+## test_password
+##############################
+## Test the function for checking if user password is correct 
+# call match_password('113', 'zxdchf12345', @password_match_t1);
+# select @password_match_t1 as t1; 
+1
+
+# call match_password('114', '123451fs45', @password_match_f1);
+# select @password_match_f1 as f1;
+0
+
+
+
+
+
+##############################
+## test_activateGuestAccount
+##############################
+## test the functino for activate Guest Account
+## In the Guest table, "is_activated" should be 1 for the users with these ID. No other changes to the current account
+call activate_guest_account(101);
+- No output
+
+call activate_guest_account(102);
+- No output
+
+
+
+
+
+
+##############################
+## test_bookSearch
+##############################
+##  test the bookSearch function
+## Search by ISBN
+# call book_search('000-0-00-179354-2', null, null, null, null); 
+'000-0-00-179354-2'
+
+# call book_search('000-0-55-412297-2', null, null, null, null); 
+'015-6-42-186006-6'
+
+## Search by Book Name
+# call book_search(null, 'Henry Ford', null, null, null); 
+'364-4-47-491195-8', '000-1-22-433498-3', '322-3-68-433249-4'
+
+# call book_search(null, 'Activeeeeee', null, null, null); 
+- No output
+
+# call book_search(null, 'The land of Gray Wolf', null, null, null);
+'000-0-55-412297-2'
+
+
+## Search by tag_name
+# call book_search(null, null, 'Paranormal', null, null); 
+(first 5 books, since there are too many results) '011-5-76-749218-6', '038-6-59-510503-1', '047-9-04-030443-0', '060-7-80-404588-5', '075-9-25-433882-2'
+
+
+## Search by author_name  
+# call book_search(null, null, null, 'Cleavland O Sullivan', null); 
+'162-4-18-153828-8', '271-2-39-653404-7'
+
+                               
+call book_search(null, null, null, 'Cleavland O', null); # Expected: ('162-4-18-153828-8', '271-2-39-653404-7') (should have the same result as the one above)
+                               
+## Search by publisher_name
+# call book_search(null, null, null, null, 'Hartmann LLC'); 
+(first 5 output since there is too much) '016-8-48-669038-8', '017-0-32-157316-2', '017-5-39-435549-0', '019-6-79-800714-8', '024-7-09-510140-8'
+
+                               
+## Search by title and publisher_name
+# call book_search(null, "The land of Gray Wolf", null, null, 'Donnelly, Mosciski and Bechtelar'); 
+'000-0-55-412297-2'
+
+
+## Search by title and author_name
+# call book_search(null, "Advertise for Treasure", null, "Jasmine O'Shevlin", null);
+'084-4-61-239526-8'
+
+
+
+
+
+
+##############################
+## test_showDetailedBookInfo
+##############################
+## Test the function for showeing book info (detailed)
+## Will show the book's (title, authors, publisher, publication_year, tags, available_copies)
+
+# call show_detailed_book_info('000-0-00-179354-2');  
+('Year Book of Orthopedics (Year Books)', 'Armin Stood, Tedra Raspel, Lela Mears', 'Barrows Group', 1950, 'Dystopian, Motivational, Mystery, Romance', 1)
+
+# call show_detailed_book_info('000-0-12-759187-4'); 
+('Fragments Of The Heart, Trials Of The Mind', 'Constantin Extence, Maryrose Meldrum', 'Robel Group', 2016, 'Art, Children, Dystopian, Humor, Travel', 0)
+
+# call show_detailed_book_info('999-9-49-243152-9'); 
+- No output
+
+
+
+
+
+##############################
+## test_showGeneralBookInfo
+##############################
+## Test the function for showeing book info (general)
+## Will show the book's (title, authors, publisher, publication_year, tags)
+
+#call show_general_book_info('000-0-00-179354-2');
+('Year Book of Orthopedics (Year Books)', 'Armin Stood, Tedra Raspel, Lela Mears', 'Barrows Group', 1950, 'Dystopian, Motivational, Mystery, Romance')
+
+                               
+# call show_general_book_info('000-0-12-759187-4');  
+('Fragments Of The Heart, Trials Of The Mind', 'Constantin Extence, Maryrose Meldrum', 'Robel Group', 2016, 'Art, Children, Dystopian, Humor, Travel')
+                               
+# call show_general_book_info('999-9-49-243152-9'); 
+- No output
+
+
+
+
+
+##############################
+## test_borrowAdmin
+##############################
+### No Update
+## Guest not activated
+# call borrow_via_admin(115, '000-0-00-179354-2', 2,@enough_credit1);
+# select @enough_credit1;
+0
+
+### Has update
+## After the update, the guest with ID 113 should have remaining_credit 4
+## Book with ISBN '000-0-79-115678-5' should have copy 2 unabailable
+# call borrow_via_admin(113, '000-0-79-115678-5', 2, @enough_credit2);
+# select @enough_credit2; 
+1
+
+## After the update, the guest with ID 113 should have remaining_credit 3
+## Book with ISBN '000-0-00-179354-2' should have copy 1 unabailable
+# call borrow_via_admin(113, '000-0-00-179354-2', 1,@enough_credit3);
+# select @enough_credit3;
+1
+
+## After the update, the guest with ID 113 should have remaining_credit 2
+## Book with ISBN '000-0-75-222789-5' should have copy 1 unabailable
+# call borrow_via_admin(113, '000-0-75-222789-5', 1, @enough_credit5);
+# select @enough_credit5; 
+1
+
+## After the update, the guest with ID 113 should have remaining_credit 1
+## Book with ISBN '000-0-75-222789-5' should have copy 2 unabailable
+# call borrow_via_admin(113, '000-0-75-222789-5', 2, @enough_credit6);
+# select @enough_credit6; 
+1
+
+## After the update, the guest with ID 113 should have remaining_credit 0
+## Book with ISBN '000-0-75-222789-5' should have copy 3 unabailable
+# call borrow_via_admin(113, '000-0-75-222789-5', 3, @enough_credit7);
+# select @enough_credit7; 
+1
+
+## No Update
+# call borrow_via_admin(113, '000-0-38-813713-2', 1, @enough_credit8);
+# select @enough_credit8; 
+0
+
+
+
+
+
+##############################
+## test_borrowGuest
+##############################
+## test the borrow function (via Guest)
+## No update: not enough credit, copy not available
+# call borrow_via_guest(113, '000-0-00-179354-2', @enough_credit1, @copy_available1);
+# select @enough_credit1, @copy_available1; 
+0, 0
+
+## No update: enough credit but no copy available
+# call borrow_via_guest(114, '000-0-00-179354-2', @enough_credit2, @copy_available2);
+# select @enough_credit2, @copy_available2; 
+1, 0
+
+## No update: guest not activated, copy available
+# call borrow_via_guest(111, '000-0-38-813713-2', @enough_credit10, @copy_available10);
+# select @enough_credit10, @copy_available10; 
+0, 1
+
+
+
+## After the update, the guest with ID 102 should have remaining_credit 4
+## Book with ISBN '021-8-66-898323-6' should have 2 copy available
+# call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit3, @copy_available3);
+# select @enough_credit3, @copy_available3; 
+1, 1
+
+## After the update, the guest with ID 102 should have remaining_credit 3
+## Book with ISBN '021-8-66-898323-6' should have 1 copy available
+# call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit4, @copy_available4);
+# select @enough_credit4, @copy_available4; 
+1, 1
+
+## After the update, the guest with ID 102 should have remaining_credit 2
+## Book with ISBN '021-8-66-898323-6' should have 0 copy available
+call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit5, @copy_available5);
+select @enough_credit5, @copy_available5; # Expect 1 and 1
+
+
+## No update: No available copy
+# call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit6, @copy_available6);
+# select @enough_credit6, @copy_available6; 
+1, 0
+
+## After the update, the guest with ID 102 should have remaining_credit 1
+## Book with ISBN '023-0-81-382736-6' should have 1 copy available
+# call borrow_via_guest(102, '023-0-81-382736-6', @enough_credit7, @copy_available7);
+# select @enough_credit7, @copy_available7; 
+1, 1
+
+## After the update, the guest with ID 102 should have remaining_credit 0
+## Book with ISBN '023-0-81-382736-6' should have 0 copy available
+# call borrow_via_guest(102, '023-0-81-382736-6', @enough_credit8, @copy_available8);
+# select @enough_credit8, @copy_available8; 
+1, 1
+
+## No update: no enough credit
+# call borrow_via_guest(102, '030-1-98-970228-3', @enough_credit9, @copy_available9);
+# select @enough_credit9, @copy_available9;
+0, 1
+
+
+
+
+
+
+
+
+
 ############################################################
 ## Event_SetUp: Test for procedure event_setup
 ############################################################

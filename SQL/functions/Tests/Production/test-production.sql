@@ -1,4 +1,214 @@
 ##############################
+## test_password
+##############################
+# Test the function for checking if user password is correct 
+call match_password('101', 'zxdchf12345', @password_match_t1);
+select @password_match_t1 as t1; #Expect: 1
+
+call match_password('102', '0123em45mis!@', @password_match_f1);
+select @password_match_f1 as f1; #Expect: 0
+
+
+
+
+
+##############################
+## test_createGuestAccoun
+##############################
+# Test the function for creating guest account
+## Expected these account to appear in both Guest and People Tables.
+## In the People table, "is_guest" should be 1 for these inserted rows
+## In the Guest table, "is_activated" should be 0 for these rows
+## In the Guest table, "credit_level" and "remaining_credit" should be 5, and "late_fee" should be 0.
+
+call create_guest_account('user1', 'zxdchf12345', '12345@gmail.com', @userid_t1);
+select @userid_t1 as t1;
+
+call create_guest_account('guest2', '1234512345', '12345@qq.com', @userid_t2);
+select @userid_t2 as t2;
+
+call create_guest_account('user4', '341hf12345', '5345@gmail.com', @userid_t3);
+select @userid_t3 as t3;
+
+call create_guest_account('user5', 'z341145', '151345@gmail.com', @userid_t4);
+select @userid_t4 as t4;
+
+call create_guest_account('user6', 'get41145', '69357345@gmail.com', @userid_t4);
+select @userid_t4 as t4;
+
+
+
+##############################
+## test_activateGuestAccount
+##############################
+# test the functino for activate Guest Account
+## In the Guest table, "is_activated" should be 1 for the users with these ID. No other changes to the current account
+call activate_guest_account(101);
+call activate_guest_account(102);
+
+
+
+##############################
+## test_bookSearch
+##############################
+# test the bookSearch function
+## Search by ISBN
+call book_search('007-8-28-546023-7', null, null, null, null); # Expected: '007-8-28-546023-7'
+call book_search('015-6-42-186006-6', null, null, null, null); # Expected: '015-6-42-186006-6'
+## Search by Book Name
+call book_search(null, 'D', null, null, null); # Expected: '164-4-02-012480-1', '395-0-36-720557-5', '007-8-28-546023-7', '580-0-52-490012-3'
+call book_search(null, 'Active', null, null, null); # Expected: '862-4-25-536823-6'
+call book_search(null, 'Activeeeeee', null, null, null); # Expected: no result
+call book_search(null, 'Acti', null, null, null); # Expected: '862-4-25-536823-6'
+## Search by tag_name
+call book_search(null, null, 'Art', null, null); # Expected: '296-9-84-024234-0', '672-1-47-810900-3', '638-8-37-351816-0', '549-7-54-517638-6', '722-4-76-658631-2', '487-0-12-864661-2', '627-8-21-279962-9'
+
+## Search by author_name  
+call book_search(null, null, null, 'Henri Brettoner', null); # Expected: '722-4-76-658631-2', '021-8-66-898323-6'
+call book_search(null, null, null, 'Henri', null); # Expected: '722-4-76-658631-2', '021-8-66-898323-6'
+## Search by publisher_name
+call book_search(null, null, null, null, 'Metz, Crist and Zemlak'); # Expected: '073-9-59-831762-7', '580-0-52-490012-3', '638-8-37-351816-0', '730-9-79-414507-8'
+## Search by title and publisher_name
+call book_search(null, "Design", null, null, 'Metz, Crist and Zemlak'); # Expected: '580-0-52-490012-3'
+## Search by title and author_name
+call book_search(null, "moral", null, 'Sherri Haller', null); # Expected: '638-8-37-351816-0'
+
+
+
+
+
+##############################
+## test_showDetailedBookInfo
+##############################
+# Test the function for showeing book info (detailed)
+# Will show the book's (title, authors, publisher, publication_year, tags, available_copies, description)
+call show_detailed_book_info('638-8-37-351816-0');  # Expect: ('moral foundations of civil society', 'Ferdie Culbard,Nikki Kondrat,Sherri Haller', 'Metz, Crist and Zemlak', '2005', 'Art,Development,History,Paranormal,Thriller', '3')
+call show_detailed_book_info('730-9-79-414507-8'); # Expect: ('Autodesk VIZ Fundamentals', NULL, 'Metz, Crist and Zemlak', '1960', 'Contemporary,Fantasy,Thriller', '2')
+call show_detailed_book_info('999-9-49-243152-9'); # Expected: no result
+
+
+##############################
+## test_showGeneralBookInfo
+##############################
+# Test the function for showeing book info (general)
+# Will show the book's (title, authors, publisher, publication_year, tags)
+call show_general_book_info('638-8-37-351816-0'); # Expect: ('moral foundations of civil society', 'Ferdie Culbard,Nikki Kondrat,Sherri Haller', 'Metz, Crist and Zemlak', '2005', 'Art,Development,History,Paranormal,Thriller')
+call show_general_book_info('730-9-79-414507-8');  # Expect: ('Autodesk VIZ Fundamentals', NULL, 'Metz, Crist and Zemlak', '1960', 'Contemporary,Fantasy,Thriller')
+call show_general_book_info('999-9-49-243152-9');  # Expect: no result
+
+
+
+##############################
+## test_borrowAdmin
+##############################
+# test the borrow function (via Admin)
+- Reset Credit Level
+UPDATE GUEST
+SET remaining_credit = 5
+WHERE GUEST.ID = 11;
+
+-- Reset Copy
+UPDATE Copy
+SET availability = true
+WHERE ISBN = 47 OR ISBN = 3 OR ISBN = 21 OR ISBN = 13;
+
+## No Update
+# Guest not activated
+call borrow_via_admin(103, '007-8-28-546023-7', 1,@enough_credit1);
+select @enough_credit1; # Expect 0
+
+## After the update, the guest with ID 101 should have remaining_credit 4
+## Book with ISBN '007-8-28-546023-7' should have 1 copy available
+call borrow_via_admin(101, '007-8-28-546023-7', 1, @enough_credit2);
+select @enough_credit2; # Expect 1
+
+## After the update, the guest with ID 101 should have remaining_credit 3
+## Book with ISBN '007-8-28-546023-7' should have 0 copy available
+call borrow_via_admin(101, '007-8-28-546023-7', 2, @enough_credit3);
+select @enough_credit3; # Expect 1
+
+## After the update, the guest with ID 101 should have remaining_credit 2
+## Book with ISBN '015-6-42-186006-6' should have 2 copy available
+call borrow_via_admin(101, '015-6-42-186006-6', 1, @enough_credit5);
+select @enough_credit5; # Expect 1
+
+## After the update, the guest with ID 101 should have remaining_credit 1
+## Book with ISBN '015-6-42-186006-6' should have 1 copy available
+call borrow_via_admin(101, '015-6-42-186006-6', 2, @enough_credit6);
+select @enough_credit6; # Expect 1
+
+## After the update, the guest with ID 101 should have remaining_credit 0
+## Book with ISBN '015-6-42-186006-6' should have 0 copy available
+call borrow_via_admin(101, '015-6-42-186006-6', 3, @enough_credit7);
+select @enough_credit7; # Expect 1
+
+## No Update
+call borrow_via_admin(101, '021-8-66-898323-6', 1, @enough_credit8);
+select @enough_credit7, @copy_available8; # Expect 0
+
+
+
+
+
+##############################
+## test_borrowGuest
+##############################
+# test the borrow function (via Guest)
+## No update: not enough credit, copy not available
+call borrow_via_guest(101, '007-8-28-546023-7', @enough_credit1, @copy_available1);
+select @enough_credit1, @copy_available1; # Expect 0 and 0
+
+## No update: enough credit but no copy available
+call borrow_via_guest(102, '007-8-28-546023-7', @enough_credit2, @copy_available2);
+select @enough_credit2, @copy_available2; # Expect 1 and 0
+
+## No update: guest not activated
+call borrow_via_guest(103, '021-8-66-898323-6', @enough_credit10, @copy_available10);
+select @enough_credit10, @copy_available10; # Expect 0 and 1
+
+
+
+## After the updete, the guest with ID 102 should have remaining_credit 4
+## Book with ISBN '021-8-66-898323-6' should have 2 copy available
+call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit3, @copy_available3);
+select @enough_credit3, @copy_available3; # Expect 1 and 1
+
+## After the updete, the guest with ID 102 should have remaining_credit 3
+## Book with ISBN '021-8-66-898323-6' should have 1 copy available
+call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit4, @copy_available4);
+select @enough_credit4, @copy_available4; # Expect 1 and 1
+
+## After the updete, the guest with ID 102 should have remaining_credit 2
+## Book with ISBN '021-8-66-898323-6' should have 0 copy available
+call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit5, @copy_available5);
+select @enough_credit5, @copy_available5; # Expect 1 and 1
+
+
+## No update: No available copy
+call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit6, @copy_available6);
+select @enough_credit6, @copy_available6; # Expect 1 and 0
+
+## After the updete, the guest with ID 102 should have remaining_credit 1
+## Book with ISBN '023-0-81-382736-6' should have 1 copy available
+call borrow_via_guest(102, '023-0-81-382736-6', @enough_credit7, @copy_available7);
+select @enough_credit7, @copy_available7; # Expect 1 and 1
+
+## After the updete, the guest with ID 102 should have remaining_credit 0
+## Book with ISBN '023-0-81-382736-6' should have 0 copy available
+call borrow_via_guest(102, '023-0-81-382736-6', @enough_credit8, @copy_available8);
+select @enough_credit8, @copy_available8; # Expect 1 and 1
+
+## No update: no enough credit
+call borrow_via_guest(102, '030-1-98-970228-3', @enough_credit9, @copy_available9);
+select @enough_credit9, @copy_available9; # Expect 0 and 1
+
+
+
+
+
+
+
+##############################
 ## Preparing State
 ##############################
 # Inser Guest and Activate

@@ -1,18 +1,4 @@
 ##############################
-## test_password
-##############################
-# Test the function for checking if user password is correct 
-call match_password('101', 'zxdchf12345', @password_match_t1);
-select @password_match_t1 as t1; #Expect: 1
-
-call match_password('102', '0123em45mis!@', @password_match_f1);
-select @password_match_f1 as f1; #Expect: 0
-
-
-
-
-
-##############################
 ## test_createGuestAccoun
 ##############################
 # Test the function for creating guest account
@@ -39,12 +25,25 @@ select @userid_t4 as t4;
 
 
 ##############################
+## test_password
+##############################
+# Test the function for checking if user password is correct 
+call match_password('101', 'zxdchf12345', @password_match_t1);
+select @password_match_t1 as t1; #Expect: 1
+
+call match_password('102', '0123em45mis!@', @password_match_f1);
+select @password_match_f1 as f1; #Expect: 0
+
+
+
+##############################
 ## test_activateGuestAccount
 ##############################
 # test the functino for activate Guest Account
 ## In the Guest table, "is_activated" should be 1 for the users with these ID. No other changes to the current account
 call activate_guest_account(101);
 call activate_guest_account(102);
+
 
 
 

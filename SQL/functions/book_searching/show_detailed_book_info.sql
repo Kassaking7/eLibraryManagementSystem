@@ -17,7 +17,7 @@ CREATE PROCEDURE show_detailed_book_info (
     BookInfo.publisherName AS publisher,
     BookInfo.publicationYear,
     GROUP_CONCAT(DISTINCT BookInfo.tagName SEPARATOR ',') AS tags,
-    BookInfo.availableCopies, 0
+    BookInfo.availableCopies
     FROM (
       SELECT 
       Book.title AS title, 

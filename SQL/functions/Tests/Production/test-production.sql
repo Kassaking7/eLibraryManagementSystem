@@ -24,6 +24,8 @@ select @userid_t4 as t4;
 
 
 
+
+
 ##############################
 ## test_password
 ##############################
@@ -36,6 +38,8 @@ select @password_match_f1 as f1; #Expect: 0
 
 
 
+
+
 ##############################
 ## test_activateGuestAccount
 ##############################
@@ -43,7 +47,6 @@ select @password_match_f1 as f1; #Expect: 0
 ## In the Guest table, "is_activated" should be 1 for the users with these ID. No other changes to the current account
 call activate_guest_account(101);
 call activate_guest_account(102);
-
 
 
 
@@ -200,8 +203,6 @@ select @enough_credit8, @copy_available8; # Expect 1 and 1
 ## No update: no enough credit
 call borrow_via_guest(102, '030-1-98-970228-3', @enough_credit9, @copy_available9);
 select @enough_credit9, @copy_available9; # Expect 0 and 1
-
-
 
 
 

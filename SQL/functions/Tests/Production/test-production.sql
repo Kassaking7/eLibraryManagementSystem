@@ -1,5 +1,5 @@
 ##############################
-## test_createGuestAccoun
+## test_createGuestAccount
 ##############################
 # Test the function for creating guest account
 ## Expected these account to appear in both Guest and People Tables.

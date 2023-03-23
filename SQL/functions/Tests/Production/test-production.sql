@@ -160,50 +160,40 @@ call show_general_book_info('999-9-49-243152-9');  # Expect: no result
 ##############################
 ## test_borrowAdmin
 ##############################
-# test the borrow function (via Admin)
-- Reset Credit Level
-UPDATE GUEST
-SET remaining_credit = 5
-WHERE GUEST.ID = 11;
-
--- Reset Copy
-UPDATE Copy
-SET availability = true
-WHERE ISBN = 47 OR ISBN = 3 OR ISBN = 21 OR ISBN = 13;
-
 ## No Update
 # Guest not activated
-call borrow_via_admin(103, '007-8-28-546023-7', 1,@enough_credit1);
+call borrow_via_admin(115, '000-0-00-179354-2', 2,@enough_credit1);
 select @enough_credit1; # Expect 0
 
-## After the update, the guest with ID 101 should have remaining_credit 4
-## Book with ISBN '007-8-28-546023-7' should have 1 copy available
-call borrow_via_admin(101, '007-8-28-546023-7', 1, @enough_credit2);
+# Has update
+## After the update, the guest with ID 113 should have remaining_credit 4
+## Book with ISBN '000-0-79-115678-5' should have copy 2 unabailable
+call borrow_via_admin(113, '000-0-79-115678-5', 2, @enough_credit2);
 select @enough_credit2; # Expect 1
 
-## After the update, the guest with ID 101 should have remaining_credit 3
-## Book with ISBN '007-8-28-546023-7' should have 0 copy available
-call borrow_via_admin(101, '007-8-28-546023-7', 2, @enough_credit3);
+## After the update, the guest with ID 113 should have remaining_credit 3
+## Book with ISBN '000-0-00-179354-2' should have copy 1 unabailable
+call borrow_via_admin(113, '000-0-00-179354-2', 1,@enough_credit3);
 select @enough_credit3; # Expect 1
 
-## After the update, the guest with ID 101 should have remaining_credit 2
-## Book with ISBN '015-6-42-186006-6' should have 2 copy available
-call borrow_via_admin(101, '015-6-42-186006-6', 1, @enough_credit5);
+## After the update, the guest with ID 113 should have remaining_credit 2
+## Book with ISBN '000-0-75-222789-5' should have copy 1 unabailable
+call borrow_via_admin(113, '000-0-75-222789-5', 1, @enough_credit5);
 select @enough_credit5; # Expect 1
 
-## After the update, the guest with ID 101 should have remaining_credit 1
-## Book with ISBN '015-6-42-186006-6' should have 1 copy available
-call borrow_via_admin(101, '015-6-42-186006-6', 2, @enough_credit6);
+## After the update, the guest with ID 113 should have remaining_credit 1
+## Book with ISBN '000-0-75-222789-5' should have copy 2 unabailable
+call borrow_via_admin(113, '000-0-75-222789-5', 2, @enough_credit6);
 select @enough_credit6; # Expect 1
 
-## After the update, the guest with ID 101 should have remaining_credit 0
-## Book with ISBN '015-6-42-186006-6' should have 0 copy available
-call borrow_via_admin(101, '015-6-42-186006-6', 3, @enough_credit7);
+## After the update, the guest with ID 113 should have remaining_credit 0
+## Book with ISBN '000-0-75-222789-5' should have copy 3 unabailable
+call borrow_via_admin(113, '000-0-75-222789-5', 3, @enough_credit7);
 select @enough_credit7; # Expect 1
 
 ## No Update
-call borrow_via_admin(101, '021-8-66-898323-6', 1, @enough_credit8);
-select @enough_credit7, @copy_available8; # Expect 0
+call borrow_via_admin(113, '000-0-38-813713-2', 1, @enough_credit8);
+select @enough_credit8; # Expect 0
 
 
 
@@ -214,30 +204,30 @@ select @enough_credit7, @copy_available8; # Expect 0
 ##############################
 # test the borrow function (via Guest)
 ## No update: not enough credit, copy not available
-call borrow_via_guest(101, '007-8-28-546023-7', @enough_credit1, @copy_available1);
+call borrow_via_guest(113, '000-0-00-179354-2', @enough_credit1, @copy_available1);
 select @enough_credit1, @copy_available1; # Expect 0 and 0
 
 ## No update: enough credit but no copy available
-call borrow_via_guest(102, '007-8-28-546023-7', @enough_credit2, @copy_available2);
+call borrow_via_guest(114, '000-0-00-179354-2', @enough_credit2, @copy_available2);
 select @enough_credit2, @copy_available2; # Expect 1 and 0
 
-## No update: guest not activated
-call borrow_via_guest(103, '021-8-66-898323-6', @enough_credit10, @copy_available10);
+## No update: guest not activated, copy available
+call borrow_via_guest(111, '000-0-38-813713-2', @enough_credit10, @copy_available10);
 select @enough_credit10, @copy_available10; # Expect 0 and 1
 
 
 
-## After the updete, the guest with ID 102 should have remaining_credit 4
+## After the update, the guest with ID 102 should have remaining_credit 4
 ## Book with ISBN '021-8-66-898323-6' should have 2 copy available
 call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit3, @copy_available3);
 select @enough_credit3, @copy_available3; # Expect 1 and 1
 
-## After the updete, the guest with ID 102 should have remaining_credit 3
+## After the update, the guest with ID 102 should have remaining_credit 3
 ## Book with ISBN '021-8-66-898323-6' should have 1 copy available
 call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit4, @copy_available4);
 select @enough_credit4, @copy_available4; # Expect 1 and 1
 
-## After the updete, the guest with ID 102 should have remaining_credit 2
+## After the update, the guest with ID 102 should have remaining_credit 2
 ## Book with ISBN '021-8-66-898323-6' should have 0 copy available
 call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit5, @copy_available5);
 select @enough_credit5, @copy_available5; # Expect 1 and 1
@@ -247,12 +237,12 @@ select @enough_credit5, @copy_available5; # Expect 1 and 1
 call borrow_via_guest(102, '021-8-66-898323-6', @enough_credit6, @copy_available6);
 select @enough_credit6, @copy_available6; # Expect 1 and 0
 
-## After the updete, the guest with ID 102 should have remaining_credit 1
+## After the update, the guest with ID 102 should have remaining_credit 1
 ## Book with ISBN '023-0-81-382736-6' should have 1 copy available
 call borrow_via_guest(102, '023-0-81-382736-6', @enough_credit7, @copy_available7);
 select @enough_credit7, @copy_available7; # Expect 1 and 1
 
-## After the updete, the guest with ID 102 should have remaining_credit 0
+## After the update, the guest with ID 102 should have remaining_credit 0
 ## Book with ISBN '023-0-81-382736-6' should have 0 copy available
 call borrow_via_guest(102, '023-0-81-382736-6', @enough_credit8, @copy_available8);
 select @enough_credit8, @copy_available8; # Expect 1 and 1

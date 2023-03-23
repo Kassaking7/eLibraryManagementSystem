@@ -7,19 +7,19 @@
 ## In the Guest table, "is_activated" should be 0 for these rows
 ## In the Guest table, "credit_level" and "remaining_credit" should be 5, and "late_fee" should be 0.
 
-call create_guest_account('user1', 'zxdchf12345', '12345@gmail.com', @userid_t1);
+call create_guest_account('Bob C', 'zxdchf12345', '123avds45@kklib.com', @userid_t1);
 select @userid_t1 as t1;
 
-call create_guest_account('guest2', '1234512345', '12345@qq.com', @userid_t2);
+call create_guest_account('Simon Zeng', '1234512345', '12gds345@kklib.com', @userid_t2);
 select @userid_t2 as t2;
 
-call create_guest_account('user4', '341hf12345', '5345@gmail.com', @userid_t3);
+call create_guest_account('Alice Tian', '341hf12345', '534sadfc5@kklib.com', @userid_t3);
 select @userid_t3 as t3;
 
-call create_guest_account('user5', 'z341145', '151345@gmail.com', @userid_t4);
+call create_guest_account('Josh Dan', 'z341145', '151adsc345@kklib.com', @userid_t4);
 select @userid_t4 as t4;
 
-call create_guest_account('user6', 'get41145', '69357345@gmail.com', @userid_t4);
+call create_guest_account('Kyle Smith', 'get41145', '69357345@kklib.com', @userid_t4);
 select @userid_t4 as t4;
 
 
@@ -30,10 +30,10 @@ select @userid_t4 as t4;
 ## test_password
 ##############################
 # Test the function for checking if user password is correct 
-call match_password('101', 'zxdchf12345', @password_match_t1);
+call match_password('113', 'zxdchf12345', @password_match_t1);
 select @password_match_t1 as t1; #Expect: 1
 
-call match_password('102', '0123em45mis!@', @password_match_f1);
+call match_password('114', '123451fs45', @password_match_f1);
 select @password_match_f1 as f1; #Expect: 0
 
 
@@ -50,30 +50,67 @@ call activate_guest_account(102);
 
 
 
+
+
+
 ##############################
 ## test_bookSearch
 ##############################
 # test the bookSearch function
 ## Search by ISBN
-call book_search('007-8-28-546023-7', null, null, null, null); # Expected: '007-8-28-546023-7'
-call book_search('015-6-42-186006-6', null, null, null, null); # Expected: '015-6-42-186006-6'
+call book_search('000-0-00-179354-2', null, null, null, null); # Expected: '000-0-00-179354-2'
+call book_search('000-0-55-412297-2', null, null, null, null); # Expected: '015-6-42-186006-6'
+
 ## Search by Book Name
-call book_search(null, 'D', null, null, null); # Expected: '164-4-02-012480-1', '395-0-36-720557-5', '007-8-28-546023-7', '580-0-52-490012-3'
-call book_search(null, 'Active', null, null, null); # Expected: '862-4-25-536823-6'
+call book_search(null, 'Henry Ford', null, null, null); # Expected: '364-4-47-491195-8', '000-1-22-433498-3', '322-3-68-433249-4'
+# Verify correctness: select * from book where isbn in ('364-4-47-491195-8', '000-1-22-433498-3', '322-3-68-433249-4');
+# Verify correctness:  select ISBN from book where title LIKE 'Henry Ford%';
 call book_search(null, 'Activeeeeee', null, null, null); # Expected: no result
-call book_search(null, 'Acti', null, null, null); # Expected: '862-4-25-536823-6'
+call book_search(null, 'The land of Gray Wolf', null, null, null); # Expected: '000-0-55-412297-2'
+# Verify correctness: select * from book where isbn in ('000-0-55-412297-2');
+# Verify correctness:  select ISBN from book where title LIKE 'The land of Gray Wolf%';
+
+
 ## Search by tag_name
-call book_search(null, null, 'Art', null, null); # Expected: '296-9-84-024234-0', '672-1-47-810900-3', '638-8-37-351816-0', '549-7-54-517638-6', '722-4-76-658631-2', '487-0-12-864661-2', '627-8-21-279962-9'
+call book_search(null, null, 'Paranormal', null, null); 
+# Expected: (first 5 books, since there are too many results) '011-5-76-749218-6', '038-6-59-510503-1', '047-9-04-030443-0', '060-7-80-404588-5', '075-9-25-433882-2'
+
+# Verify correctness: (Expect 'Paranormal' to be one of the tags, so the expected count should be 1)
+select count(*) from (select tag_name from has_tag where isbn = '011-5-76-749218-6') as f where tag_name = 'Paranormal'; # Expected: 1
+select count(*) from (select tag_name from has_tag where isbn = '038-6-59-510503-1') as f where tag_name = 'Paranormal'; # Expected: 1
+select count(*) from (select tag_name from has_tag where isbn = '047-9-04-030443-0') as f where tag_name = 'Paranormal'; # Expected: 1
+select count(*) from (select tag_name from has_tag where isbn = '060-7-80-404588-5') as f where tag_name = 'Paranormal'; # Expected: 1
+select count(*) from (select tag_name from has_tag where isbn = '075-9-25-433882-2') as f where tag_name = 'Paranormal'; # Expected: 1
+
+
 
 ## Search by author_name  
-call book_search(null, null, null, 'Henri Brettoner', null); # Expected: '722-4-76-658631-2', '021-8-66-898323-6'
-call book_search(null, null, null, 'Henri', null); # Expected: '722-4-76-658631-2', '021-8-66-898323-6'
+
+## Chose which author to test (don't want too many outputs)
+# select author_id from written_by group by author_id order by count(author_id) asc;
+# select name from author where id = 9001;
+call book_search(null, null, null, 'Cleavland O Sullivan', null); # Expected: '162-4-18-153828-8', '271-2-39-653404-7'
+# Verify correctness: (Expect author with id 9001 to be one of the authors, so the expected count should be 1)
+select count(*) from (select author_id from written_by where isbn =  '271-2-39-653404-7') as f where author_id = 9001; # Expected: 1
+select count(*) from (select author_id from written_by where isbn = '162-4-18-153828-8') as f where author_id = 9001; # Expected: 1
+                               
+call book_search(null, null, null, 'Cleavland O', null); # Expected: ('162-4-18-153828-8', '271-2-39-653404-7') (should have the same result as the one above)
+                               
 ## Search by publisher_name
-call book_search(null, null, null, null, 'Metz, Crist and Zemlak'); # Expected: '073-9-59-831762-7', '580-0-52-490012-3', '638-8-37-351816-0', '730-9-79-414507-8'
+call book_search(null, null, null, null, 'Hartmann LLC'); 
+# Expected:(first 5 output since there is too much) '016-8-48-669038-8', '017-0-32-157316-2', '017-5-39-435549-0', '019-6-79-800714-8', '024-7-09-510140-8'
+# Verify correctness: (Expect publisher with id 85 to be one of the publishers, so the expected count should be 1)
+select count(*) from (select publisher_id from book where isbn =  '016-8-48-669038-8') as f where publisher_id = 85; # Expected: 1
+select count(*) from (select publisher_id from book where isbn = '017-0-32-157316-2') as f where publisher_id = 85; # Expected: 1
+select count(*) from (select publisher_id from book where isbn = '017-5-39-435549-0') as f where publisher_id = 85; # Expected: 1
+select count(*) from (select publisher_id from book where isbn = '019-6-79-800714-8') as f where publisher_id = 85; # Expected: 1
+select count(*) from (select publisher_id from book where isbn = '024-7-09-510140-8') as f where publisher_id = 85; # Expected: 1
+                               
 ## Search by title and publisher_name
-call book_search(null, "Design", null, null, 'Metz, Crist and Zemlak'); # Expected: '580-0-52-490012-3'
+call book_search(null, "The land of Gray Wolf", null, null, 'Donnelly, Mosciski and Bechtelar'); # Expected: '000-0-55-412297-2'
 ## Search by title and author_name
-call book_search(null, "moral", null, 'Sherri Haller', null); # Expected: '638-8-37-351816-0'
+call book_search(null, "Advertise for Treasure", null, "Jasmine O'Shevlin", null); # Expected: '084-4-61-239526-8'
+
 
 
 

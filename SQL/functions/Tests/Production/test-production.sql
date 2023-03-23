@@ -120,9 +120,9 @@ call book_search(null, "Advertise for Treasure", null, "Jasmine O'Shevlin", null
 ## test_showDetailedBookInfo
 ##############################
 # Test the function for showeing book info (detailed)
-# Will show the book's (title, authors, publisher, publication_year, tags, available_copies, description)
-call show_detailed_book_info('638-8-37-351816-0');  # Expect: ('moral foundations of civil society', 'Ferdie Culbard,Nikki Kondrat,Sherri Haller', 'Metz, Crist and Zemlak', '2005', 'Art,Development,History,Paranormal,Thriller', '3')
-call show_detailed_book_info('730-9-79-414507-8'); # Expect: ('Autodesk VIZ Fundamentals', NULL, 'Metz, Crist and Zemlak', '1960', 'Contemporary,Fantasy,Thriller', '2')
+# Will show the book's (title, authors, publisher, publication_year, tags, available_copies)
+call show_detailed_book_info('000-0-00-179354-2');  # Expect: ('Year Book of Orthopedics (Year Books)', 'Armin Stood, Tedra Raspel, Lela Mears', 'Barrows Group', 1950, 'Dystopian, Motivational, Mystery, Romance', 1)
+call show_detailed_book_info('000-0-12-759187-4'); # Expect: ('Fragments Of The Heart, Trials Of The Mind', 'Constantin Extence, Maryrose Meldrum', 'Robel Group', 2016, 'Art, Children, Dystopian, Humor, Travel', 0)
 call show_detailed_book_info('999-9-49-243152-9'); # Expected: no result
 
 
@@ -131,8 +131,28 @@ call show_detailed_book_info('999-9-49-243152-9'); # Expected: no result
 ##############################
 # Test the function for showeing book info (general)
 # Will show the book's (title, authors, publisher, publication_year, tags)
-call show_general_book_info('638-8-37-351816-0'); # Expect: ('moral foundations of civil society', 'Ferdie Culbard,Nikki Kondrat,Sherri Haller', 'Metz, Crist and Zemlak', '2005', 'Art,Development,History,Paranormal,Thriller')
-call show_general_book_info('730-9-79-414507-8');  # Expect: ('Autodesk VIZ Fundamentals', NULL, 'Metz, Crist and Zemlak', '1960', 'Contemporary,Fantasy,Thriller')
+call show_general_book_info('000-0-00-179354-2'); # Expect: ('Year Book of Orthopedics (Year Books)', 'Armin Stood, Tedra Raspel, Lela Mears', 'Barrows Group', 1950, 'Dystopian, Motivational, Mystery, Romance')
+## Verify
+# Get the title and publication_year
+select title, publication_year from book where isbn = '000-0-00-179354-2';
+# Get the author
+select name from author where id in (select author_id from written_by where isbn = '000-0-00-179354-2');
+# Get the publisher
+select name from publisher where id = (select publisher_ID from book where isbn = '000-0-00-179354-2');
+# Get the tags
+select name from tag where name in (select tag_name from has_tag where isbn = '000-0-00-179354-2');
+                               
+call show_general_book_info('000-0-12-759187-4');  # Expect: ('Fragments Of The Heart, Trials Of The Mind', 'Constantin Extence, Maryrose Meldrum', 'Robel Group', 2016, 'Art, Children, Dystopian, Humor, Travel')
+## Verify
+# Get the title and publication_year
+select title, publication_year from book where isbn = '000-0-12-759187-4';
+# Get the author
+select name from author where id in (select author_id from written_by where isbn = '000-0-12-759187-4');
+# Get the publisher
+select name from publisher where id = (select publisher_ID from book where isbn = '000-0-12-759187-4');
+# Get the tags
+select name from tag where name in (select tag_name from has_tag where isbn = '000-0-12-759187-4');
+                               
 call show_general_book_info('999-9-49-243152-9');  # Expect: no result
 
 

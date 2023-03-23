@@ -104,16 +104,6 @@ call show_general_book_info('999-9-49-243152-9');  # Expect: no result
 ## test_borrowAdmin
 ##############################
 # test the borrow function (via Admin)
-- Reset Credit Level
-UPDATE GUEST
-SET remaining_credit = 5
-WHERE GUEST.ID = 11;
-
--- Reset Copy
-UPDATE Copy
-SET availability = true
-WHERE ISBN = 47 OR ISBN = 3 OR ISBN = 21 OR ISBN = 13;
-
 ## No Update
 # Guest not activated
 call borrow_via_admin(103, '007-8-28-546023-7', 1,@enough_credit1);

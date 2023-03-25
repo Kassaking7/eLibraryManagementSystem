@@ -25,3 +25,14 @@ name: Sax ; password: Mc12!Anell7543ye
 
 Note:
 * To check the SQL queries used in Backend, please see the .xml files in [here](https://github.com/Kassaking7/eLibraryManagementSystem/tree/main/LibraryBackend/src/main/resources/mapper)
+
+
+# Generating Production Dataset
+
+The production dataset of our library system is generated via two ways. The first is using online webpage [mockaroo](https://www.mockaroo.com/). The other is using the [python program](https://github.com/Kassaking7/eLibraryManagementSystem/tree/main/dataGeneration). Both will directly output the data informat of sql insertion codes.
+
+# Load Production Dataset into Database
+* Create tables by using the [table creation schema](https://github.com/Kassaking7/eLibraryManagementSystem/tree/main/schema/table_creation_schema)
+* Adding [triggers](https://github.com/Kassaking7/eLibraryManagementSystem/tree/main/SQL/triggers)
+* Loading [each sql file](https://github.com/Kassaking7/eLibraryManagementSystem/tree/main/SQL/Milestone2_Data/Production_Data) under this folder
+* Don't forget to add the [procedures](https://github.com/Kassaking7/eLibraryManagementSystem/tree/main/SQL/functions)

@@ -1,6 +1,7 @@
 package com.example.backend.service.impl;
 
 import com.example.backend.entity.Book;
+import com.example.backend.entity.BookInfo;
 import com.example.backend.mapper.BookMapper;
 import com.example.backend.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class BookServiceImpl implements BookService {
 
     public Book findByISBN(String ISBN){
         return BookMapper.findBookByISBN(ISBN);
+    }
+    public BookInfo findBookInfo(String ISBN) {
+        return BookMapper.findBookInfo(ISBN);
     }
 
     public List<Book> ListBook(){

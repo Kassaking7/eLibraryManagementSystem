@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.backend.mapper.BookMapper">
-
     <select id="ListBook" resultType="Book">
         SELECT * FROM Book
     </select>
@@ -12,6 +11,16 @@
     <select id="findBookByISBN" resultType="Book">
         SELECT  * FROM Book where ISBN = #{ISBN}
     </select>
+
+    <select id="findBookInfo" resultType="BookInfo">
+        {call show_detailed_book_info(#{ISBN})}
+    </select>
+
+
+    <select id="findBookAuthor" resultType="Book">
+        SELECT  * FROM Book INNER JOIN Author AS a ON a.where ISBN = #{ISBN}
+    </select>
+
 
     <insert id="insertBook" parameterType="com.example.backend.entity.Book"
             keyProperty="id" useGeneratedKeys="true">

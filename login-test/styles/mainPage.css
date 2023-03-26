@@ -5,14 +5,22 @@
   }
   .user-name {
     padding: 10px;
-    border: 1px solid rgb(76, 6, 6);
+    border: 1px solid rgb(224, 223, 223);
     border-radius: 15px;
-    background-color: #77d5e0;
+    background-color: #aee1e7;
     text-align: center;
     font-size: 20px;
     width: 150px;
     margin: 10px;
     align-self: center;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    
+    transition: all 0.3s ease;
+  }
+  .user-name:hover {
+    background-color: rgba(0,0,0,0.2);
   }
   .left-side {
     background-color: #77d5e0;
@@ -34,7 +42,7 @@
   }
   
   .bottom-part {
-    background-color: #87f59f;
+    background-color: #c1f0e5;
     height: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -42,17 +50,7 @@
     justify-content: center;
   }
   
-  .book {
-    background-color: #90ee90;
-    height: 200px;
-    margin: 10px;
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
+
   .left-side a {
     display: block;
     padding: 10px;
@@ -66,3 +64,76 @@
   .left-side a:hover {
     background-color: rgba(0,0,0,0.2);
   }
+
+
+  
+
+  .bottom-part {
+    background-color: #75d58a;
+    height: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .books {
+    width: 80%;
+    margin: 20px;
+    min-height: 350px;
+  }
+  .book-info:hover {
+    background-color: #3cd0d3;
+  }
+  .book-info {
+    background-color: #5ec7c9;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #d4ebfd;
+  }
+  
+  .filerBooks {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .filerBooks input {
+
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    width: 200px;
+  }
+  
+  .nexpreButtons button {
+    padding: 10px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #5ec7c9;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100px;
+  }
+  
+  .nexpreButtons button:hover {
+    background-color: #3cd0d3;
+  }
+
+  
+  .nexpreButtons {
+    margin-top: 10%;
+}

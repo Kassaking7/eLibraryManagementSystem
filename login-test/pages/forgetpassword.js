@@ -6,8 +6,7 @@ import { useRouter } from "next/router";
 function Forgetpassword() {
   const [userStatus, setUserStatus] = useState("guest");
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -44,7 +43,7 @@ function Forgetpassword() {
           id="email"
           placeholder="Enter your email"
           value={email}
-          onChange={(event) => setName(event.target.value)}
+          onChange={(event) => setEmail(event.target.value)}
           required
           className="form-input"
         />
@@ -55,8 +54,8 @@ function Forgetpassword() {
           type="code"
           id="code"
           placeholder="Enter your code"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          value={code}
+          onChange={(event) => setCode(event.target.value)}
           required
           className="form-input"
         />

@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.entity.Book;
+import com.example.backend.entity.BookInfo;
 import com.example.backend.service.impl.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,16 @@ public class BookCRUD {
     @GetMapping("/listBook")
     public List<Book> ListBook(){
         return BookService.ListBook();
+    }
+
+    @GetMapping("/findBookByISBN")
+    public Book findBookByISBN(@RequestParam("ISBN") String ISBN){
+        return BookService.findByISBN(ISBN);
+    }
+
+    @GetMapping("/findBookInfo")
+    public BookInfo findBookInfo(@RequestParam("ISBN") String ISBN){
+        return BookService.findBookInfo(ISBN);
     }
 
     @PostMapping(value="delete")

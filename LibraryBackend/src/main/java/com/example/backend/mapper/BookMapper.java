@@ -1,5 +1,6 @@
 package com.example.backend.mapper;
 
+import com.example.backend.entity.BookInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface BookMapper {
     Book findBookByISBN(String ISBN);
-
+    public BookInfo findBookInfo(String ISBN);
     public List<Book> ListBook();
 
     public int insertBook(Book Book);

@@ -1,0 +1,53 @@
+.bookPageContainer {
+  display: flex;
+  height: 1000px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #aee1e7;
+}
+
+.title {
+  margin-top: 125px;
+  font-size: 2.0rem;
+  margin-bottom: 20px;
+}
+
+
+.bookInfoContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.bookInfoItem {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.bookInfoLabel {
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.bookInfoValue {
+  font-size: 1.0rem;
+}
+
+.goBackButton {
+  cursor: pointer;
+  background-color: #aee1e7;
+  color: white;
+  border-style: solid;
+  border-color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 30px;
+  font-size: 1.2rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.goBackButton:hover {
+  background-color: #2ab59e;
+}

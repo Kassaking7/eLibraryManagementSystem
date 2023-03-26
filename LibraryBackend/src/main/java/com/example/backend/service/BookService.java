@@ -1,11 +1,14 @@
 package com.example.backend.service;
 
 import com.example.backend.entity.Book;
+import com.example.backend.entity.BookInfo;
 
 import java.util.List;
 
 public interface BookService {
     public Book findByISBN(String ISBN);
+
+    public BookInfo findBookInfo(String ISBN);
 
     public List<Book> ListBook();
 

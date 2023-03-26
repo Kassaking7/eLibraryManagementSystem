@@ -43,7 +43,7 @@ function MainPage() {
       <div className="left-side">
         {/* Left side menu */}
         {/* ... */}
-        <Link href="/search-books">
+        <Link href="/mainPage">
           Search Books
         </Link>
         <Link href="/event">

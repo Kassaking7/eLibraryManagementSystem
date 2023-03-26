@@ -84,7 +84,7 @@
     min-height: 350px;
   }
   .book-info:hover {
-    background-color: rgba(0,0,0,0.2);
+    background-color: #3cd0d3;
   }
   .book-info {
     background-color: #5ec7c9;
@@ -122,14 +122,15 @@
     margin: 0 10px;
     border: none;
     border-radius: 5px;
-    background-color: #487fac;
+    background-color: #5ec7c9;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
+    width: 100px;
   }
   
   .nexpreButtons button:hover {
-    background-color: #406d98;
+    background-color: #3cd0d3;
   }
 
   

@@ -25,11 +25,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/book/[isbn]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/book/[isbn].js"
-    ],
     "/mainPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

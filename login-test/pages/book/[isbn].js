@@ -7,14 +7,19 @@ import styles from "../../styles/bookInfoPage.module.css";
 
 function BookPage() {
   const router = useRouter();
-  const {isbn,username } = router.query;
+  const [userName, setUserName] = useState([]);
+  const {isbn} = router.query;
   const [book, setBook] = useState([]);
   const [bookInfo,setBookInfo] = useState([]);
 
   // Fetch book details using the book ID
   // ...
   useEffect(() => {
-    console.log(isbn);
+    if (typeof window == "undefined" && !localStorage.getItem("username")) {
+      Router.push("/login");
+    } else {
+      setUserName(localStorage.getItem("username"));
+    }
     axios.get("http://localhost:8080/bookcrud/findBookByISBN?ISBN=" + isbn)
     .then(response => {
       setBook(response.data);

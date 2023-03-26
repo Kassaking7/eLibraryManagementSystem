@@ -66,12 +66,12 @@ function MainPage() {
         <div className="bottom-part">
           {/* Filter */}
           <div className="filerBooks">
-            <input type="text" placeholder="Filter books" value={filterText} onChange={e => setFilterText(e.target.value)} />
+            <input type="text" placeholder="Search Books" value={filterText} onChange={e => setFilterText(e.target.value)} />
           </div>
             {/* List of books */}
           <div className="books" style={{ height: "150px", overflowY: "scroll" }}>
             {filteredBooks.slice(startIndex, startIndex + booksPerPage).map(book => (
-              <Link href={{ pathname: `/book/${book.isbn}`, query: { isbn: book.isbn,username: userName } }}>
+              <Link href={{ pathname: `/book/${book.isbn}`, query: { isbn: book.isbn} }}>
               <div className="book-info" key={book.id}>
                 <div>
                   {book.title}

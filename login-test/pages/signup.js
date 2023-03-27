@@ -33,7 +33,8 @@ function SignupPage() {
                                        "&password=" + password + "&email_address=" + email);
       //                               "&is_guest=" + true + 
       //                               "&password=" + password +
-      const user_id = response.data[0].id;                        
+      const user_id = response.data[0].id; 
+      const response2 = await axios.post("http://127.0.0.1:8080/guestcrud/activateGuest?id=" + user_id);                         
       if (user_id == -1) {
         setError("Sign Up failed, username already exists");
         return;

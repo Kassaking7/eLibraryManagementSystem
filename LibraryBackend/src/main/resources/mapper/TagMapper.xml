@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.backend.mapper.BookMapper">
+    <select id="ListBook" resultType="Book">
+        SELECT * FROM Book
+    </select>
+
+    <select id="findBookByISBN" resultType="Book">
+        SELECT  * FROM Book where ISBN = #{ISBN}
+    </select>
+
+    <select id="findBookInfo" resultType="BookInfo">
+        {call show_detailed_book_info(#{ISBN})}
+    </select>
+
+
+    <select id="findBookAuthor" resultType="Book">
+        SELECT  * FROM Book INNER JOIN Author AS a ON a.where ISBN = #{ISBN}
+    </select>
+
+
+    <insert id="insertBook" parameterType="com.example.backend.entity.Book"
+            keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO Book(
+           ISBN, title, pages, descrpition, publisher_ID, publication_year
+        )
+        VALUES(
+        #{ISBN}, #{title},#{pages},#{descrpition},#{publisher_ID},#{publication_year}
+        )
+    </insert>
+
+    <update id="Update" parameterType="com.example.backend.entity.Book">
+        update Book
+        <set>
+            <if test="ISBN != null">ISBN=#{ISBN},</if>
+            <if test="title != null">title=#{title},</if>
+            <if test="pages!= null">pages=#{pages}</if>
+            <if test="descrpition!= null">descrpition=#{descrpition}</if>
+            <if test="publisher_ID!= null">publisher_ID=#{publisher_ID}</if>
+            <if test="publication_year!= null">publication_year=#{publication_year}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="com.example.backend.entity.Book">
+        delete from Book where id=#{id}
+    </delete>
+</mapper>

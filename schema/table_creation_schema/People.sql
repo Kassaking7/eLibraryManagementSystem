@@ -1,6 +1,6 @@
 CREATE TABLE People (
   ID                BIGINT NOT NULL,
-  username          VARCHAR(100) NOT NULL,
+  username          VARCHAR(100) NOT NULL UNIQUE,
   password          VARCHAR(100) NOT NULL,
   email_address     VARCHAR(100) NOT NULL UNIQUE,
   is_guest          BOOLEAN NOT NULL DEFAULT TRUE,

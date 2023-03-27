@@ -8,19 +8,19 @@
 ## In the Guest table, "credit_level" and "remaining_credit" should be 5, and "late_fee" should be 0.
 
 call create_guest_account('Bob C', 'zxdchf12345', '123avds45@kklib.com', @userid_t1);
-select @userid_t1 as t1;
+select @userid_t1 as t1; # Expected: 113
 
 call create_guest_account('Simon Zeng', '1234512345', '12gds345@kklib.com', @userid_t2);
-select @userid_t2 as t2;
+select @userid_t2 as t2; # Expected: 114
 
 call create_guest_account('Alice Tian', '341hf12345', '534sadfc5@kklib.com', @userid_t3);
-select @userid_t3 as t3;
+select @userid_t3 as t3; # Expected: 115
 
 call create_guest_account('Josh Dan', 'z341145', '151adsc345@kklib.com', @userid_t4);
-select @userid_t4 as t4;
+select @userid_t4 as t4; # Expected: 116
 
 call create_guest_account('Kyle Smith', 'get41145', '69357345@kklib.com', @userid_t4);
-select @userid_t4 as t4;
+select @userid_t4 as t4; # Expected: 117
 
 
 

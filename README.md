@@ -9,7 +9,7 @@ Prerequest:
 To start the project:
 * Turn on database and run the commands to creating the tables with sample data.
 * Open idea, modify application-dev.yml file (located [here](https://github.com/Kassaking7/eLibraryManagementSystem/blob/main/LibraryBackend/src/main/resources/application-dev.yml)), use the password and username of your database. Then run the Java code. It will take some time for those who run Springboot Project first time since idea will automatically install the required dependency (Backend)
-* Open terminal. cd to login-test and do 
+* Open terminal. cd to LibraryFrontend and do 
 ```
 npm run dev
 ```
@@ -20,12 +20,20 @@ npm install next react react-dom
 ```
 * Go to localhost 3000 port and use the library.
 
-Test user:  
-name: Sax ; password: Mc12!Anell7543ye
+Test admin user:  
+name: Emmalyn; password: unGCZtARdY
+
+Sign up is activated. Feel free to sign up a new account and use as guest
 
 Note:
 * To check the SQL queries used in Backend, please see the .xml files in [here](https://github.com/Kassaking7/eLibraryManagementSystem/tree/main/LibraryBackend/src/main/resources/mapper)
 
+# Available Features So Far
+
+* Login
+* Sign Up
+* Searching Books
+* Borrow Books
 
 # Generating Production Dataset
 

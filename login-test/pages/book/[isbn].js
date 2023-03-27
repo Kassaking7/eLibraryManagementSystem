@@ -4,14 +4,18 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Router from 'next/router';
 import styles from "../../styles/bookInfoPage.module.css";
+import { setTokenSourceMapRange } from "typescript";
 
 function BookPage() {
   const router = useRouter();
   const [userName, setUserName] = useState([]);
+  const [id,setId] = useState("");
   const {isbn} = router.query;
   const [book, setBook] = useState([]);
   const [bookInfo,setBookInfo] = useState([]);
-
+  const [borrowRes,setBorrowRes] = useState();
+  const [enCre,setEnCre] = useState();
+  const [copy,setCopy] = useState();
   // Fetch book details using the book ID
   // ...
   useEffect(() => {
@@ -20,6 +24,14 @@ function BookPage() {
     } else {
       setUserName(localStorage.getItem("username"));
     }
+    axios.get("http://localhost:8080/peoplecrud/listPeopleByName?name=" + userName)
+    .then(response => {
+      setId(response.data[0].id);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
     axios.get("http://localhost:8080/bookcrud/findBookByISBN?ISBN=" + isbn)
     .then(response => {
       setBook(response.data);
@@ -35,8 +47,36 @@ function BookPage() {
     .catch(error => {
       console.log(error);
     });
-  }, [router.query]);
+  });
+  function handleBorrow() {
+    axios.get("http://localhost:8080/bookcrud/borrowBook?user_id="+ id +"&ISBN=" + isbn)
+    .then(response => {
+      setBorrowRes(response.data.enough_credit && response.data.copy_available);
+      setEnCre(response.data.enough_credit);
+      setCopy(response.data.copy_available);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+  useEffect(() => {
+    console.log(borrowRes);
+    if (borrowRes === undefined){
+      return;
+    } 
+    if (borrowRes) {
+      alert("Borrow Successful");
+    } else {
+      if (!copy && !enCre) {
+        alert("Fail to Borrow: No more copy and no more credit");
+      } else if (!copy) {
+        alert("Fail to Borrow: No more copy");
+      } else {
+        alert("Fail to Borrow: No more credit");
+      }
 
+    }
+  },[borrowRes]);
   return (
     <div className={styles.bookPageContainer}>
       <h1 className={styles.title}>{book.title}</h1>
@@ -64,7 +104,9 @@ function BookPage() {
           <span className={styles.bookInfoValue}>{bookInfo.copy}</span>
         </div>
       </div>
-
+      <div className={styles.borrowButton} onClick={() => handleBorrow()}>
+        Borrow this book
+      </div>
       <div className={styles.goBackButton} onClick={() => Router.push("/mainPage")}>
         Go back to Main page
       </div>

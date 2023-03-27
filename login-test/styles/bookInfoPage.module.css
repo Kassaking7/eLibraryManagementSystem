@@ -35,7 +35,7 @@
   font-size: 1.0rem;
 }
 
-.goBackButton {
+.goBackButton{
   cursor: pointer;
   background-color: #aee1e7;
   color: white;
@@ -49,5 +49,23 @@
 }
 
 .goBackButton:hover {
+  background-color: #2ab59e;
+}
+
+
+.borrowButton{
+  cursor: pointer;
+  background-color: #aee1e7;
+  color: white;
+  border-style: solid;
+  border-color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 30px;
+  font-size: 1.2rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.borrowButton:hover {
   background-color: #2ab59e;
 }

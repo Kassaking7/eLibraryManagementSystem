@@ -42,7 +42,7 @@
   }
   
   .bottom-part {
-    background-color: #c1f0e5;
+    background-color: #d0e7e2;
     height: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -67,9 +67,8 @@
 
 
   
-
   .bottom-part {
-    background-color: #75d58a;
+    background-color: #7adff4;
     height: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -83,13 +82,16 @@
     margin: 20px;
     min-height: 350px;
   }
+  
   .book-info:hover {
     background-color: #3cd0d3;
   }
+  
   .book-info {
     background-color: #5ec7c9;
     height: 100px;
     width: 100%;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -99,16 +101,22 @@
     font-size: 16px;
     font-weight: bold;
     color: #d4ebfd;
+    padding: 7px;
   }
   
   .filerBooks {
     margin: 10px 0;
+    margin-left: 23%;
     display: flex;
     align-items: center;
+    justify-content: flex-start; /* Added */
   }
   
   .filerBooks input {
-
+    background-color: aquamarine;
+  }
+  
+  .filerBooks input {
     padding: 5px;
     font-size: 16px;
     border-radius: 5px;
@@ -128,12 +136,73 @@
     cursor: pointer;
     width: 100px;
   }
-  
+  .ResetButton {
+    padding: 10px;
+    margin: 15px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #5ec7c9;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100px;
+    margin-top: 50px;
+  }
+  .ResetButton:hover {
+    background-color: #3cd0d3;
+  }
   .nexpreButtons button:hover {
     background-color: #3cd0d3;
   }
-
   
   .nexpreButtons {
     margin-top: 10%;
-}
+    display: flex; /* Added */
+    justify-content: flex-start; /* Added */
+    align-items: center; /* Added */
+    margin-left: 23%;
+  }
+  
+  .filter-tags button {
+    margin-right: 10px;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+    background-color: rgb(60, 187, 234);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .filter-tags button.active {
+    background-color: #0070f3;
+    color: #fff;
+  }
+  
+  .filter-tags button input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .filter-tags button input[type="checkbox"]:checked + label {
+    background-color: #0070f3;
+    color: #fff;
+  }
+  
+  .filter-tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 350px;
+    overflow-x: scroll;
+    margin-right: 10px; /* Modified */
+    margin-left: 20px;
+    margin-top: -15px;
+    padding: 10px;
+    background-color: #6bcfcf;
+    border: 1px solid rgb(240, 228, 228);
+    border-radius: 5px;
+  }
+  .filterWidth {
+    width: 517px;
+  }
+

@@ -19,19 +19,23 @@ function SignupPage() {
       return;
     }
     try {
-      const allusers = await axios.post("http://127.0.0.1:8080/peoplecrud/listPeople");
-      const usernum = allusers.data.length;
-      const newusernum = usernum + 1;
-      console.log(newusernum);
-      const response = await axios.post("http://127.0.0.1:8080/peoplecrud/insert?id=" + newusernum + 
-                                    "&username=" + name + 
-                                    "&is_guest=" + true + 
-                                    "&password=" + password +
-                                    "&email_address=" + email);
-      console.log(response.data);
-      const users = response.data;
-      if (users.length == 0) {
-        setError("Sign Up failed");
+      // const allusers = await axios.post("http://127.0.0.1:8080/peoplecrud/listPeople");
+      // const usernum = allusers.data.length;
+      // const newusernum = usernum + 1;
+      // const response = await axios.post("http://127.0.0.1:8080/peoplecrud/insert?id=" + newusernum + 
+      //                               "&username=" + name + 
+      //                               "&is_guest=" + true + 
+      //                               "&password=" + password +
+      //                               "&email_address=" + email);
+      // console.log(response.data);
+      // const users = response.data;
+      const response = await axios.post("http://127.0.0.1:8080/peoplecrud/SignUp?username=" + name + 
+                                       "&password=" + password + "&email_address=" + email);
+      //                               "&is_guest=" + true + 
+      //                               "&password=" + password +
+      const user_id = response.data[0].id;                        
+      if (user_id == -1) {
+        setError("Sign Up failed, username already exists");
         return;
       }
       localStorage.setItem("username", name);

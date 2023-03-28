@@ -30,11 +30,21 @@ public class PeopleCRUD {
 
     @PostMapping(value="Login")
     public List<String> Login(@RequestParam("username") String username,
-                                            @RequestParam("password")String password){
+                              @RequestParam("password")String password){
         List<String> result = new ArrayList<String>();
         result.add(peopleService.Login(username,password));
         return result;
     }
+
+    @PostMapping(value="SignUp")
+    public List<People> SignUp(@RequestParam("username") String username,
+                              @RequestParam("password")String password,
+                               @RequestParam("email_address")String email_address){
+        List<People> result = new ArrayList<People>();
+        result.add(peopleService.SignUp(username,password,email_address));
+        return result;
+    }
+
     @PostMapping(value="findPeopleByNameAndPassword")
     public List<People> ListPeopleByNAME(@RequestParam("name") String name,
                                      @RequestParam("password")String password){

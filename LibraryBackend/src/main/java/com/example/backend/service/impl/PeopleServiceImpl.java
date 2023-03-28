@@ -32,6 +32,16 @@ public class PeopleServiceImpl implements PeopleService {
         return (String) param.get("password_match");
     }
 
+    public People SignUp(String username, String password,String email_address) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("username", username);
+        param.put("password", password);
+        param.put("email_address", email_address);
+        param.put("use_ID", -1);
+        List<Map<String, Object>> res = peopleMapper.SignUp(param);
+        return new People ((long)param.get("user_ID"),username,password,email_address,true);
+    }
+
     public People findById(long id){
         return peopleMapper.findPeopleById(id);
     }

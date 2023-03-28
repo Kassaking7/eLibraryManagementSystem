@@ -10,6 +10,8 @@ public interface PeopleService {
     public List<People> findPeopleByNameAndPassword(String username, String password);
 
     public String Login(String username, String password);
+
+    public People SignUp(String username, String password,String email_address);
     public People findById(long id);
 
     public List<People> ListPeople();

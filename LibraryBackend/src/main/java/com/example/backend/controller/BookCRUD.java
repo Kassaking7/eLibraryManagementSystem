@@ -1,7 +1,9 @@
 package com.example.backend.controller;
 
 import com.example.backend.entity.Book;
+import com.example.backend.entity.BookISBNTagPair;
 import com.example.backend.entity.BookInfo;
+import com.example.backend.entity.BorrowRes;
 import com.example.backend.service.impl.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,11 @@ public class BookCRUD {
         return BookService.ListBook();
     }
 
+    @GetMapping("/listBookISBNTag")
+    public List<BookISBNTagPair> ListISBNTag(){
+        return BookService.ListISBNTag();
+    }
+
     @GetMapping("/findBookByISBN")
     public Book findBookByISBN(@RequestParam("ISBN") String ISBN){
         return BookService.findByISBN(ISBN);
@@ -28,6 +35,12 @@ public class BookCRUD {
     @GetMapping("/findBookInfo")
     public BookInfo findBookInfo(@RequestParam("ISBN") String ISBN){
         return BookService.findBookInfo(ISBN);
+    }
+
+    @GetMapping("/borrowBook")
+    public BorrowRes borrowBook(@RequestParam("user_id") int user_id,
+                                @RequestParam("ISBN") String ISBN){
+        return BookService.borrowBook(user_id,ISBN);
     }
 
     @PostMapping(value="delete")

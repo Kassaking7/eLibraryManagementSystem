@@ -16,9 +16,18 @@
         <parameter property="password" mode="IN" jdbcType="VARCHAR" />
         <parameter property="password_match" mode="OUT" jdbcType="VARCHAR" />
     </parameterMap>
-
+    <parameterMap type="java.util.Map" id ="SignUpMap">
+        <parameter property="username" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="password" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="email_address" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="user_ID" mode="OUT" jdbcType="BIGINT" />
+    </parameterMap>
     <select id="Login" statementType="CALLABLE"  parameterMap="LoginMap">
         {call match_password(?,?,?)}
+    </select>
+
+    <select id="SignUp" statementType="CALLABLE"  parameterMap="SignUpMap">
+        {call create_guest_account(?,?,?,?)}
     </select>
 
     <select id="ListPeople" resultMap="result">
@@ -28,6 +37,8 @@
     <select id="findPeopleByName" resultMap="result">
         SELECT * FROM People where username=#{name}
     </select>
+
+
 
     <select id="findPeopleByNameAndPassword" resultMap="result">
         SELECT * FROM People where username=#{username} and password=#{password}

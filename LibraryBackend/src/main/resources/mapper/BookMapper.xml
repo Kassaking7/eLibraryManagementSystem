@@ -4,8 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.backend.mapper.BookMapper">
+    <parameterMap type="java.util.Map" id ="borrowBookMap">
+        <parameter property="user_id" mode="IN" jdbcType="BIGINT" />
+        <parameter property="ISBN" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="enough_credit" mode="OUT" jdbcType="BOOLEAN" />
+        <parameter property="copy_available" mode="OUT" jdbcType="BOOLEAN" />
+    </parameterMap>
     <select id="ListBook" resultType="Book">
         SELECT * FROM Book
+    </select>
+
+    <select id="ListISBNTag" resultType="BookISBNTagPair">
+        SELECT B.ISBN AS ISBN, B.title AS title,MIN(tag_name) AS tags
+        FROM Book AS B
+        INNER JOIN Has_tag AS H ON B.ISBN = H.ISBN
+        GROUP BY B.ISBN
     </select>
 
     <select id="findBookByISBN" resultType="Book">
@@ -16,6 +29,9 @@
         {call show_detailed_book_info(#{ISBN})}
     </select>
 
+    <update id="borrowBook" statementType="CALLABLE"  parameterMap="borrowBookMap">
+        {call borrow_via_guest(?,?,?,?)}
+    </update>
 
     <select id="findBookAuthor" resultType="Book">
         SELECT  * FROM Book INNER JOIN Author AS a ON a.where ISBN = #{ISBN}

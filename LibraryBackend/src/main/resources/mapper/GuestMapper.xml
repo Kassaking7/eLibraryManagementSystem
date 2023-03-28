@@ -23,7 +23,7 @@
         SELECT * FROM Guest
     </select>
 
-    <select id="activateGuest" statementType="CALLABLE" parameterMap="ActivateGuestMap">
+    <update id="activateGuest" statementType="CALLABLE" parameterMap="ActivateGuestMap">
         {call activate_guest_account(?)}
-    </select>
+    </update>
 </mapper>

@@ -18,6 +18,11 @@ If an error on next happen (happens for all who first run a next.js prject), it'
 ```
 npm install next react react-dom
 ```
+If there's still lots of errors, it's likely that your npm version is old. Please do 
+```
+npm install
+```
+to update npm
 * Go to localhost 3000 port and use the library.
 
 Test admin user:  

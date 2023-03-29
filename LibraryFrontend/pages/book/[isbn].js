@@ -56,11 +56,11 @@ function BookPage() {
       setCopy(response.data.copy_available);
     })
     .catch(error => {
+      console.log("error happens at borrowing");
       console.log(error);
     });
   }
   useEffect(() => {
-    console.log(borrowRes);
     if (borrowRes === undefined){
       return;
     } 
@@ -74,8 +74,11 @@ function BookPage() {
       } else {
         alert("Fail to Borrow: No more credit");
       }
-
     }
+    setBorrowRes(undefined);
+  },[borrowRes]);
+  useEffect(() => {
+    console.log(borrowRes);
   },[borrowRes]);
   return (
     <div className={styles.bookPageContainer}>

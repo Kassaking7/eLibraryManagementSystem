@@ -10,6 +10,7 @@ function Event() {
   const [adminId,setAdminId]  = useState(-1);
   const [userId,setUserID] = useState(-1);
   const [eventID,setEventID] = useState(0);
+  const [eventInfo,setEventInfo] = useState([]);
   const [formData, setFormData] = useState({
     event_name: '',
     start_date_time: '',
@@ -42,19 +43,23 @@ function Event() {
         setUserID(response.data[0].id);
       } else {
         setUserAdmin(2);
-        axios.get("http://localhost:8080/peoplecrud/listPeopleByName?name="+userName)
-        .then(response => {
-          setUserID(response.data[0].id);
-        })
-        .catch(error => {
-          console.log(error);
-        });
       }
     })
     .catch(error => {
       console.log(error);
     });
   }, []);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/peoplecrud/listPeopleByName?name="+userName)
+    .then(response => {
+      setUserID(response.data[0].id);
+      console.log(response.data[0].id)
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  },[userName])
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
   }
@@ -90,6 +95,10 @@ function Event() {
         alert("register fail");
       } else {
         alert("register successfully");
+        axios.post("http://localhost:8080/eventcrud/findEvent?eventId="+eventID)
+        .then(response => {
+          setEventInfo([response.data.name, (response.data.startDateTime).replace('T',' '), (response.data.endDateTime).replace('T',' '),response.data.description]);
+        })
       }
     })
     .catch(error => {
@@ -101,6 +110,7 @@ function Event() {
     event.preventDefault();
     axios.post("http://localhost:8080/eventcrud/cancelRegisterEvent?guestID="+userId+"&eventID="+eventID)
     .then(response => {
+      console.log(eventID);
       if (response.data == "0") {
         alert("cancel fail");
       } else {
@@ -159,6 +169,12 @@ function Event() {
             </div> 
             <button type="submit">Submit</button>
           </form>
+          <div className="eventInfo">
+            <div> {eventInfo[0]} </div>
+            <div> {eventInfo[1]}</div>
+            <div>{eventInfo[2]}</div>
+            <div>{eventInfo[3]}</div>
+          </div>
           </div>
         );
       case "cancel-event":

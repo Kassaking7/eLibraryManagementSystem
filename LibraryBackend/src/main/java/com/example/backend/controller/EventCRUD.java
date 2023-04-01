@@ -29,25 +29,25 @@ public class EventCRUD {
     }
 
     @PostMapping("/insertEvent")
-    public Boolean insertEvent(@RequestParam("eventName") String eventName,
+    public String insertEvent(@RequestParam("eventName") String eventName,
                                @RequestParam("startDateTime") String startDateTime,
                                @RequestParam("endDateTime") String endDateTime,
                                @RequestParam("capacity") int capacity,
                                @RequestParam("description") String description,
-                               @RequestParam("lcoationID") long lcoationID,
-                               @RequestParam("adminID") long adminID) {
-        return insertEvent(eventName, startDateTime, endDateTime, capacity, description, lcoationID, adminID);
+                               @RequestParam("locationID") int locationID,
+                               @RequestParam("adminID") int adminID) {
+        return eventService.insertEvent(eventName, startDateTime, endDateTime, capacity, description, locationID, adminID);
     }
 
     @PostMapping("/registerEvent")
-    public Boolean registerEvent(@RequestParam("guestID") long guestID,
-                                 @RequestParam("eventID") long eventID) {
-        return registerEvent(guestID, eventID);
+    public String registerEvent(@RequestParam("guestID") long guestID,
+                                @RequestParam("eventID") long eventID) {
+        return eventService.registerEvent(guestID, eventID);
     }
 
     @PostMapping("/cancelRegisterEvent")
-    public Boolean cancelRegisterEvent(@RequestParam("guestID") long guestID,
+    public String cancelRegisterEvent(@RequestParam("guestID") long guestID,
                                        @RequestParam("eventID") long eventID) {
-        return cancelRegisterEvent(guestID, eventID);
+        return eventService.cancelRegisterEvent(guestID, eventID);
     }
 }

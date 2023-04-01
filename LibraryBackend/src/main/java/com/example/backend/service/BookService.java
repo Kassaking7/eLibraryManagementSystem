@@ -13,6 +13,7 @@ public interface BookService {
     public BookInfo findBookInfo(String ISBN);
 
     public BorrowRes borrowBook(int user_id, String ISBN);
+    public String returnBook(int user_id, String ISBN, int book_id);
 
     public List<BookISBNTagPair> ListISBNTag();
 

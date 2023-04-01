@@ -10,10 +10,10 @@ public interface EventService {
 
     public List<Event> listEvents();
 
-    public Boolean insertEvent(String eventName, String startDateTime, String endDateTime,
-                             int capacity, String description, long lcoationID, long adminID);
+    public String insertEvent(String eventName, String startDateTime, String endDateTime,
+                             int capacity, String description, int locationID, int adminID);
 
-    public Boolean registerEvent(long guestID, long eventID);
+    public String registerEvent(long guestID, long eventID);
 
-    public Boolean cancelRegisterEvent(long guestID, long eventID);
+    public String cancelRegisterEvent(long guestID, long eventID);
 }

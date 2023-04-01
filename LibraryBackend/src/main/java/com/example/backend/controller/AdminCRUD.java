@@ -19,6 +19,12 @@ public class AdminCRUD {
         return AdministratorService.ListAdministrator();
     }
 
+    @GetMapping("/checkAdminByName")
+    public List<Administrator> checkAdminByName(@RequestParam("username") String username){
+        return AdministratorService.checkAdminByName(username);
+    }
+
+
     @PostMapping(value="delete")
     public String delete(@RequestParam("id") int id){
         int result = AdministratorService.Delete(id);

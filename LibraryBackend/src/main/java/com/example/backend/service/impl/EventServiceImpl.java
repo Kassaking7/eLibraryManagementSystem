@@ -23,8 +23,8 @@ public class EventServiceImpl implements EventService {
         return eventMapper.listEvents();
     }
 
-    public Boolean insertEvent(String eventName, String startDateTime, String endDateTime,
-                               int capacity, String description, long locationID, long adminID) {
+    public String insertEvent(String eventName, String startDateTime, String endDateTime,
+                               int capacity, String description, int locationID, int adminID) {
         Map<String, Object> param = new HashMap<>();
         param.put("event_name", eventName);
         param.put("start_date_time", startDateTime);
@@ -34,53 +34,26 @@ public class EventServiceImpl implements EventService {
         param.put("location_ID", locationID);
         param.put("admin_ID", adminID);
         param.put("if_succeeded", false);
-        if (eventMapper.insertEvent(param)) {
-            return (Boolean) param.get("if_succeeded");
-        }
-        return false;
+        List<Map<String, Object>> res = eventMapper.insertEvent(param);
+        return (String) param.get("if_succeeded");
     }
 
-    /*
-    org.springframework.beans.factory.UnsatisfiedDependencyException:
-    Error creating bean with name 'adminCRUD': Unsatisfied dependency expressed through field 'AdministratorService';
-    nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException:
-        Error creating bean with name 'administratorServiceImpl':
-            Unsatisfied dependency expressed through field 'AdministratorMapper';
-    nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException:
-        Error creating bean with name 'administratorMapper' defined in file
-        [/Users/zihanpan/Downloads/CS348/eLibraryManagementSystem/LibraryBackend/target/classes/com/example/backend/mapper/AdministratorMapper.class]:
-            Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.BeanCreationException:
-                Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]:
-                    Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException:
-                        Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]:
-                            Factory method 'sqlSessionFactory' threw exception;
-    nested exception is org.springframework.core.NestedIOException:
-        Failed to parse mapping resource: 'file [/Users/zihanpan/Downloads/CS348/eLibraryManagementSystem/LibraryBackend/target/classes/mapper/EventMapper.xml]';
-    nested exception is org.apache.ibatis.builder.BuilderException:
-        Error parsing Mapper XML. The XML location is 'file [/Users/zihanpan/Downloads/CS348/eLibraryManagementSystem/LibraryBackend/target/classes/mapper/EventMapper.xml]'.
-        Cause: org.apache.ibatis.builder.BuilderException: Error resolving JdbcType.
-        Cause: java.lang.IllegalArgumentException: No enum constant org.apache.ibatis.type.JdbcType.DATETIME
-    */
 
-    public Boolean registerEvent(long guestID, long eventID) {
+    public String registerEvent(long guestID, long eventID) {
         Map<String, Object> param = new HashMap<>();
         param.put("guest_ID", guestID);
         param.put("event_ID", eventID);
-        param.put("if_succeeded", false);
-        if (eventMapper.registerEvent(param)) {
-            return (Boolean) param.get("if_succeeded");
-        }
-        return false;
+        param.put("if_registerd", false);
+        List<Map<String, Object>> res = eventMapper.registerEvent(param);
+        return (String) param.get("if_registerd");
     }
 
-    public Boolean cancelRegisterEvent(long guestID, long eventID) {
+    public String cancelRegisterEvent(long guestID, long eventID) {
         Map<String, Object> param = new HashMap<>();
         param.put("guest_ID", guestID);
         param.put("event_ID", eventID);
-        param.put("if_succeeded", false);
-        if (eventMapper.cancelRegisterEvent(param)) {
-            return (Boolean) param.get("if_succeeded");
-        }
-        return false;
+        param.put("if_registerd", false);
+        List<Map<String, Object>> res = eventMapper.registerEvent(param);
+        return (String) param.get("if_registerd");
     }
 }

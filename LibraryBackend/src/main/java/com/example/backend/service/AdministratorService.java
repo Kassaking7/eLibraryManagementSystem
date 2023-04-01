@@ -8,6 +8,7 @@ public interface AdministratorService {
     public Administrator findById(long id);
 
     public List<Administrator> ListAdministrator();
+    public List<Administrator> checkAdminByName(String username);
 
     public Administrator insertAdministrator(long id, Boolean can_edit_book,Boolean can_host_event);
 

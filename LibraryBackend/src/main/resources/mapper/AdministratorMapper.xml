@@ -13,6 +13,16 @@
         SELECT * FROM Administrator where id=#{id}
     </select>
 
+    <select id="checkAdminByName" resultType="Administrator">
+        SELECT * FROM Administrator
+        where id IN (
+          SELECT a.id
+          FROM Administrator AS a
+          INNER JOIN People AS p ON a.id = p.id
+          WHERE p.username=#{username}
+        )
+    </select>
+
     <insert id="insertAdministrator" parameterType="com.example.backend.entity.Administrator"
             keyProperty="id" useGeneratedKeys="true">
         INSERT INTO Administrator(

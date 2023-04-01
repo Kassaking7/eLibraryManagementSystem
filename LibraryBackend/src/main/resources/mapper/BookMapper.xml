@@ -10,6 +10,11 @@
         <parameter property="enough_credit" mode="OUT" jdbcType="BOOLEAN" />
         <parameter property="copy_available" mode="OUT" jdbcType="BOOLEAN" />
     </parameterMap>
+    <parameterMap type="java.util.Map" id ="returnBookMap">
+        <parameter property="user_id" mode="IN" jdbcType="BIGINT" />
+        <parameter property="ISBN" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="copy_ID" mode="IN" jdbcType="BIGINT" />
+    </parameterMap>
     <select id="ListBook" resultType="Book">
         SELECT * FROM Book
     </select>
@@ -48,6 +53,9 @@
         )
     </insert>
 
+    <update id="returnBook" statementType="CALLABLE" parameterMap="returnBookMap">
+        {call book_return(?,?,?)}
+    </update>
     <update id="Update" parameterType="com.example.backend.entity.Book">
         update Book
         <set>

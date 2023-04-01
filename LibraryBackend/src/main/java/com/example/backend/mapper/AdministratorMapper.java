@@ -14,6 +14,8 @@ public interface AdministratorMapper {
 
     public List<Administrator> ListAdministrator();
 
+    public List<Administrator> checkAdminByName(String username);
+
     public int insertAdministrator(Administrator Administrator);
 
     public int delete(long id);

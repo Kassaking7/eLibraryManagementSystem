@@ -17,6 +17,10 @@ public class AdministratorServiceImpl implements AdministratorService {
         return AdministratorMapper.findAdministratorById(id);
     }
 
+    public List<Administrator> checkAdminByName(String username) {
+        return AdministratorMapper.checkAdminByName(username);
+    }
+
     public List<Administrator> ListAdministrator(){
         return AdministratorMapper.ListAdministrator();
     }

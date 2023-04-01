@@ -19,7 +19,11 @@ public class CopyCRUD {
     public List<Copy> ListCopyByISBN(@RequestParam("ISBN") String ISBN){
         return copyService.listCopiesByISBN(ISBN);
     }
-
+    @GetMapping("/findCopyByISBNAndCopyId")
+    public Copy findCopyByISBNAndCopyId(@RequestParam("ISBN") String ISBN,
+                                              @RequestParam("copy_id") long copyId){
+        return copyService.findCopyByISBNAndCopyId(ISBN,copyId);
+    }
     @PostMapping(value="delete")
     public String delete(@RequestParam("ISBN") String ISBN, @RequestParam("copy_ID") long copyID){
         int result = copyService.delete(ISBN, copyID);

@@ -16,9 +16,9 @@ public interface EventMapper {
 
     public List<Event> listEvents();
 
-    public Boolean insertEvent(Map<String, Object> param);
+    public List<Map<String, Object>> insertEvent(Map<String, Object> param);
 
-    public Boolean registerEvent(Map<String, Object> param);
+    public List<Map<String, Object>> registerEvent(Map<String, Object> param);
 
     public Boolean cancelRegisterEvent(Map<String, Object> param);
 }

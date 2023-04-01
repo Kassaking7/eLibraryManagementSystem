@@ -15,32 +15,35 @@
         <result property="location_ID" column="location_ID" />
         <result property="admin_ID" column="admin_ID" />
     </resultMap>
+
     <parameterMap type="java.util.Map" id ="InsertEventMap">
         <parameter property="event_name" mode="IN" jdbcType="VARCHAR" />
         <parameter property="start_date_time" mode="IN" jdbcType="VARCHAR" />
-        <parameter property="end_date_time" mode="OUT" jdbcType="VARCHAR" />
-        <parameter property="capacity" mode="OUT" jdbcType="DECIMAL" />
-        <parameter property="description" mode="OUT" jdbcType="VARCHAR" />
-        <parameter property="location_ID" mode="OUT" jdbcType="BIGINT" />
-        <parameter property="admin_ID" mode="OUT" jdbcType="BIGINT" />
-        <parameter property="if_succeeded" mode="OUT" jdbcType="BOOLEAN" />
-    </parameterMap>
-    <parameterMap type="java.util.Map" id ="RegisterEventMap">
-        <parameter property="guest_ID" mode="IN" jdbcType="BIGINT" />
-        <parameter property="event_ID" mode="IN" jdbcType="BIGINT" />
-        <parameter property="if_registerd" mode="OUT" jdbcType="BOOLEAN" />
+        <parameter property="end_date_time" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="capacity" mode="IN" jdbcType="BIGINT" />
+        <parameter property="description" mode="IN" jdbcType="VARCHAR" />
+        <parameter property="location_ID" mode="IN" jdbcType="BIGINT" />
+        <parameter property="admin_ID" mode="IN" jdbcType="BIGINT" />
+        <parameter property="if_succeeded" mode="OUT" jdbcType="VARCHAR" />
     </parameterMap>
 
     <select id="insertEvent" statementType="CALLABLE"  parameterMap="InsertEventMap">
-        {call match_password(?,?,?,?,?,?,?,?)}
+        {call event_setup(?,?,?,?,?,?,?,?)}
     </select>
 
+    <parameterMap type="java.util.Map" id ="RegisterEventMap">
+        <parameter property="guest_ID" mode="IN" jdbcType="BIGINT" />
+        <parameter property="event_ID" mode="IN" jdbcType="BIGINT" />
+        <parameter property="if_registerd" mode="OUT" jdbcType="VARCHAR"/>
+    </parameterMap>
+
+
     <select id="registerEvent" statementType="CALLABLE"  parameterMap="RegisterEventMap">
-        {call match_password(?,?,?)}
+        {call register_event(?,?,?)}
     </select>
 
     <select id="cancelRegisterEvent" statementType="CALLABLE"  parameterMap="RegisterEventMap">
-        {call match_password(?,?,?)}
+        {call cancel_register(?,?,?)}
     </select>
 
     <select id="findEvent" resultMap="result">

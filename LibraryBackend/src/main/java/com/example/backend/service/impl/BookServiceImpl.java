@@ -37,6 +37,16 @@ public class BookServiceImpl implements BookService {
         return new BorrowRes(res1,res2);
     }
 
+    public String returnBook(int user_id, String ISBN, int book_id) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("user_id", user_id);
+        param.put("ISBN", ISBN);
+        param.put("book_id", book_id);
+        BookMapper.returnBook(param);
+        String res = "return successfully";
+        return res;
+    }
+
     public List<Book> ListBook(){
         return BookMapper.ListBook();
     }

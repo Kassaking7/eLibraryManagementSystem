@@ -39,8 +39,14 @@ public class BookCRUD {
 
     @GetMapping("/borrowBook")
     public BorrowRes borrowBook(@RequestParam("user_id") int user_id,
-                                @RequestParam("ISBN") String ISBN){
+                             @RequestParam("ISBN") String ISBN){
         return BookService.borrowBook(user_id,ISBN);
+    }
+    @GetMapping("/returnBook")
+    public String returnBook(@RequestParam("user_id") int user_id,
+                                @RequestParam("ISBN") String ISBN,
+                                @RequestParam("book_id") int book_id){
+        return BookService.returnBook(user_id,ISBN,book_id);
     }
 
     @PostMapping(value="delete")

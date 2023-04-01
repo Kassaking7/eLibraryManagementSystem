@@ -53,7 +53,7 @@ public class EventServiceImpl implements EventService {
         param.put("guest_ID", guestID);
         param.put("event_ID", eventID);
         param.put("if_registerd", false);
-        List<Map<String, Object>> res = eventMapper.registerEvent(param);
+        List<Map<String, Object>> res = eventMapper.cancelRegisterEvent(param);
         return (String) param.get("if_registerd");
     }
 }

@@ -29,7 +29,7 @@ function bookreturn() {
         setReturnStatus("book information incorrect");
         return;
       }
-      axios.post("http://localhost:8080/bookcrud/returnBook?user_id="+userId+ "&ISBN="+isbn+",&book_id="+bookId)
+      axios.post("http://localhost:8080/bookcrud/returnBook?user_id="+userId+ "&ISBN="+isbn+"&book_id="+bookId)
         .then(response => {
           setReturnStatus("book returns successfully");
         })

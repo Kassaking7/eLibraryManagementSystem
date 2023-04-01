@@ -13,7 +13,7 @@
     <parameterMap type="java.util.Map" id ="returnBookMap">
         <parameter property="user_id" mode="IN" jdbcType="BIGINT" />
         <parameter property="ISBN" mode="IN" jdbcType="VARCHAR" />
-        <parameter property="copy_ID" mode="IN" jdbcType="BIGINT" />
+        <parameter property="book_id" mode="IN" jdbcType="BIGINT" />
     </parameterMap>
     <select id="ListBook" resultType="Book">
         SELECT * FROM Book
@@ -53,9 +53,9 @@
         )
     </insert>
 
-    <update id="returnBook" statementType="CALLABLE" parameterMap="returnBookMap">
+    <select id="returnBook" statementType="CALLABLE" parameterMap="returnBookMap">
         {call book_return(?,?,?)}
-    </update>
+    </select>
     <update id="Update" parameterType="com.example.backend.entity.Book">
         update Book
         <set>

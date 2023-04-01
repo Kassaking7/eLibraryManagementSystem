@@ -42,9 +42,8 @@ public class BookServiceImpl implements BookService {
         param.put("user_id", user_id);
         param.put("ISBN", ISBN);
         param.put("book_id", book_id);
-        BookMapper.returnBook(param);
-        String res = "return successfully";
-        return res;
+        List<Map<String, Object>> tmp = BookMapper.returnBook(param);
+        return (String) param.get("ISBN");
     }
 
     public List<Book> ListBook(){

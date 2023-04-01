@@ -42,10 +42,13 @@ function Event() {
         setUserID(response.data[0].id);
       } else {
         setUserAdmin(2);
-        axios.get("http://localhost:8080/peoplecrud/findPeopleByName?username="+userName)
+        axios.get("http://localhost:8080/peoplecrud/listPeopleByName?name="+userName)
         .then(response => {
           setUserID(response.data[0].id);
         })
+        .catch(error => {
+          console.log(error);
+        });
       }
     })
     .catch(error => {
@@ -73,7 +76,7 @@ function Event() {
         }
       })
       .catch(error => {
-        console.log(error);
+        alert("fail to create the event");
       });
   }
   const handleEventInput = (event) => {
@@ -89,6 +92,9 @@ function Event() {
         alert("register successfully");
       }
     })
+    .catch(error => {
+      alert("register fail");
+    });
   }
 
   const handleCancelSubmit = (event) => {
@@ -101,6 +107,9 @@ function Event() {
         alert("cancel successfully");
       }
     })
+    .catch(error => {
+      alert("cancel fail");
+    });
   }
 
   const renderContent = () => {
@@ -180,9 +189,9 @@ function Event() {
         <Link href="/event">
           Event
         </Link>
-        <Link href="/bookreturn">
+        {(userAdmin == 1) && (<Link href="/bookreturn">
           Return Books
-        </Link>
+        </Link>)}
         <Link href="/contact">
           Contact
         </Link>
@@ -201,8 +210,8 @@ function Event() {
           <div className="event-box">
             <div className="event-box-options">
             {userAdmin === 1 && <div className={`event-box-option ${selectedOption === "set-up-event" ? "selected" : ""}`} onClick={() => handleOptionSelect("set-up-event")}>Set up event</div>}
-              <div className={`event-box-option ${selectedOption === "register-event" ? "selected" : ""}`} onClick={() => handleOptionSelect("register-event")}>Register event</div>
-              <div className={`event-box-option ${selectedOption === "cancel-event" ? "selected" : ""}`} onClick={() => handleOptionSelect("cancel-event")}>Cancel event</div>
+            {userAdmin != 1 && <div className={`event-box-option ${selectedOption === "register-event" ? "selected" : ""}`} onClick={() => handleOptionSelect("register-event")}>Register event</div>}
+             {userAdmin != 1 &&  <div className={`event-box-option ${selectedOption === "cancel-event" ? "selected" : ""}`} onClick={() => handleOptionSelect("cancel-event")}>Cancel event</div>}
             </div>
             <div className="event-box-content">
               {renderContent()}

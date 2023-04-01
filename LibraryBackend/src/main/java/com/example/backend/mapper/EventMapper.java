@@ -20,5 +20,5 @@ public interface EventMapper {
 
     public List<Map<String, Object>> registerEvent(Map<String, Object> param);
 
-    public Boolean cancelRegisterEvent(Map<String, Object> param);
+    public List<Map<String, Object>> cancelRegisterEvent(Map<String, Object> param);
 }

@@ -18,7 +18,7 @@ public interface BookMapper {
     public BookInfo findBookInfo(String ISBN);
     public int borrowBook(Map<String, Object> param);
 
-    public void returnBook(Map<String, Object> param);
+    public List<Map<String, Object>> returnBook(Map<String, Object> param);
     public List<Book> ListBook();
     public List<BookISBNTagPair> ListISBNTag();
     public int insertBook(Book Book);

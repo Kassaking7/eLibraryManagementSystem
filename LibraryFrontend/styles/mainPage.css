@@ -272,6 +272,8 @@
   
   .event-box-option.selected {
     background-color: rgba(0,0,0,0.2);
+    margin: auto;
+    margin-bottom: 15px;
   }
   
   .event-box-content {

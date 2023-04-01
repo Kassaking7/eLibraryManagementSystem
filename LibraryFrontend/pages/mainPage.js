@@ -11,6 +11,7 @@ function MainPage() {
   const [startIndex, setStartIndex] = useState(0);
   const [selectedTag, setSelectedTag] = useState([]);
   const [Tag, setTag] = useState([]);
+  const [userAdmin, setUserAdmin] = useState(0);
   const booksPerPage = 5;
 
   function filterBooks(books) {
@@ -33,6 +34,13 @@ function MainPage() {
     } else {
       setUserName(localStorage.getItem("username"));
     }
+    axios.get("http://localhost:8080/admincrud/checkAdminByName?username=" + localStorage.getItem("username"))
+    .then(response => {
+      setUserAdmin(!(response.data.length === 0) ? 1 : 2);
+    })
+    .catch(error => {
+      console.log(error);
+    });
     axios.get("http://localhost:8080/bookcrud/listBookISBNTag")
     .then(response => {
       setBooks(response.data);
@@ -41,9 +49,16 @@ function MainPage() {
       console.log(error);
     });
   }, []);
+
+
+
+
   function handleReset() {
     setSelectedTag([]);
   }
+
+
+
   useEffect(() => {
     axios.get("http://localhost:8080/tagcrud/listTag")
     .then(response => {
@@ -68,9 +83,14 @@ function MainPage() {
         <Link href="/mainPage">
           Search Books
         </Link>
-        <Link href="/event">
-          Event
-        </Link>
+        
+          <Link href="/event">
+            Event
+          </Link>
+        
+        {(userAdmin == 1) && (<Link href="/bookreturn">
+          Return Books
+        </Link>)}
         <Link href="/contact">
           Contact
         </Link>

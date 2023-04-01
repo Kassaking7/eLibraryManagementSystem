@@ -108,6 +108,9 @@ function SignupPage() {
         />
       </div>
       <div className="form-group">
+      <Link href="/login" className="forgetpassword">
+          Go back
+        </Link>
         <button type="submit" className="form-submit-btn">Sign Up</button>
       </div>
     </form>

@@ -28,6 +28,11 @@ hr {
   text-align: left;
 }
 
+.form-group a {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
 label {
   margin-bottom: 10px;
   font-weight: bold;

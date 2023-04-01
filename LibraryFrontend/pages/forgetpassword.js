@@ -64,7 +64,11 @@ function Forgetpassword() {
         <Link href="/forgetpassword" className="forgetpassword">
           Send verification code
         </Link>
+        <Link href="/login" className="forgetpassword">
+          Go back
+        </Link>
       </div>
+
       <div className="form-group">
         <button type="submit" className="form-submit-btn">Submit</button>
       </div>

@@ -309,3 +309,17 @@
   font-weight: bold;
   text-align: end;
 }
+
+.eventInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  background-color: #50d7d7;
+}
+.eventInfo div {
+  margin-top: 10px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}

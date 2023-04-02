@@ -11,24 +11,25 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
   const router = useRouter();
-
+  function isValidEmail(email) {
+    const atSymbolCount = (email.match(/@/g) || []).length;
+    return atSymbolCount === 1;
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
+    if (password.length < 10) {
+      setError("Username must be at least 10 characters.");
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setError("Email should contain only 1 @");
+      return;
+    }
     try {
-      // const allusers = await axios.post("http://127.0.0.1:8080/peoplecrud/listPeople");
-      // const usernum = allusers.data.length;
-      // const newusernum = usernum + 1;
-      // const response = await axios.post("http://127.0.0.1:8080/peoplecrud/insert?id=" + newusernum + 
-      //                               "&username=" + name + 
-      //                               "&is_guest=" + true + 
-      //                               "&password=" + password +
-      //                               "&email_address=" + email);
-      // console.log(response.data);
-      // const users = response.data;
       const response = await axios.post("http://127.0.0.1:8080/peoplecrud/SignUp?username=" + name + 
                                        "&password=" + password + "&email_address=" + email);
       //                               "&is_guest=" + true + 

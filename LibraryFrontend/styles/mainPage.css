@@ -1,5 +1,5 @@
 .main-page {
-    background-color: #f4f4f4;
+    background-color: #F1FAEE;
     display: flex;
     height: 100vh;
   }
@@ -7,7 +7,7 @@
     padding: 10px;
     border: 1px solid rgb(224, 223, 223);
     border-radius: 15px;
-    background-color: #aee1e7;
+    background-color: #AEC3B0;
     text-align: center;
     font-size: 20px;
     width: 150px;
@@ -23,26 +23,26 @@
     background-color: rgba(0,0,0,0.2);
   }
   .left-side {
-    background-color: #77d5e0;
+    background-color: #2D3142;
     width: 20%;
   }
   
   .right-side {
-    background-color: #487fac;
+    background-color: #86BBD8;
     width: 80%;
     display: flex;
     flex-direction: column;
   }
   
   .top-part {
-    background-color: #a6faf7;
+    background-color: #EF8354;
     height: 10%;
     display: flex;
     justify-content: flex-end;
   }
   
   .bottom-part {
-    background-color: #d0e7e2;
+    background-color: #BFC0C0;
     height: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -68,7 +68,6 @@
 
   
   .bottom-part {
-    background-color: #7adff4;
     height: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -84,11 +83,11 @@
   }
   
   .book-info:hover {
-    background-color: #3cd0d3;
+    background-color: #494d60;
   }
   
   .book-info {
-    background-color: #5ec7c9;
+    background-color: #2D3142;
     height: 100px;
     width: 100%;
     text-align: center;
@@ -113,7 +112,7 @@
   }
   
   .filerBooks input {
-    background-color: aquamarine;
+    background-color: #AEC3B0;
   }
   
   .filerBooks input {
@@ -123,8 +122,11 @@
     border: 1px solid #ccc;
     margin-right: 10px;
     width: 200px;
+    color: white;
   }
-  
+  .filerBooks input[type="text"]::placeholder {
+    color: rgb(255, 255, 255);
+  }
   .nexpreButtons button {
     padding: 10px;
     margin: 0 10px;
@@ -167,14 +169,14 @@
     margin-right: 10px;
     margin-bottom: 8px;
     padding: 5px 10px;
-    background-color: rgb(60, 187, 234);
+    background-color: #2D3142;
     border: none;
     border-radius: 5px;
     cursor: pointer;
   }
   
   .filter-tags button.active {
-    background-color: #0070f3;
+    background-color: #b3c5da;
     color: #fff;
   }
   
@@ -198,7 +200,7 @@
     margin-left: 20px;
     margin-top: -15px;
     padding: 10px;
-    background-color: #6bcfcf;
+    background-color: #AEC3B0;
     border: 1px solid rgb(240, 228, 228);
     border-radius: 5px;
   }

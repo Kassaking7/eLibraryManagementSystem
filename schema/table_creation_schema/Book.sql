@@ -9,3 +9,5 @@ CREATE TABLE Book (
 
   FOREIGN KEY (publisher_ID) REFERENCES Publisher(ID)
 );
+
+CREATE INDEX book_index ON Book(title);

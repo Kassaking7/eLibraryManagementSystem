@@ -15,6 +15,8 @@ CREATE TABLE Event (
   FOREIGN KEY (admin_ID) REFERENCES Administrator(ID)
 );
 
+CREATE INDEX event_index ON Event(start_date_time, end_date_time);
+
 CREATE TABLE Registration (
   guest_ID          BIGINT NOT NULL,
   event_ID          BIGINT NOT NULL,

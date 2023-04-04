@@ -11,6 +11,8 @@ CREATE TABLE Location (
   CONSTRAINT unique_location UNIQUE (building, floor, room)
 );
 
+CREATE INDEX location_index ON Location(building, floor, room);
+
 CREATE TABLE In_charged_by (
   location_ID       BIGINT NOT NULL,
   administrator_ID  BIGINT NOT NULL,

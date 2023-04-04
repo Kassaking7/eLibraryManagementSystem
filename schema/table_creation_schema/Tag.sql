@@ -13,3 +13,5 @@ CREATE TABLE Has_tag (
   FOREIGN KEY (ISBN) REFERENCES Book(ISBN),
   FOREIGN KEY (tag_name) REFERENCES Tag(name)
 );
+
+CREATE INDEX tag_index ON Has_tag(tag_name);

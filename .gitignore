@@ -1,5 +1,7 @@
 .DS_Store
-./frontend/.DS_Store
+./LibraryFrontend/.DS_Store
+./LibraryFrontend/node_modules/
+./LibraryFrontend/.next
 ./schema/.DS_Store
 ./dataGeneration/.DS_Store
 ./dataGeneration/ipynb_checkpoints/*

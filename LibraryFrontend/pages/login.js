@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,15 +9,20 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const router = useRouter();
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8080/peoplecrud/Login?username=" + name + "&password=" + password);
+      const response = await axios.post("http://127.0.0.1:8080/api/auth/login?username=" + name 
+                                        + "&password=" + password ,{},
+                                        
+                                        {
+                                          withCredentials: true
+                                      });
       
       const users = response.data;
       console.log(users);
-      if (users[0] == "0") {
+      console.log(response)
+      if (users.success == false) {
         setError("Incorrect name or password");
         return;
       }
@@ -31,7 +36,18 @@ function LoginPage() {
   const handleUserStatusChange = (event) => {
     setUserStatus(event.target.value);
   };
-
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8080/api/user/me" ,{},{withCredentials: true})
+    .then(response => {
+      if (response.data.success == true) {
+        localStorage.setItem("username", response.data.message.username);
+        router.push("/mainPage");
+      };
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }, []);
   return (
     <div className="login-form">
     <h2 className="form-title">Sign-In to Your Library Account</h2>

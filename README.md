@@ -1,6 +1,7 @@
 # eLibraryManagementSystem
+This is a new version of eLibraryManagementSystem. Order version can be found in [CS348version](https://github.com/Kassaking7/eLibraryManagementSystem/tree/CS348version)
 
-The database will be stored in MySQL port 3306. And we use JDBC(Springboot+Mybatis) to receive data from db 3306, and we upload those data to port 8080. We use React(Next.js) for our web front end and use Axois to take data from port 8080.
+The database will be stored in MySQL port 3306. And we use JDBC(Springboot+Mybatis) to receive data from db 3306, and we upload those data to port 8080. We use React(Next.js) for our web front end and use Axois to take data from port 8080. We also use Redis to temporarily store login information and redis-cli is open in port 6379
 
 Prerequest:
 * [idea](https://www.jetbrains.com/idea/)

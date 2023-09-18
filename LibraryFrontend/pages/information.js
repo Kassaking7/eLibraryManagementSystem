@@ -14,7 +14,6 @@ const Information = () => {
       <p>Username: {userName}</p>
       {/* Add other information here */}
       <button onClick={() => Router.push('/mainPage')}>Return to Main Page</button>
-      <button> <Link href="/login">Return to Login Page </Link></button>
     </div>
   );
 };

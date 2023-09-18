@@ -35,8 +35,10 @@ function Event() {
     } else {
       setUserName(localStorage.getItem("username"));
     }
-    axios.get("http://localhost:8080/admincrud/checkAdminByName?username=" + localStorage.getItem("username"))
+    axios.get("http://127.0.0.1:8080/api/admin/" + localStorage.getItem("username"))
     .then(response => {
+      console.log(localStorage.getItem("username"))
+      console.log(response.data)
       if (response.data.length !== 0) {
         setUserAdmin(1);
         setAdminId(response.data[0].id);
@@ -51,7 +53,7 @@ function Event() {
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/peoplecrud/listPeopleByName?name="+userName)
+    axios.get("http://127.0.0.1:8080/peoplecrud/listPeopleByName?name="+userName)
     .then(response => {
       setUserID(response.data[0].id);
       console.log(response.data[0].id)
@@ -65,16 +67,21 @@ function Event() {
   }
   const handleSetUpSubmit = (event) => {
     event.preventDefault();
-    axios.post("http://localhost:8080/eventcrud/insertEvent?eventName="+ 
-                formData.event_name +
-                "&startDateTime=" + formData.start_date_time.replace('T',' ') +
-                "&endDateTime=" + formData.end_date_time.replace('T',' ')  +
-                "&capacity=" + formData.capacity +
-                "&description=" + formData.description +
-                "&locationID=" + formData.location_ID +
-                "&adminID=" + adminId)
+    const events = {
+      ID: null,
+      name: formData.event_name,
+      startDateTime: formData.start_date_time.replace('T',' '),
+      endDateTime: formData.end_date_time.replace('T',' '),
+      capacity: formData.capacity,
+      currentAmount: null,
+      description: formData.description,
+      locationID: formData.location_ID,
+      adminID: adminId
+    }
+    axios.post("http://127.0.0.1:8080/api/events/",events,{withCredentials: true})
       .then(response => {
-        if (response.data == "0") {
+        console.log(response.data);
+        if (response.data.message == false) {
           alert("fail to create the event");
         } else {
           alert("create the event successfully");
@@ -89,15 +96,17 @@ function Event() {
   }
   const handleRegisterSubmit = (event) => {
     event.preventDefault();
-    axios.post("http://localhost:8080/eventcrud/registerEvent?guestID="+userId+"&eventID="+eventID)
+    axios.post("http://127.0.0.1:8080/api/events/"+eventID+"/register?guestID="+userId)
     .then(response => {
-      if (response.data == "0") {
+      console.log(response.data.message)
+      if (response.data.message == false) {
         alert("register fail");
       } else {
         alert("register successfully");
-        axios.post("http://localhost:8080/eventcrud/findEvent?eventId="+eventID)
+        axios.post("http://127.0.0.1:8080/api/events/"+eventID)
         .then(response => {
-          setEventInfo([response.data.name, (response.data.startDateTime).replace('T',' '), (response.data.endDateTime).replace('T',' '),response.data.description]);
+          console.log(response)
+          setEventInfo([response.data.message.name, (response.data.message.startDateTime).replace('T',' '), (response.data.message.endDateTime).replace('T',' '),response.data.message.description]);
         })
       }
     })
@@ -108,7 +117,7 @@ function Event() {
 
   const handleCancelSubmit = (event) => {
     event.preventDefault();
-    axios.post("http://localhost:8080/eventcrud/cancelRegisterEvent?guestID="+userId+"&eventID="+eventID)
+    axios.post("http://127.0.0.1:8080/api/events/"+eventID+"/cancel?guestID="+userId)
     .then(response => {
       console.log(eventID);
       if (response.data == "0") {
@@ -194,7 +203,14 @@ function Event() {
     }
   };
   
-
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8080/api/auth/logout',{},{withCredentials: true});
+      console.log(response.data);
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
   return (
     <div className="main-page">
       <div className="left-side">
@@ -211,7 +227,7 @@ function Event() {
         <Link href="/contact">
           Contact
         </Link>
-        <Link href="/login">
+        <Link href="/" onClick={handleLogout}>
           Log out
         </Link>
       </div>

@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:  jdbc:mysql://127.0.0.1:3306/elibrarydb?serverTimezone=UTC&useSSL=false
+    username: root
+    password: 196851444
+  mail:
+    host: smtp.163.com
+    username: myemail
+    password: mypassword
+    port: 465
+    properties:
+      from: kassaking7@163.com
+      mail:
+        smtp:
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+
+data:
+  redis:
+    database: 0
+    host: localhost
+    port: 6379

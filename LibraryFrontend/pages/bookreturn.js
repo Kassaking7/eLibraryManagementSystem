@@ -23,13 +23,19 @@ function bookreturn() {
     const isbn = formData.get("isbn");
     const bookId = formData.get("bookId");
 
-    axios.post("http://localhost:8080/copycrud/findCopyByISBNAndCopyId?ISBN="+isbn+"&copy_id="+bookId)
+    axios.get("http://127.0.0.1:8080/api/copy/"+isbn+"/"+bookId)
     .then(response => {
       if (response.data == "") {
         setReturnStatus("book information incorrect");
         return;
       }
-      axios.post("http://localhost:8080/bookcrud/returnBook?user_id="+userId+ "&ISBN="+isbn+"&book_id="+bookId)
+      axios.post("http://127.0.0.1:8080/api/book/return",{
+        userId: userId,
+        ISBN: isbn,
+        bookId: bookId
+      },{withCredentials: true,headers: {
+        'Content-Type': 'application/json'
+      }})
         .then(response => {
           setReturnStatus("book returns successfully");
         })
@@ -61,7 +67,7 @@ function bookreturn() {
         <Link href="/contact">
           Contact
         </Link>
-        <Link href="/login">
+        <Link href="/">
           Log out
         </Link>
       </div>

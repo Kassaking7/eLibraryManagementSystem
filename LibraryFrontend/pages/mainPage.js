@@ -34,14 +34,14 @@ function MainPage() {
     } else {
       setUserName(localStorage.getItem("username"));
     }
-    axios.get("http://localhost:8080/admincrud/checkAdminByName?username=" + localStorage.getItem("username"))
+    axios.get("http://127.0.0.1:8080/api/admin/" + localStorage.getItem("username"),{},{withCredentials: true})
     .then(response => {
       setUserAdmin(!(response.data.length === 0) ? 1 : 2);
     })
     .catch(error => {
       console.log(error);
     });
-    axios.get("http://localhost:8080/bookcrud/listBookISBNTag")
+    axios.get("http://127.0.0.1:8080/api/book/ISBNTag",{},{withCredentials: true})
     .then(response => {
       setBooks(response.data);
     })
@@ -58,9 +58,17 @@ function MainPage() {
   }
 
 
-
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8080/api/auth/logout',{},{withCredentials: true});
+      console.log(response.data);
+      localStorage.removeItem("username");
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
   useEffect(() => {
-    axios.get("http://localhost:8080/tagcrud/listTag")
+    axios.get("http://127.0.0.1:8080/api/tag/",{},{withCredentials: true})
     .then(response => {
       setTag(response.data);
     })
@@ -74,7 +82,6 @@ function MainPage() {
   const filteredBooks = filterBooks(books);
   const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
   const currentPage = Math.floor(startIndex / booksPerPage);
-
   return (
     <div className="main-page">
       <div className="left-side">
@@ -94,7 +101,7 @@ function MainPage() {
         <Link href="/contact">
           Contact
         </Link>
-        <Link href="/login">
+        <Link href="/" onClick={handleLogout}>
           Log out
         </Link>
       </div>

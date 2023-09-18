@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+
 function SignupPage() {
   const [userStatus, setUserStatus] = useState("guest");
   const [name, setName] = useState("");
@@ -10,6 +11,7 @@ function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
+  const [vcode, setVcode] = useState("");
   const router = useRouter();
   function isValidEmail(email) {
     const atSymbolCount = (email.match(/@/g) || []).length;
@@ -21,8 +23,8 @@ function SignupPage() {
       setError("Passwords do not match.");
       return;
     }
-    if (password.length < 10) {
-      setError("Username must be at least 10 characters.");
+    if (password.length < 5) {
+      setError("password must be at least 7 characters.");
       return;
     }
     if (!isValidEmail(email)) {
@@ -30,18 +32,17 @@ function SignupPage() {
       return;
     }
     try {
-      const response = await axios.post("http://127.0.0.1:8080/peoplecrud/SignUp?username=" + name + 
-                                       "&password=" + password + "&email_address=" + email);
-      //                               "&is_guest=" + true + 
-      //                               "&password=" + password +
-      const user_id = response.data[0].id; 
-      const response2 = await axios.post("http://127.0.0.1:8080/guestcrud/activateGuest?id=" + user_id);                         
-      if (user_id == -1) {
-        setError("Sign Up failed, username already exists");
-        return;
-      }
-      localStorage.setItem("username", name);
-      router.push("/mainPage");
+      const response = await axios.post("http://127.0.0.1:8080/api/auth/register?username=" + name + 
+                                       "&password=" + password + "&email=" + email + "&code=" + vcode,{},{withCredentials: true});
+      const res = response.data;
+        console.log(res);
+        if (res.status == 200) {
+          console.log("signup successfully.");
+          localStorage.setItem("username",name);
+          router.push("/mainPage");
+        } else {
+          setError(res.message);
+        }
     } catch (error) {
       console.error(error);
       setError("An error occurred while Signing up");
@@ -49,6 +50,23 @@ function SignupPage() {
   };
   const handleUserStatusChange = (event) => {
     setUserStatus(event.target.value);
+  };
+
+  const handlGetCode = async () => {
+    try {
+      if (!isValidEmail(email)) {
+        setError("Email should contain only 1 @");
+        return;
+      }
+  
+      const response = await axios.post("http://127.0.0.1:8080/api/auth/valid-register-email?email="+email,{},{withCredentials: true});  
+  
+      console.log("Verification code sent successfully.");
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+      setError("An error occurred while obtaining the verification code");
+    }
   };
 
   return (
@@ -108,11 +126,24 @@ function SignupPage() {
           className="form-input"
         />
       </div>
+      <button type="submit" className="form-code-btn" onClick={handlGetCode}>Obtain Verification Code</button>
+      <div className="form-group">
+        <label htmlFor="verification_code" className="form-label">Verification Code:</label>
+        <input
+          type="text"
+          id="code"
+          placeholder="Enter the verification code"
+          value={vcode}
+          onChange={(event) => setVcode(event.target.value)}
+          required
+          className="form-input"
+        />
+      </div>
       <div className="form-group">
       <Link href="/login" className="forgetpassword">
           Go back
         </Link>
-        <button type="submit" className="form-submit-btn">Sign Up</button>
+        <button type="submit" className="form-signup-btn">Sign Up</button>
       </div>
     </form>
     {error && <div className="error">{error}</div>}

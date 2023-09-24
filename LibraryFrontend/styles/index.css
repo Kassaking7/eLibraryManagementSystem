@@ -74,3 +74,11 @@ button {
   margin-top: 20px;
   font-weight: bold;
 }
+.form-check{
+  display: flex;
+}
+
+.form-check   div {
+    font-weight: bold;
+    margin-right: 10px;
+}

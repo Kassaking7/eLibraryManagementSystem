@@ -6,14 +6,17 @@ import { useRouter } from "next/router";
 function LoginPage() {
   const [userStatus, setUserStatus] = useState("guest");
   const [name, setName] = useState("");
+  const [remember, setRemember] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const router = useRouter();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      console.log(remember);
       const response = await axios.post("http://127.0.0.1:8080/api/auth/login?username=" + name 
-                                        + "&password=" + password ,{},
+                                        + "&password=" + password 
+                                        + "&remember=" + remember,{},
                                         
                                         {
                                           withCredentials: true
@@ -54,13 +57,6 @@ function LoginPage() {
     <hr className="form-divider" />
     <form onSubmit={handleSubmit} className="form">
       <div className="form-group">
-        <label htmlFor="userStatus" className="form-label">You are a:</label>
-        <select id="userStatus" value={userStatus} onChange={handleUserStatusChange} className="form-select">
-          <option value="guest">Guest</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
-      <div className="form-group">
         <label htmlFor="name" className="form-label">Username:</label>
         <input
           type="text"
@@ -84,6 +80,15 @@ function LoginPage() {
           className="form-input"
         />
       </div>
+      <div className="form-check">
+      <div className="Remember-me">Remember Me</div>
+      <input
+          type="checkbox"
+          id="remember"
+          value={remember}
+          onChange={(event) => setRemember(event.target.checked)}
+        />
+      </div> 
       <div className="form-group">
         <Link href="/forgetpassword" className="forgetpassword">
           Forget password
